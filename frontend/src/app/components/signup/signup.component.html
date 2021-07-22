@@ -1,0 +1,163 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title> Sign up </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+      <!-- Account Details -->
+      <div formGroupName="account">
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="lastName"
+            placeholder="provide your last name"
+            required
+          />
+          <mat-error
+            *ngIf="lastName?.touched && lastName?.hasError('required')"
+          >
+            Please, provide the last name!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="firstName"
+            placeholder="provide your first name"
+            required
+          />
+          <mat-error
+            *ngIf="firstName?.touched && firstName?.hasError('required')"
+          >
+            Please, provide the first name!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Other Name(s) [if any]</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="otherNames"
+            placeholder="provide your other names"
+          />
+          <mat-error
+            *ngIf="firstName?.touched && firstName?.hasError('required')"
+          >
+            Please, provide the first name!
+          </mat-error>
+        </mat-form-field>
+
+        <p>
+          <label for="gender">Gender </label>
+          <input type="radio" value="male" formControlName="gender" /> Male
+          <input type="radio" value="female" formControlName="gender" /> Female
+        </p>
+        <mat-error *ngIf="!gender?.valid && (gender?.dirty || gender?.touched)">
+          <div [hidden]="!gender?.errors?.required">gender is required</div>
+        </mat-error>
+
+        <mat-form-field>
+            <mat-label>Mobile Number</mat-label>
+            <input matInput type="text" formControlName="mobileNumber" placeholder="Eg. 0541234567" required>
+            <mat-hint>
+                Example: 0541234567
+            </mat-hint>
+            <mat-error *ngIf="mobileNumber?.touched && mobileNumber?.hasError('required')">
+                Please, provide your mobile number
+            </mat-error>
+        </mat-form-field>
+      </div>
+      <!-- Account Details -->
+
+      <!-- User Details -->
+      <div formGroupName="user">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            placeholder="provide username"
+            required
+          />
+          <mat-error
+            *ngIf="email?.hasError('email') && !email?.hasError('required')"
+          >
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="email?.hasError('required')">
+            Email is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="username"
+            placeholder="provide username"
+            required
+          />
+          <mat-error
+            *ngIf="username?.touched && username?.hasError('required')"
+          >
+            Please, provide username!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            placeholder="provide password"
+            required
+          />
+          <mat-error
+            *ngIf="password?.touched && password?.hasError('required')"
+          >
+            Please, provide password!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Confirm password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="confirmPassword"
+            placeholder="re-enter password"
+            required
+          />
+        </mat-form-field>
+      </div>
+      <!-- User Details -->
+
+      <!-- Submit button -->
+      <button
+        mat-raised-button
+        aria-label="Sign up button"
+        color="accent"
+        type="submit"
+        [disabled]="!signupForm.valid"
+      >
+        Sign up
+      </button>
+    </form>
+  </mat-card-content>
+
+  <mat-card-footer>
+    <p>
+      Already have an account?
+      <a routerLink="/login"> Log in</a>
+    </p>
+  </mat-card-footer>
+</mat-card>
