@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, "../public")));
 
 
 let fallpath = path.join(__dirname, "../public/fe/index.html");
+console.log('fallback', fallpath);
 app.get("**", (req: Request, res: Response) => {
   res.sendFile(fallpath);
 });
