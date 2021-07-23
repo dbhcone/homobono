@@ -20,9 +20,9 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express_1.default.static(path.join(__dirname, "../dist")));
-app.get("**", (req, res) => {
-    res.sendFile(path.join(__dirname, "../dist/fe/index.html"));
-});
+// app.get("**", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../dist/fe/index.html"));
+// });
 app.use('/api/users', usersRouter);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
