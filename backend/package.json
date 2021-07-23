@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./public/dist/bin/www.js",
     "build": "tsc -p .",
-    "dev": "nodemon ./src/bin/www.ts"
+    "dev": "nodemon ./src/bin/www.ts",
+    "heroku-postbuild": "tsc -p ."
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
