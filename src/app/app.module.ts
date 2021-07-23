@@ -45,6 +45,7 @@ import { ShoppingCartModule } from 'ng-shopping-cart';
 import { SignupComponent } from './components/signup/signup.component';
 import { UserLayoutComponent } from './components/shared/user-layout/user-layout.component';
 import { LayoutComponent } from './components/shared/layout/layout.component';
+import { FourZeroFourComponent } from './components/shared/four-zero-four/four-zero-four.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +53,7 @@ import { LayoutComponent } from './components/shared/layout/layout.component';
     LayoutComponent,
     SignupComponent,
     UserLayoutComponent,
+    FourZeroFourComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
