@@ -12,18 +12,18 @@ let app = express();
 app.use(cors());
 
 // view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+// app.set("views", path.join(__dirname, "views"));
+// app.set("view engine", "jade");
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../public")));
 
-// app.get("**", (req: Request, res: Response) => {
-//   res.sendFile(path.join(__dirname, "public/dist/fe/index.html"));
-// });
+app.get("**", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "../public/fe/index.html"));
+});
 
 app.use("/api/users", usersRouter);
 
@@ -39,11 +39,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
-  // res.status(err.status || 500);
-  // res.render('error');
-
-  // redirect to index page
-  res.sendFile(path.join(__dirname, "../public/fe/index.html"));
+  res.status(err.status || 500);
+  res.render('error');
 });
 
 module.exports = app;
