@@ -19,7 +19,7 @@ app.use(logger('dev'));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express_1.default.static(path.join(__dirname, "../dist")));
+app.use(express_1.default.static(path.join(__dirname, "../public")));
 // app.get("**", (req, res) => {
 //     res.sendFile(path.join(__dirname, "../dist/fe/index.html"));
 // });
@@ -38,6 +38,6 @@ app.use((err, req, res, next) => {
     // res.render('error');
 
     // redirect to index page
-    res.sendFile(path.join(__dirname, "../dist/fe/index.html"));
+    res.sendFile(path.join(__dirname, "../public/fe/index.html"));
 });
 module.exports = app;
