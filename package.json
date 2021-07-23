@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./public/dist/bin/www.js",
+    "start": "node bin/www.js",
     "dev": "nodemon ./src/bin/www.ts"
   },
   "dependencies": {
