@@ -10,7 +10,7 @@ config/default.json
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
-/public/dist
+# /public/dist
 
 # dependencies
 /node_modules
