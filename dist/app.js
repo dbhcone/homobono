@@ -23,7 +23,7 @@ app.use(express_1.default.static(path.join(__dirname, "../dist")));
 app.get("**", (req, res) => {
     res.sendFile(path.join(__dirname, "../dist/fe/index.html"));
 });
-app.use('/users', usersRouter);
+app.use('/api/users', usersRouter);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
     next(createError(404));
