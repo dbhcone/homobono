@@ -1,0 +1,32 @@
+<section>
+  <h3>Upcoming events</h3>
+  <div class="row">
+    <div class="col-md-4" *ngFor="let event of events">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ event._id }}</mat-card-title>
+          <mat-card-subtitle>{{ event.title }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <img src="{{ event.img }}" mat-card-image />
+          <p>{{ event.description }}</p>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-raised-button color="accent">Book</button>
+          <button mat-raised-button color="primary">View details</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <mat-paginator
+    [length]="events.length"
+    [pageSize]="pageSize"
+    (page)="pageEvent = $event"
+  >
+  </mat-paginator>
+</section>
+
+<hr />
+
+<h3>Past Events</h3>
