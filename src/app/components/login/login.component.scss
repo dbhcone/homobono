@@ -1,7 +1,19 @@
 mat-form-field {
-    display: block;
+  display: block;
 }
 
 mat-card {
-    max-width: 500px;
+  max-width: 600px;
+  background: #72d133;
+  color: #ffffff;
+}
+
+.login-container {
+    background: rgb(34,193,195);
+    background: radial-gradient(circle, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+  font-size: 1.2rem;
+}
+
+button[type="submit"] {
+  width: 100%;
 }

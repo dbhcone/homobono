@@ -46,6 +46,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { UserLayoutComponent } from './components/shared/user-layout/user-layout.component';
 import { LayoutComponent } from './components/shared/layout/layout.component';
 import { FourZeroFourComponent } from './components/shared/four-zero-four/four-zero-four.component';
+import { EventsComponent } from './components/events/events.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +55,7 @@ import { FourZeroFourComponent } from './components/shared/four-zero-four/four-z
     SignupComponent,
     UserLayoutComponent,
     FourZeroFourComponent,
+    EventsComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

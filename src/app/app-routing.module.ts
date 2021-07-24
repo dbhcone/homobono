@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EventsComponent } from './components/events/events.component';
 import { LoginComponent } from './components/login/login.component';
 import { FourZeroFourComponent } from './components/shared/four-zero-four/four-zero-four.component';
 import { LayoutComponent } from './components/shared/layout/layout.component';
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: LayoutComponent },
   { path: 'logout', redirectTo: 'login' },
+  { path: 'events', component: EventsComponent },
   { path: '**', component: FourZeroFourComponent },
 ];
 

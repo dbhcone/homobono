@@ -4,37 +4,31 @@ import { Paragraphs } from 'src/app/utils/paragraphs';
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
-  styleUrls: ['./events.component.scss']
+  styleUrls: ['./events.component.scss'],
 })
 export class EventsComponent implements OnInit {
-
   // Example data of events
-  events: any[] = [
-    
-  ]
+  events: any[] = [];
   // MatPaginator Output
   pageEvent?: PageEvent;
 
   pageSize = 10;
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.buildEvents();
   }
 
-
-
   buildEvents() {
-    for(let i=0; i < 50; i++) {
+    for (let i = 0; i < 50; i++) {
       let event = {
         _id: i,
         title: `Title #${i}`,
-        date: "yyyy-MM-dd hh:mm:ss z",
-        description: Paragraphs[i%9],
-        img: `assets/public_events/event_${i%10}.jpg`
+        date: 'yyyy-MM-dd hh:mm:ss z',
+        description: Paragraphs[i % 9],
+        img: `assets/public_events/event_${i % 10}.jpg`,
       };
       this.events.push(event);
     }
   }
-
 }

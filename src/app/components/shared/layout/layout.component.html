@@ -16,7 +16,7 @@
     <mat-nav-list>
       <a mat-list-item routerLink="/events"><mat-icon>events</mat-icon> Events</a>
       <a mat-list-item routerLink="/gallery"><mat-icon>gallery</mat-icon> Gallery</a>
-      <a mat-list-item routerLink="/about-us">About Us</a>
+      <a mat-list-item routerLink="/about-us"><mat-icon>people</mat-icon>About Us</a>
 
       <!-- Logout link at the bottom -->
       <a mat-list-item routerLink="/logout" class="logout-link"
@@ -37,10 +37,13 @@
       </button>
       <span>HB Events</span>
 
-      <!--  -->
+      <!-- Align Right -->
 
       <span class="example-spacer"></span>
-      <button
+
+      <a mat-button routerLink="/signup"><mat-icon>user</mat-icon>Register</a>
+      <a mat-button routerLink="/login" title="login"><mat-icon>login</mat-icon>Login</a>
+      <!-- <button
         mat-icon-button
         class="example-icon favorite-icon"
         aria-label="Example icon-button with heart icon"
@@ -53,7 +56,8 @@
         aria-label="Example icon-button with share icon"
       >
         <mat-icon>share</mat-icon>
-      </button>
+      </button> -->
+      <!-- Align Right ends -->
     </mat-toolbar>
 
     <!-- Add Content Here (Router Outlet) -->
