@@ -47,6 +47,9 @@ import { UserLayoutComponent } from './components/shared/user-layout/user-layout
 import { LayoutComponent } from './components/shared/layout/layout.component';
 import { FourZeroFourComponent } from './components/shared/four-zero-four/four-zero-four.component';
 import { EventsComponent } from './components/events/events.component';
+import { CreateEventComponent } from './components/admin/create-event/create-event.component';
+import { UsersComponent } from './components/admin/users/users.component';
+import { ClientsComponent } from './components/admin/clients/clients.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +59,9 @@ import { EventsComponent } from './components/events/events.component';
     UserLayoutComponent,
     FourZeroFourComponent,
     EventsComponent,
+    CreateEventComponent,
+    UsersComponent,
+    ClientsComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
