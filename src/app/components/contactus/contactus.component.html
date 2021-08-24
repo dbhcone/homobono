@@ -1,1 +1,82 @@
-<p>contactus works!</p>
+<div class="container h-100 login-container">
+    <div class="row h-100 justify-content-center align-items-center">
+      <mat-card>
+        <mat-card-header class="center-content">
+          <mat-card-title class="text-center">HB Events | Login</mat-card-title>
+          <mat-card-subtitle class="text-center"
+            >Send us a message. You must be heard!</mat-card-subtitle
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="contactusForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                type="email"
+                formControlName="email"
+                placeholder="enter your email"
+                required
+              />
+              <mat-icon matSuffix>email</mat-icon>
+              <mat-error
+                *ngIf="email?.touched && email?.hasError('required')"
+              >
+                Provide email
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+                <mat-label>Full Name</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  formControlName="fullname"
+                  placeholder="enter your full name"
+                  required
+                />
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-error
+                  *ngIf="fullname?.touched && fullname?.hasError('required')"
+                >
+                  Provide full name
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Subject</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  formControlName="subject"
+                  placeholder="enter your subject"
+                  
+                />
+                
+              </mat-form-field>
+  
+              <mat-form-field appearance="outline">
+                <mat-label>Message</mat-label>
+                <textarea matInput formControlName="message" rows="7" ></textarea>
+              </mat-form-field>
+
+            <button
+              class="full-width"
+              type="submit"
+              mat-raised-button
+              color="accent"
+              [disabled]="!contactusForm.valid"
+            >
+              {{"submit" | uppercase}}
+            </button>
+          </form>
+        </mat-card-content>
+        <mat-card-footer>
+          <p>
+            
+          </p>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+  

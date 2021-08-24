@@ -2,8 +2,11 @@
   <div class="row h-100 justify-content-center align-items-center">
     <!-- <div class="col-md-12"> -->
     <mat-card>
-      <mat-card-header>
-        <mat-card-title> Sign up </mat-card-title>
+      <mat-card-header class="center-content">
+        <mat-card-title class="text-center">CREATE YOUR OWN ACCOUNT</mat-card-title>
+        <mat-card-subtitle class="text-center"
+          >Get your personal account here!</mat-card-subtitle
+        >
       </mat-card-header>
       <mat-card-content>
         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
@@ -181,7 +184,7 @@
       </mat-card-content>
 
       <mat-card-footer>
-        <p>
+        <p class="center-content">
           Already have an account?
           <a routerLink="/login"> Log in</a>
         </p>

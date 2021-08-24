@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
+import { ActivateaccountComponent } from './components/activateaccount/activateaccount.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { ContactusComponent } from './components/contactus/contactus.component';
 import { EventsComponent } from './components/events/events.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
       { path: 'contact', component: ContactComponent },
       { path: 'contact-us', component: ContactusComponent },
       { path: 'about-us', component: AboutComponent },
+      { path: 'activate-account', component: ActivateaccountComponent },
     ],
   },
   { path: '**', component: FourZeroFourComponent },
