@@ -1,31 +1,51 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { Auth } from '../api/endpoints';
+import { IAccount, ICredentials, IUser } from '../models/auth.interface';
+import { Client } from '../utils/client';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  headers: any;
-  constructor(private http: HttpClient) {
-    this.headers = {
-      Authorization: '',
-      'Content-Type': 'application/json',
-    };
+export class AuthService implements OnInit {
+  constructor(private client: Client) {}
+
+  ngOnInit(): void {}
+  login(credentials: ICredentials) {
+    return this.client.POST(`${Auth.login}`, { ...credentials });
   }
 
-  login(username: string, password: string) {
-    return this.http.post(
-      Auth.login,
-      { username, password },
-      { headers: this.headers }
-    );
+  signup(user: IUser, accountData: IAccount) {
+    return this.client.POST(`${Auth.signup}`, { user, account: accountData });
   }
 
-  signup(data: any) {
-    return this.http.post(Auth.signup, data, { headers: this.headers });
+  activateAccount(user: IUser, accountData: IAccount) {
+    return this.client.POST(`${Auth.activate}`, { user, account: accountData });
+  }
+  setToken(token: string) {
+    const promise = new Promise((resolve, reject) => {
+      localStorage.setItem('access-token', token);
+      resolve(token);
+      reject(Error('There was an error'))
+    });
+    return promise;
   }
 
-  activateAccount(data: any, headers?: any) {
-    return this.http.post(Auth.activate, data, {headers: {...this.headers, headers}});
+  getToken(): string | null {
+    return localStorage.getItem('access-token');
+  }
+
+  data(): IUser {
+    const jwtHelper = new JwtHelperService();
+    const token = this.getToken() || undefined;
+
+    const decodedToken = jwtHelper.decodeToken(token);
+    // const expirationDate = jwtHelper.getTokenExpirationDate(token);
+    // const isExpired = jwtHelper.isTokenExpired(token);
+    return decodedToken;
+  }
+
+  get isAdmin() {
+    return this.data().role === 'admin';
   }
 }

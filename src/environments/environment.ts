@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiurl: "http://hb-events-be.herokuapp.com/api"
+  apiroot: "http://localhost:9500/api"
 };
 
 /*
