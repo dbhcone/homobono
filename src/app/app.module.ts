@@ -50,6 +50,9 @@ import { EventsComponent } from './components/events/events.component';
 import { CreateEventComponent } from './components/admin/create-event/create-event.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import { ClientsComponent } from './components/admin/clients/clients.component';
+import { GalleryComponent } from './components/gallery/gallery.component';
+import { HeaderComponent } from './components/shared/header/header.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +65,10 @@ import { ClientsComponent } from './components/admin/clients/clients.component';
     CreateEventComponent,
     UsersComponent,
     ClientsComponent,
+    GalleryComponent,
+    HeaderComponent,
+    FooterComponent
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
