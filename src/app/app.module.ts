@@ -53,6 +53,9 @@ import { ClientsComponent } from './components/admin/clients/clients.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { HeaderComponent } from './components/shared/header/header.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
+import { AboutComponent } from './components/about/about.component';
+import { ContactusComponent } from './components/contactus/contactus.component';
+import { ContactComponent } from './components/contact/contact.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +70,10 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     ClientsComponent,
     GalleryComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AboutComponent,
+    ContactusComponent,
+    ContactComponent
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
