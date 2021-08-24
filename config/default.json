@@ -1,0 +1,5 @@
+{
+    "CONN_STR_LOC": "mongodb://localhost:27017/hbevents",
+    "CONN_STR": "mongodb+srv://hb-events-user:pP00RDsetoM36rn3@cluster-hbevents.7qw1t.mongodb.net/hb-events?retryWrites=true&w=majority",
+    "JWT_SECRET": "SinnersJe$u$TheQu1ckBrownFoxJumped0verTheL@zyDog$WillReceive"
+}
