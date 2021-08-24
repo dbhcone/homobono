@@ -53,7 +53,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '9500');
 app.set('port', port);
 
 /**
@@ -94,7 +94,7 @@ app.use((err: { message: any; status: any }, req: Request, res: Response, next: 
 // DB Connection
 try {
     mongoose.connect(
-        config.get('CONN_STR_LOC'),
+        config.get('CONN_STR'),
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
