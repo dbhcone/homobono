@@ -29,7 +29,7 @@ const accountValidation: ObjectSchema<{
   otherNumbers: string[];
   occupation: string;
 }> = Joi.object({
-  email: Joi.string().email(),
+  email: Joi.string().email().required(),
   surname: Joi.string().required().min(3),
   firstName: Joi.string().required().min(3),
   otherNames: Joi.string().allow(null),
