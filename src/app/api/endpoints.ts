@@ -4,4 +4,8 @@ const Auth = {
   activate: '/auth/activate-account',
 };
 
-export { Auth };
+const General = {
+  contactus: '/contactus'
+}
+
+export { Auth, General };

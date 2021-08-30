@@ -7,11 +7,10 @@ import { Observable } from 'rxjs';
     providedIn: 'root',
 })
 export class Client {
-    // httpe: HttpClient;
-
+    
     constructor(private http: HttpClient) {}
     headers = new HttpHeaders({
-        Authorization: `Bearer ${localStorage.getItem('user-token')}`,
+        Authorization: `Bearer ${localStorage.getItem('access-token')}`,
         'Content-Type': 'application/json',
     });
 

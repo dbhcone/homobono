@@ -31,13 +31,13 @@
                 <input
                   matInput
                   type="text"
-                  formControlName="fullname"
+                  formControlName="fullName"
                   placeholder="enter your full name"
                   required
                 />
                 <mat-icon matSuffix>person</mat-icon>
                 <mat-error
-                  *ngIf="fullname?.touched && fullname?.hasError('required')"
+                  *ngIf="fullName?.touched && fullName?.hasError('required')"
                 >
                   Provide full name
                 </mat-error>
@@ -50,14 +50,14 @@
                   type="text"
                   formControlName="subject"
                   placeholder="enter your subject"
-                  
                 />
                 
               </mat-form-field>
   
               <mat-form-field appearance="outline">
                 <mat-label>Message</mat-label>
-                <textarea matInput formControlName="message" rows="7" ></textarea>
+                <textarea matInput #message formControlName="message" rows="7" minlength="15" maxlength="256" ></textarea>
+                <mat-hint align="start">{{message.value.length}} / 256</mat-hint>
               </mat-form-field>
 
             <button
