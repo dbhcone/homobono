@@ -26,12 +26,12 @@ export class AuthService implements OnInit {
     const promise = new Promise((resolve, reject) => {
       localStorage.setItem('access-token', token);
       resolve(token);
-      reject(Error('There was an error'))
+      reject(Error('There was an error'));
     });
     return promise;
   }
 
-  getToken(): string | null {
+  getToken() {
     return localStorage.getItem('access-token');
   }
 
@@ -43,6 +43,22 @@ export class AuthService implements OnInit {
     // const expirationDate = jwtHelper.getTokenExpirationDate(token);
     // const isExpired = jwtHelper.isTokenExpired(token);
     return decodedToken;
+  }
+
+  session() {
+    const jwtHelper = new JwtHelperService();
+
+    const isTokenExpired = jwtHelper.isTokenExpired(
+      this.getToken() || undefined
+    );
+    const decodedToken = jwtHelper.decodeToken(this.getToken() || undefined);
+    const { username, email } = decodedToken;
+
+    return { username, isTokenExpired, email };
+  }
+
+  isTokeExpired(): boolean {
+    return this.session().isTokenExpired;
   }
 
   get isAdmin() {
