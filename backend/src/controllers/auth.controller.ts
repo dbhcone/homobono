@@ -125,16 +125,12 @@ const Signup = async (req: Request, res: Response) => {
 };
 
 const Login = async (req: Request, res: Response) => {
-  let { username, password, isAdmin } = req.body;
+  let { username, password } = req.body;
 
   try {
     const validation = await loginValidation.validateAsync(req.body);
-    console.log('body', req.body);
-
-    const role = isAdmin ? 'admin' : 'member';
+    const role = 'member'
     const user = await Users.findOne({ username, password, role });
-
-    // console.log('user', user);
 
     if (!user) {
       return res

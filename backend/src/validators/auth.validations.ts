@@ -14,7 +14,6 @@ const loginValidation: ObjectSchema<{
 }> = Joi.object({
   username: Joi.string().required(),
   password: Joi.string().required(),
-  isAdmin: Joi.boolean(),
 });
 
 const userValidation: ObjectSchema<{
