@@ -1,5 +1,13 @@
 import Joi, { ObjectSchema } from 'joi';
 
+const accountActivationValidation: ObjectSchema<{
+  token: string;
+  pin: number;
+}> = Joi.object({
+  token: Joi.string().required(),
+  pin: Joi.number(),
+});
+
 const loginValidation: ObjectSchema<{
   username: string;
   password: string;
@@ -11,16 +19,17 @@ const loginValidation: ObjectSchema<{
 
 const userValidation: ObjectSchema<{
   username: string;
+  email: string;
   password: string;
-  role: string;
+  role?: string;
 }> = Joi.object({
   username: Joi.string().required().min(8),
   password: Joi.string().required(),
-  role: Joi.string().required(),
+  email: Joi.string().email().required(),
+  role: Joi.string().default('subscriber'),
 });
 
 const accountValidation: ObjectSchema<{
-  email: string;
   surname: string;
   firstName: string;
   otherNames?: string;
@@ -29,7 +38,6 @@ const accountValidation: ObjectSchema<{
   otherNumbers: string[];
   occupation: string;
 }> = Joi.object({
-  email: Joi.string().email().required(),
   surname: Joi.string().required().min(3),
   firstName: Joi.string().required().min(3),
   otherNames: Joi.string().allow(null),
@@ -43,9 +51,8 @@ const accountValidation: ObjectSchema<{
   occupation: Joi.string().min(5).allow(null),
 });
 
-
 const accountUpdateValidation = Joi.object({
-  _id: Joi.string().required().label("Account Id"),
+  _id: Joi.string().required().label('Account Id'),
   updateData: Joi.object({
     email: Joi.string().email(),
     surname: Joi.string().min(3),
@@ -57,6 +64,12 @@ const accountUpdateValidation = Joi.object({
       'string.empty': `'primary mobile number' cannot be an empty field`,
     }),
     occupation: Joi.string().min(5).allow(null),
-  }).required()
+  }).required(),
 });
-export { loginValidation, userValidation, accountValidation, accountUpdateValidation };
+export {
+  loginValidation,
+  userValidation,
+  accountValidation,
+  accountUpdateValidation,
+  accountActivationValidation,
+};

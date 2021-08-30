@@ -1,7 +1,6 @@
 import { Document } from 'mongoose';
 
 export interface IAccount extends Document {
-  email: string;
   surname: string;
   firstName: string;
   otherNames?: string;

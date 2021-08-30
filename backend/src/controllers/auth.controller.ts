@@ -1,13 +1,11 @@
 import { Request, Response } from 'express';
-import { generateToken } from '../helpers/functions/auth.helpers';
+import { decodeToken, generateToken } from '../helpers/functions/auth.helpers';
 import { IAccount } from '../interfaces/account.interface';
 import { IUser } from '../interfaces/user.interface';
 
 import Account from '../models/account.model';
 import Users from '../models/user.model';
-
-import TempAccount from '../models/temp.account.model';
-import TempUsers from '../models/temp.user.model';
+import Activations from '../models/user.activations.model';
 
 // import validations
 import {
@@ -15,6 +13,7 @@ import {
   loginValidation,
   accountValidation,
   accountUpdateValidation,
+  accountActivationValidation,
 } from '../validators/auth.validations';
 import {
   accountActivationEmail,
@@ -51,7 +50,7 @@ const Signup = async (req: Request, res: Response) => {
       console.log('User validation completed', uValidation);
 
       // now create a new account for the person
-      let accountData = await new TempAccount(account).save();
+      let accountData = await new Account(account).save();
 
       if (accountData) {
         console.log('Account creation data', accountData);
@@ -60,7 +59,7 @@ const Signup = async (req: Request, res: Response) => {
         user.accountOwner = accountData._id;
 
         // now create a user
-        let userData = await new TempUsers(user).save();
+        let userData = await new Users(user).save();
 
         if (userData) {
           console.log('User creation data', userData);
@@ -71,20 +70,26 @@ const Signup = async (req: Request, res: Response) => {
            */
           //Generate token
           const temp_token = generateToken(
-            { email: account.email, username: user.username },
+            { email: user.email, username: user.username },
             '24h'
           );
 
           const pin = generatPin(6);
 
           const sendmail = await accountActivationEmail(
-            user.username,
+            account.firstName,
             temp_token,
-            account.email,
+            user.email,
             pin
           );
 
           if (sendmail.status == 'ok') {
+            // save the pin and email to activations to be later verified
+            const activation = new Activations({
+              email: user.email,
+              password: '',
+              pin,
+            });
             return res.status(201).json({
               message:
                 'Follow the link in your email to activate your account and complete the process.',
@@ -293,6 +298,73 @@ const MembersStats = async (req: Request, res: Response) => {
       .json({ message: error.message, status: 'error', code: 404 });
   }
 };
+
+const ActivateAccount = async (req: Request, res: Response) => {
+  const data = req.body;
+
+  try {
+    const validation = await accountActivationValidation.validateAsync(data);
+
+    const { token, pin } = data;
+    const decodedData = decodeToken(token);
+
+    if (decodedData) {
+      const email = decodedData?.data?.email;
+
+      if (email) {
+        const activation = await Activations.findOne({ email, pin });
+
+        if (activation) {
+          // found. now update the status in users and delete from activations
+          const user = await Users.findOneAndUpdate(
+            { email },
+            { $set: { status: 'active' } }
+          );
+
+          const del = await Activations.deleteMany({ email, pin });
+          console.log('activations deleted', del);
+          if (user) {
+            // activation successful
+            return res
+              .status(200)
+              .json({
+                message: 'Account activation successful!',
+                status: 'ok',
+                code: 200,
+              });
+          } else {
+            // unsuccessful activation
+            return res
+              .status(404)
+              .json({
+                message: 'Could not activate account!',
+                status: 'error',
+                code: 404,
+              });
+          }
+        } else {
+          // activation not found
+          return res
+            .status(404)
+            .json({
+              message: 'No pending activations. Request one now!',
+              status: 'error',
+              code: 404,
+            });
+        }
+      }
+    } else {
+      return res
+        .status(404)
+        .json({ message: 'error verifying token', status: 'error', code: 404 });
+    }
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ message: error.message, status: 'error', code: 404 });
+  }
+};
+
 export {
   Signup,
   Login,

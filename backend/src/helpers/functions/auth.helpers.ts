@@ -1,11 +1,43 @@
 import jwt from 'jsonwebtoken';
 import config from 'config';
-import { NextFunction, Request, Response } from 'express';
+// import { NextFunction, Request, Response } from 'express';
 
 const generateToken = (payload: any, duration: string | number) => {
-  return jwt.sign(payload, config.get('JWT_SECRET'), { expiresIn: duration });
+  return jwt.sign(
+    { iss: config.get('BE_URL'), ...payload },
+    config.get('JWT_SECRET'),
+    { expiresIn: duration }
+  );
 };
 
+const decodeToken = (token: string) : {data: any, status: string, code: number, message: string} | undefined => {
+  try {
+    jwt.verify(
+      token,
+      config.get('JWT_SECRET'),
+      (err: jwt.VerifyErrors | null) => {
+        if (err) {
+          return {
+            data: null,
+            status: 'error',
+            code: 403,
+            message: err.message,
+          };
+        } else {
+          // token verified. now decode
+          return {
+            data: jwt.decode(token),
+            status: 'ok',
+            code: 403,
+            message: 'token verified and decoded',
+          };
+        }
+      }
+    );
+  } catch (error) {
+    return { message: error.message, status: 'error', code: 404, data: null };
+  }
+};
 // const verifyToken = (req: Request, res: Response, next: NextFunction) => {
 //   try {
 //     //Get Authorization
@@ -41,4 +73,4 @@ const generateToken = (payload: any, duration: string | number) => {
 //     res.status(404).send({ error: error.message });
 //   }
 // };
-export { generateToken };
+export { generateToken, decodeToken };

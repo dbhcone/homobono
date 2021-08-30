@@ -3,7 +3,6 @@ import { IAccount } from '../interfaces/account.interface';
 
 
 const AccountSchema: Schema = new Schema ({
-    email: {type: String},
     surname: { type: String, required: true },
     firstName: { type: String, required: true },
     otherNames: { type: String, default: null },

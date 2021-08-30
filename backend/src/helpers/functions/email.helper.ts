@@ -2,37 +2,41 @@
 import nodemailer from 'nodemailer';
 import config from 'config';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
+
+const mailer = <string>config.get('MAILER_EMAIL') || '';
+const pwd = <string>config.get('MAILER_PWD') || '';
+const callbackurl = <string>config.get('CALLBACK_URL') || '';
 
 const transporter = nodemailer.createTransport({
   service: 'outlook',
   auth: {
-    user: config.get('MAILER_EMAIL'),
-    pass: config.get('MAILER_PWD'),
+    user: mailer,
+    pass: pwd,
   },
 });
 
 //Account Activation Notification
 const accountActivationEmail = async (
-  username: string,
+  firstname: string,
   temp_token: string,
   email: string,
   pin: string
 ) => {
   const mailOptions = {
-    from: `HB Events<${config.get('MAILER_EMAIL')}>`,
+    from: `HB Events<${mailer}>`,
     to: `${email}`,
     subject: 'Account Activation',
     html: `<body> 
                <header> <h1>HB EVENTS</h1> </header> 
                <br> 
                <section> 
-                    <p>Welcome <b>"${username}"</b>. Thank you for choosing <b>"HB EVENTS & USHERING SERVICES"</b>. Please click the link below to activate your account</p> 
+                    <p>Welcome <b>"${firstname}"</b>. Thank you for choosing <b>"HB EVENTS & USHERING SERVICES"</b>. <br /> You are just one step away to completing your account setup. <br />
+                    Please click the link below to activate your account</p> 
                     <br> 
-                    <a href="/activate-account/token=${temp_token}" target="_blank">ACTIVATE ACCOUNT</a>
+                    <a href="${callbackurl}/activate-account?token=${temp_token}" target="_blank">ACTIVATE ACCOUNT</a>
                     <br> 
-                    <p>You will be required to enter your PIN: <strong>${pin}</strong>
+                    <p>You will be required to enter your PIN: <strong>${pin}</strong></p>
                </section> 
             </body>`,
   };
@@ -47,42 +51,29 @@ const accountActivationEmail = async (
   } catch (error: any) {
     return { message: error.message, status: 'error', code: error.name };
   }
-  // const response = await transporter.sendMail(
-  //   mailOptions
-  // (error: Error | null, info: SMTPTransport.SentMessageInfo) => {
-  //   if (error) {
-  //     console.log(error);
-  //     return {message: error.message, status: "error", code: error.name}
-  //   } else {
-  //     console.log('Email sent: ' + info.response);
-  //     return {message: 'Email sent: ' + info.response, status: "ok", code: '200'}
-  //   }
-  // }
-  // );
 };
 
 //Password Reset Request Notification
 const passwordResetRequestEmail = async (
-  username: string,
+  firstname: string,
   temp_token: string,
   email: string,
   temp_pin: number
 ) => {
   const mailOptions = {
-    from: `HB Events<${config.get('MAILER_EMAIL')}>`,
+    from: `HB Events<${mailer}>`,
     to: `${email}`,
     subject: 'Password Reset',
     html: `<body> 
                  <header> <h1>HB EVENTS</h1> </header> 
                  <br> 
                  <section> 
-                      <p>Hello <b>"${username}"</b>. We received a password reset request from you. Kindly click on the button below to reset your password</p> 
+                      <p>Hello <b>"${firstname}"</b>. We received a password reset request from you. Kindly click on the button below to reset your password</p> 
                       <p>Ignore this message if you did not make any request.</p>
                       <br> 
                       <h2><p>PIN: <b style="color:Green;">${temp_pin}</b></p></h2> 
                       <br> 
-                      <a href="/resetpassword/token=${temp_token}" target="_blank"> RESET PASSWORD
-                      </a>
+                      <a href="${callbackurl}/resetpassword?token=${temp_token}" target="_blank"> RESET PASSWORD</a>
                       <br> 
                  </section> 
               </body>`,
@@ -105,8 +96,6 @@ const generatPin = (digit: number) => {
   return Math.random().toFixed(digit).split('.')[1];
 };
 
-const generateToken = (objects: any, timeframe: any) =>
-  jwt.sign(objects, 'secret', { expiresIn: timeframe });
 
 //Function to verify token
 function verifyToken(req: Request, res: Response, next: NextFunction) {
