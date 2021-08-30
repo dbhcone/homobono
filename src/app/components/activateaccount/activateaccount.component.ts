@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-activateaccount',
   templateUrl: './activateaccount.component.html',
@@ -8,10 +10,25 @@ import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 })
 export class ActivateaccountComponent implements OnInit {
   activateAccountForm;
-  constructor(private fb: FormBuilder) {
+  token: any;
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.activateAccountForm = fb.group({
-      pin: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      pin: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('[0-9]{6}'),
+        ]),
+      ],
     });
+    route.queryParams.subscribe((param) => {
+      this.token = param["token"];
+    })
   }
 
   ngOnInit(): void {}
@@ -21,6 +38,19 @@ export class ActivateaccountComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('We are submitting form');
+    this.auth.activateAccount(this.token || '', this.pin?.value).subscribe(
+      async (resp: any) => {
+        console.log('activation', resp);
+        Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then((res) => {
+          this.router.navigate(['login']);
+        });
+      },
+      (err) => {
+        Swal.fire({
+          title: `${err.error.status} - ${err.error.code}`,
+          text: `${err.error.message}`,
+        });
+      }
+    );
   }
 }

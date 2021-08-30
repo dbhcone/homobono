@@ -13,19 +13,19 @@
           <!-- Account Details -->
           <div formGroupName="account">
             <mat-form-field appearance="outline">
-              <mat-label>Last Name</mat-label>
+              <mat-label>Surname</mat-label>
               <input
                 matInput
                 type="text"
-                formControlName="lastName"
-                placeholder="provide your last name"
+                formControlName="surname"
+                placeholder="provide your surname"
                 required
               />
               <mat-icon matSuffix>person</mat-icon>
               <mat-error
-                *ngIf="lastName?.touched && lastName?.hasError('required')"
+                *ngIf="surname?.touched && surname?.hasError('required')"
               >
-                Please, provide the last name!
+                Please, provide the surname!
               </mat-error>
             </mat-form-field>
 
@@ -82,7 +82,7 @@
               <input
                 matInput
                 type="text"
-                formControlName="mobileNumber"
+                formControlName="primaryMobileNumber"
                 placeholder="Eg. 0541234567"
                 required
               />
@@ -90,7 +90,7 @@
               <mat-hint> Example: 0541234567 </mat-hint>
               <mat-error
                 *ngIf="
-                  mobileNumber?.touched && mobileNumber?.hasError('required')
+                  primaryMobileNumber?.touched && primaryMobileNumber?.hasError('required')
                 "
               >
                 Please, provide your mobile number

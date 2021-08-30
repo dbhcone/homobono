@@ -1,7 +1,7 @@
 const Auth = {
   login: '/auth/login',
   signup: '/auth/signup',
-  activate: '/auth/activateaccount',
+  activate: '/auth/activate-account',
 };
 
 export { Auth };

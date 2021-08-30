@@ -19,8 +19,8 @@ export class AuthService implements OnInit {
     return this.client.POST(`${Auth.signup}`, { user, account: accountData });
   }
 
-  activateAccount(user: IUser, accountData: IAccount) {
-    return this.client.POST(`${Auth.activate}`, { user, account: accountData });
+  activateAccount(token: string, pin: string) {
+    return this.client.POST(`${Auth.activate}`, { token, pin });
   }
   setToken(token: string) {
     const promise = new Promise((resolve, reject) => {

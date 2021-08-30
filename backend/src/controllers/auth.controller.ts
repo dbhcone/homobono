@@ -85,14 +85,13 @@ const Signup = async (req: Request, res: Response) => {
 
           if (sendmail.status == 'ok') {
             // save the pin and email to activations to be later verified
-            const activation = new Activations({
+            const activation = await new Activations({
               email: user.email,
-              password: '',
               pin,
-            });
+            }).save();
             return res.status(201).json({
               message:
-                'Follow the link in your email to activate your account and complete the process.',
+                'A link has been sent to your email. Kindly follow to activate your account!',
               code: 201,
               status: 'ok',
             });
@@ -300,63 +299,55 @@ const MembersStats = async (req: Request, res: Response) => {
 };
 
 const ActivateAccount = async (req: Request, res: Response) => {
-  const data = req.body;
-
   try {
-    const validation = await accountActivationValidation.validateAsync(data);
+    const validation = await accountActivationValidation.validateAsync(
+      req.body
+    );
 
-    const { token, pin } = data;
-    const decodedData = decodeToken(token);
+    const { token, pin } = req.body;
+    let decoded = decodeToken(token);
 
-    if (decodedData) {
-      const email = decodedData?.data?.email;
+    if (decoded.data) {
+      const dc = JSON.parse(JSON.stringify(decoded.data));
+      const activation = await Activations.findOne({ email: dc.email, pin });
 
-      if (email) {
-        const activation = await Activations.findOne({ email, pin });
+      if (activation) {
+        // found. now update the status in users and delete from activations
+        const user = await Users.findOneAndUpdate(
+          { email: dc.email },
+          { $set: { status: 'active' } }
+        );
 
-        if (activation) {
-          // found. now update the status in users and delete from activations
-          const user = await Users.findOneAndUpdate(
-            { email },
-            { $set: { status: 'active' } }
-          );
-
-          const del = await Activations.deleteMany({ email, pin });
-          console.log('activations deleted', del);
-          if (user) {
-            // activation successful
-            return res
-              .status(200)
-              .json({
-                message: 'Account activation successful!',
-                status: 'ok',
-                code: 200,
-              });
-          } else {
-            // unsuccessful activation
-            return res
-              .status(404)
-              .json({
-                message: 'Could not activate account!',
-                status: 'error',
-                code: 404,
-              });
-          }
+        const del = await Activations.deleteMany({ email: dc.email, pin });
+        console.log('activations deleted', del);
+        if (user) {
+          // activation successful
+          return res.status(200).json({
+            message: 'Account activation successful!',
+            status: 'ok',
+            code: 200,
+          });
         } else {
-          // activation not found
-          return res
-            .status(404)
-            .json({
-              message: 'No pending activations. Request one now!',
-              status: 'error',
-              code: 404,
-            });
+          // unsuccessful activation
+          return res.status(404).json({
+            message: 'Could not activate account!',
+            status: 'error',
+            code: 404,
+          });
         }
+      } else {
+        // activation not found
+        return res.status(404).json({
+          message:
+            'No pending activations with this user and pin. Request one now!',
+          status: 'error',
+          code: 404,
+        });
       }
     } else {
       return res
         .status(404)
-        .json({ message: 'error verifying token', status: 'error', code: 404 });
+        .json({ message: decoded.message, status: 'error', code: 404 });
     }
   } catch (error) {
     return res
@@ -373,4 +364,5 @@ export {
   DeleteUser,
   UpdateMember,
   MembersStats,
+  ActivateAccount,
 };

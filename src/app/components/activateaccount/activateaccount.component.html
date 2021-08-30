@@ -13,13 +13,20 @@
               <mat-label>PIN</mat-label>
               <input
                 matInput
-                type="number"
+                type="text"
                 formControlName="pin"
                 placeholder="enter your PIN here"
-                min="0"
+                minlength="6"
+                maxlength="6"
+                pattern="[0-9]{6}"
                 required
               />
               <mat-icon matSuffix>pin</mat-icon>
+              <mat-error
+                *ngIf="pin?.touched && pin?.hasError('pattern')"
+              >
+                Numbers only
+              </mat-error>
               <mat-error
                 *ngIf="pin?.touched && pin?.hasError('required')"
               >
