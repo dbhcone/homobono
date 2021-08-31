@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
 import { ActivateaccountComponent } from './components/activateaccount/activateaccount.component';
+import { AdminNavigationComponent } from './components/admin/admin-navigation.component';
+import { CreateEventComponent } from './components/admin/create-event/create-event.component';
+import { DashboardComponent as AdminDashboardComponent } from './components/admin/dashboard/dashboard.component';
 // import { ContactComponent } from './components/contact/contact.component';
 import { ContactusComponent } from './components/contactus/contactus.component';
 import { EventsComponent } from './components/events/events.component';
@@ -28,6 +31,14 @@ const routes: Routes = [
       { path: 'contact-us', component: ContactusComponent },
       { path: 'about-us', component: AboutComponent },
       { path: 'activate-account', component: ActivateaccountComponent },
+    ],
+  },
+  {
+    path: 'admin',
+    component: AdminNavigationComponent,
+    children: [
+      { path: 'dashboard', component: AdminDashboardComponent },
+      { path: 'create-event', component: CreateEventComponent },
     ],
   },
   { path: '**', component: FourZeroFourComponent },

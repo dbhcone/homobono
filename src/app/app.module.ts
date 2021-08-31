@@ -57,6 +57,8 @@ import { AboutComponent } from './components/about/about.component';
 import { ContactusComponent } from './components/contactus/contactus.component';
 // import { ContactComponent } from './components/contact/contact.component';
 import { ActivateaccountComponent } from './components/activateaccount/activateaccount.component';
+import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
+import { AdminNavigationComponent } from './components/admin/admin-navigation.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,7 +77,9 @@ import { ActivateaccountComponent } from './components/activateaccount/activatea
     AboutComponent,
     ContactusComponent,
     // ContactComponent,
-    ActivateaccountComponent
+    ActivateaccountComponent,
+    DashboardComponent,
+    AdminNavigationComponent
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
