@@ -15,7 +15,7 @@ export class SignupComponent implements OnInit {
       account: this.fb.group({
         surname: ['', [Validators.required]],
         firstName: ['', [Validators.required]],
-        otherNames: [''],
+        otherNames: [null],
         gender: ['', [Validators.required]],
         primaryMobileNumber: [
           '',
