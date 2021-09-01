@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
 import { ActivateaccountComponent } from './components/activateaccount/activateaccount.component';
 import { AdminNavigationComponent } from './components/admin/admin-navigation.component';
-import { CreateEventComponent } from './components/admin/create-event/create-event.component';
+import { CreateEventComponent } from './components/admin/events/create-event.component';
 import { DashboardComponent as AdminDashboardComponent } from './components/admin/dashboard/dashboard.component';
+import { SettingsComponent } from './components/admin/settings/settings.component';
 // import { ContactComponent } from './components/contact/contact.component';
 import { ContactusComponent } from './components/contactus/contactus.component';
 import { EventsComponent } from './components/events/events.component';
@@ -14,7 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { FourZeroFourComponent } from './components/shared/four-zero-four/four-zero-four.component';
 import { LayoutComponent } from './components/shared/layout/layout.component';
 import { SignupComponent } from './components/signup/signup.component';
-
+import { EventsComponent as AdminEventsComponent } from './components/admin/events/events.component';
 const routes: Routes = [
   {
     path: '',
@@ -38,7 +39,8 @@ const routes: Routes = [
     component: AdminNavigationComponent,
     children: [
       { path: 'dashboard', component: AdminDashboardComponent },
-      { path: 'create-event', component: CreateEventComponent },
+      { path: 'events', component: AdminEventsComponent },
+      { path: 'settings', component: SettingsComponent },
     ],
   },
   { path: '**', component: FourZeroFourComponent },

@@ -20,7 +20,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -39,6 +39,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 // Material End
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShoppingCartModule } from 'ng-shopping-cart';
@@ -47,7 +48,8 @@ import { UserLayoutComponent } from './components/shared/user-layout/user-layout
 import { LayoutComponent } from './components/shared/layout/layout.component';
 import { FourZeroFourComponent } from './components/shared/four-zero-four/four-zero-four.component';
 import { EventsComponent } from './components/events/events.component';
-import { CreateEventComponent } from './components/admin/create-event/create-event.component';
+import { EventsComponent as AdminEventsComponent } from './components/admin/events/events.component';
+import { CreateEventComponent } from './components/admin/events/create-event.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import { ClientsComponent } from './components/admin/clients/clients.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
@@ -59,6 +61,7 @@ import { ContactusComponent } from './components/contactus/contactus.component';
 import { ActivateaccountComponent } from './components/activateaccount/activateaccount.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { AdminNavigationComponent } from './components/admin/admin-navigation.component';
+import { SettingsComponent } from './components/admin/settings/settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,8 +82,9 @@ import { AdminNavigationComponent } from './components/admin/admin-navigation.co
     // ContactComponent,
     ActivateaccountComponent,
     DashboardComponent,
-    AdminNavigationComponent
-
+    AdminNavigationComponent,
+    SettingsComponent,
+    AdminEventsComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -121,6 +125,8 @@ import { AdminNavigationComponent } from './components/admin/admin-navigation.co
     MatRadioModule,
     MatDatepickerModule,
     MatTooltipModule,
+    MatDialogModule,
+    MatNativeDateModule,
     // Material End
     FormsModule,
     ReactiveFormsModule,

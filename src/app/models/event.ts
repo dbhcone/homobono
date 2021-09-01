@@ -5,11 +5,8 @@ export interface Event {
   time: string;
   speaker: string;
   venue: string;
-  image?: string;
-  details?: {
-    theme: string;
-    special_guest: string;
-  };
+  flyer?: string;
+  extraDetails?: {};
   description: string;
-  avatar?: string;
+  photos?: string[];
 }
