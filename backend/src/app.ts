@@ -31,7 +31,7 @@ app.use('/api/user', userRouter);
 app.use('/api/events', eventRouter);
 
 // serve only the static files from the dist directory
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../public/fe')));
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/fe/'));
