@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import { createEventValidation } from '../validators/event.validations';
 import Events from '../models/event.model';
 import config from 'config';
+import { mongoidValidation } from '../validators/shared.validations';
+import { deletePhoto } from '../helpers/functions/fs.helpers';
 
 const CreateEvent = async (req: Request, res: Response, next: NextFunction) => {
   const data = req.body;
@@ -67,6 +69,25 @@ const FetchAllEvents = async (req: Request, res: Response) => {
   }
 };
 
+const DeleteEvent = async (req: Request, res: Response) => {
+  try {
+    const validation = await mongoidValidation.validateAsync(req.body);
+
+    // first delete the document from the collection
+    const deleteEvent = await Events.findByIdAndDelete(req.body._id);
+
+    // then now unlink the corresponding file
+    if (deleteEvent) {
+      deletePhoto(deleteEvent.flyer?.filename)
+    }
+
+    return res.sendStatus(200);
+
+  } catch (error) {
+    return res.status(404).json({message: error.message, code: 404, status: 'error'})
+  }
+}
+
 const UpdateEvent = async () => {};
 
-export { CreateEvent, UpdateEvent, FetchAllEvents };
+export { CreateEvent, UpdateEvent, FetchAllEvents, DeleteEvent };
