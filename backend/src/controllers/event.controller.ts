@@ -58,7 +58,7 @@ const CreateEvent = async (req: Request, res: Response, next: NextFunction) => {
 const FetchAllEvents = async (req: Request, res: Response) => {
   try {
     const events = await Events.find().sort({ title: 'asc' });
-    const uploadPath = `${config.get('APPROOT')}/uploads`;
+    const uploadPath = `${config.get('APPROOT')}/public/uploads`;
     return res.status(200).json({message: 'Events fetched successfully', status: 'ok', code: 200, data: {count: events.length, events, uploadPath}})
   } catch (error) {
     return res
