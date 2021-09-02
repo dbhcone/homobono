@@ -1,24 +1,48 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { createEventValidation } from '../validators/event.validations';
 import Events from '../models/event.model';
+import config from 'config';
 
-const CreateEvent = async (req: Request, res: Response) => {
+const CreateEvent = async (req: Request, res: Response, next: NextFunction) => {
   const data = req.body;
+  console.log('Data received at backend', data);
+
+  if (!req.body.eventData) {
+    return res
+      .status(404)
+      .json({ message: 'provide event data', status: 'error', code: 404 });
+  }
 
   try {
-    const validation = await createEventValidation.validateAsync(data);
+    let { eventData } = data;
+    eventData = JSON.parse(eventData);
 
-    const event = await new Events(data).save();
+    const validation = await createEventValidation.validateAsync(eventData);
+
+    if (!req.file) {
+      console.log('no file at the moment');
+      return res.status(400).json({
+        message: 'Select a file to be uploaded as a flyer',
+        status: 'error',
+        code: 400,
+      });
+    }
+
+    const { mimetype, filename, size } = req.file;
+    console.log('we have a file excl. buffer', mimetype, filename, size);
+
+    const event = await new Events({
+      ...eventData,
+      flyer: { mimetype, filename, size },
+    }).save();
 
     if (event) {
-      return res
-        .status(201)
-        .json({
-          message: 'Event created successfully',
-          code: 201,
-          status: 'ok',
-          data: event,
-        });
+      return res.status(201).json({
+        message: 'Event created successfully',
+        code: 201,
+        status: 'ok',
+        data: event,
+      });
     } else {
       return res
         .status(404)
@@ -31,6 +55,18 @@ const CreateEvent = async (req: Request, res: Response) => {
   }
 };
 
+const FetchAllEvents = async (req: Request, res: Response) => {
+  try {
+    const events = await Events.find().sort({ title: 'asc' });
+    const uploadPath = `${config.get('APPROOT')}/uploads`;
+    return res.status(200).json({message: 'Events fetched successfully', status: 'ok', code: 200, data: {count: events.length, events, uploadPath}})
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ message: error.message, code: 404, status: 'error' });
+  }
+};
+
 const UpdateEvent = async () => {};
 
-export { CreateEvent, UpdateEvent };
+export { CreateEvent, UpdateEvent, FetchAllEvents };

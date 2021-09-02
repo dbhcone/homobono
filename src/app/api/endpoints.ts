@@ -6,6 +6,12 @@ const Auth = {
 
 const General = {
   contactus: '/contactus'
+};
+
+const Events = {
+  create: '/events/create-event',
+  all: '/events',
+  deleteOne: '/events/delete'
 }
 
-export { Auth, General };
+export { Auth, General, Events };

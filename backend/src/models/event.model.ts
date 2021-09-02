@@ -7,10 +7,10 @@ const EventSchema: Schema = new Schema({
   time: { type: String, required: true },
   speaker: { type: String, required: true },
   venue: { type: String, required: true },
-  flyer: { type: String, required: true },
+  flyer: { type: Object, required: true },
   description: { type: String, required: true },
-  extraDetails: { type: Object },
-  photos: [{type: String}]
+  extraDetails: { type: Object, default: null },
+  photos: [{type: String, default: null}]
 }, {timestamps: true});
 
 export default mongoose.model<IEvent>('Events', EventSchema);

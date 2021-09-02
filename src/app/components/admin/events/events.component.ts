@@ -1,26 +1,12 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateEventComponent } from './create-event.component';
 import { Subscription } from 'rxjs';
-
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
-}
-
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-  'blueberry', 'lychee', 'kiwi', 'mango', 'peach', 'lime', 'pomegranate', 'pineapple'
-];
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
+import Swal from 'sweetalert2';
+import { EventService } from 'src/app/services/event.service';
 
 /**
  * @title Data table with sorting, pagination, and filtering.
@@ -30,27 +16,52 @@ const NAMES: string[] = [
   styleUrls: ['./events.component.scss'],
   templateUrl: './events.component.html',
 })
-export class EventsComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-  dataSource: MatTableDataSource<UserData>;
-  subscription!: Subscription;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+export class EventsComponent implements AfterViewInit, OnDestroy {
+  uploadPath = null;
+  displayedColumns: string[] = [
+    'flyer',
+    'title',
+    'date',
+    'time',
+    'speaker',
+    'venue',
+    'description',
+    'edit',
+    'delete',
+  ];
+  dataSource: MatTableDataSource<any>;
+  subscription?: Subscription;
 
-  constructor(private dialog: MatDialog) {
-    // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+  @ViewChild(MatSort)
+  sort!: MatSort;
 
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+  constructor(private dialog: MatDialog, private eventService: EventService) {
+    this.dataSource = new MatTableDataSource();
+    this.fetchEvents();
   }
 
-  ngAfterViewInit() {
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+  ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
+  fetchEvents(): void {
+    this.eventService.getAllEvents().subscribe((res: any) => {
+      console.log(res);
+
+      this.dataSource.data = res.data.events;
+      this.uploadPath = res.data.uploadPath
+      // this.dataSource.data = res.data.map((member: any) => {
+      //   return { username: member.username, ...member.accountOwner };
+      // });
+    });
+  }
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -59,27 +70,67 @@ export class EventsComponent implements AfterViewInit {
     }
   }
 
-  triggerModal(): void {
+  openCreateEventDialog(): void {
     const dialogRef = this.dialog.open(CreateEventComponent, {
-        width: '500px',
-        disableClose: true,
+      width: '500px',
+      disableClose: true,
     });
     this.subscription = dialogRef.afterClosed().subscribe((result) => {
-        console.log('dialog closed', result);
-        
+      console.log('dialog closed', result);
+      this.fetchEvents();
     });
-}
-}
+  }
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
+  openEditEventDialog(data: any): void {
+    data.heading = "EDIT"
+    const dialogRef = this.dialog.open(CreateEventComponent, {
+      width: '500px',
+      disableClose: true,
+      data,
+    });
+    this.subscription = dialogRef.afterClosed().subscribe((result) => {
+      console.log('dialog closed', result);
+      this.fetchEvents();
+    });
+  }
 
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))]
-  };
+  deleteEvent(_id: string) {
+    this.eventService.deleteEvent(_id).subscribe(
+      async (resp: any) => {
+        console.log('Delete', resp);
+        Swal.fire({ text: resp.message, icon: 'success' }).then((result) => {
+          this.fetchEvents();
+        });
+      },
+      (err) => {
+        Swal.fire({
+          title: `${err.error.status} - ${err.error.code}`,
+          text: `${err.error.message}`,
+        });
+      }
+    );
+  }
+
+  triggerDeleteEvent(_id: string) {
+    Swal.fire({
+      title: 'Delete Event - Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+        this.deleteEvent(_id);
+      } else {
+        Swal.fire('Cancelled', 'Your data is safe :)', 'error');
+      }
+    });
+  }
+
+  displayFlyer (flyerFileName: string) {
+    return `${this.uploadPath}/${flyerFileName}`
+  }
 }

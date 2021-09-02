@@ -8,18 +8,17 @@ const createEventValidation: ObjectSchema<{
   venue: string;
   flyer: string;
   description: string;
-  extraDetails: object;
-  photos: string[];
+  extraDetails?: object;
+  photos?: string[];
 }> = Joi.object({
   title: Joi.string().required(),
   date: Joi.date(),
   time: Joi.string().required(),
   speaker: Joi.string().required(),
   venue: Joi.string().required(),
-  flyer: Joi.string().required(),
   description: Joi.string().required(),
-  extraDetails: Joi.object(),
-  photos: Joi.array(),
+  extraDetails: Joi.object().allow(null),
+  photos: Joi.array().allow(null),
 });
 
 export { createEventValidation };

@@ -6,7 +6,7 @@ export interface IEvent extends Document {
     time: string;
     speaker: string;
     venue: string;
-    flyer?: string;
+    flyer?: {};
     extraDetails?: {};
     description: string;
     photos?: string[];

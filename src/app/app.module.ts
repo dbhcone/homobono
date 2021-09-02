@@ -41,6 +41,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 // Material End
+import { MatTableExporterModule } from 'mat-table-exporter';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShoppingCartModule } from 'ng-shopping-cart';
 import { SignupComponent } from './components/signup/signup.component';
@@ -128,6 +129,7 @@ import { SettingsComponent } from './components/admin/settings/settings.componen
     MatDialogModule,
     MatNativeDateModule,
     // Material End
+    MatTableExporterModule,
     FormsModule,
     ReactiveFormsModule,
     ShoppingCartModule.forRoot({

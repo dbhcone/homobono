@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EventService } from 'src/app/services/event.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-event',
@@ -14,7 +17,14 @@ export class CreateEventComponent implements OnInit {
   photoFiles: File[] | undefined;
   photoSrcs: string[] | undefined;
 
-  constructor(private fb: FormBuilder) {
+  HEADING = 'CREATE A NEW EVENT';
+
+  constructor(
+    private fb: FormBuilder,
+    private eventService: EventService,
+    public dialogRef: MatDialogRef<CreateEventComponent>,
+    @Inject(MAT_DIALOG_DATA) public data?: any
+  ) {
     this.createEventForm = fb.group({
       title: [
         '',
@@ -36,6 +46,9 @@ export class CreateEventComponent implements OnInit {
       ],
       photos: [null],
     });
+     if (this.data) {
+       this.HEADING = 'EDIT EVENT DETAILS';
+     }
   }
 
   ngOnInit(): void {}
@@ -77,14 +90,41 @@ export class CreateEventComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('We are about submitting the form', this.createEventForm.value);
+    const formData = new FormData();
+    const formValue = this.createEventForm.value;
+    console.log('We are about submitting the form', formValue);
+    const { flyer, ...eventdata } = formValue;
+    formData.append('flyer', flyer);
+    formData.append('eventData', JSON.stringify({ ...eventdata }));
+
+    console.log('flyer', flyer);
+    console.log('eventdata', eventdata);
+
+    console.log('Form data being sent is ', formData.getAll('eventData'));
+    this.eventService.createEvent(formData).subscribe(
+      async (resp: any) => {
+        Swal.fire({
+          icon: 'success',
+          titleText: resp.message,
+        }).then(() => {
+          this.closeDialog();
+        });
+      },
+      (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          titleText: err.error.message,
+        });
+      }
+    );
   }
 
   onFileSelected(event: any) {
     this.flyerFile = <File>event.target.files[0];
     this.previewImage();
     this.createEventForm.patchValue({
-      photo: this.flyerFile,
+      flyer: this.flyerFile,
     });
     this.createEventForm.get('flyer')?.updateValueAndValidity();
   }
@@ -116,5 +156,9 @@ export class CreateEventComponent implements OnInit {
         this.flyerSrc = reader.result as string;
       };
     }
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 }

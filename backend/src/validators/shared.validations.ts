@@ -21,9 +21,9 @@ const storage = multer .diskStorage({
 });
 
 //Image Validation Schema
-const profilePhoto = multer({
+const photograph = multer({
     limits: {
-        fileSize: 5242880, // 5MB
+        fileSize: 3145728 , // 3MB
     },
     fileFilter(req, file, callback) {
         if (!file.originalname.match(/\.(png|PNG|JPG|jpg|JPEG|jpeg)/))
@@ -39,4 +39,4 @@ const profilePhoto = multer({
 //     storage: storage
 // });
 
-export { mongoidValidation, profilePhoto };
+export { mongoidValidation, photograph };
