@@ -32,10 +32,11 @@ app.use('/api/events', eventRouter);
 
 // serve only the static files from the dist directory
 app.use(express.static(path.join(__dirname, '../public/fe')));
+app.use('/public/uploads', express.static(path.join(__dirname, '../public/uploads')))
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/fe/'));
-});
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../public/fe/index.html'));
+// });
 
 //#region  ======= CREATE SERVER AND START ===============
 var http = require('http');
