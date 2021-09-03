@@ -4,14 +4,15 @@
     <div class="col-md-4" *ngFor="let event of events">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>{{ event._id }}</mat-card-title>
-          <mat-card-subtitle>{{ event.title }}</mat-card-subtitle>
+          <mat-card-title>{{ event.title }}</mat-card-title>
+          <mat-card-subtitle><b>SPEAKER: </b>{{ event.speaker }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <img src="{{ event.img }}" mat-card-image />
-          <p>{{ event.description }}</p>
+          <img src="{{ displayFlyer(event.flyer.filename) }}" class="img-fluid flyer" />
+          <section class="event-description">
+            <p>{{ event.description }}</p>
+          </section>
         </mat-card-content>
-
         <mat-card-actions>
           <button mat-raised-button color="accent">Book</button>
           <button mat-raised-button color="primary">View details</button>

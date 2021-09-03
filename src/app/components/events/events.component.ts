@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { EventService } from 'src/app/services/event.service';
 import { Paragraphs } from 'src/app/utils/paragraphs';
 @Component({
   selector: 'app-events',
@@ -7,16 +8,28 @@ import { Paragraphs } from 'src/app/utils/paragraphs';
   styleUrls: ['./events.component.scss'],
 })
 export class EventsComponent implements OnInit {
+  uploadPath = null;
   // Example data of events
   events: any[] = [];
   // MatPaginator Output
   pageEvent?: PageEvent;
 
   pageSize = 10;
-  constructor() {}
+  constructor(private eventService: EventService) {
+    this.fetchAllEvents();
+  }
 
-  ngOnInit(): void {
-    this.buildEvents();
+  ngOnInit(): void {}
+
+  fetchAllEvents() {
+    this.eventService.getAllEvents().subscribe(async (resp: any) => {
+      this.events = resp.data.events;
+      this.uploadPath = resp.data.uploadPath;
+    });
+  }
+
+  displayFlyer(flyerFileName: string) {
+    return `${this.uploadPath}/${flyerFileName}`;
   }
 
   buildEvents() {

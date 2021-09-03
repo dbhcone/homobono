@@ -16,6 +16,8 @@ import { FourZeroFourComponent } from './components/shared/four-zero-four/four-z
 import { LayoutComponent } from './components/shared/layout/layout.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { EventsComponent as AdminEventsComponent } from './components/admin/events/events.component';
+import { UsersComponent } from './components/admin/users/users.component';
+import { ClientsComponent } from './components/admin/clients/clients.component';
 const routes: Routes = [
   {
     path: '',
@@ -38,9 +40,12 @@ const routes: Routes = [
     path: 'admin',
     component: AdminNavigationComponent,
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'events', component: AdminEventsComponent },
       { path: 'settings', component: SettingsComponent },
+      { path: 'users', component: UsersComponent },
+      { path: 'clients', component: ClientsComponent },
     ],
   },
   { path: '**', component: FourZeroFourComponent },
