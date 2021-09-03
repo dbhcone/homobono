@@ -11,9 +11,11 @@ const accountActivationValidation: ObjectSchema<{
 const loginValidation: ObjectSchema<{
   username: string;
   password: string;
+  isAdmin?: boolean
 }> = Joi.object({
   username: Joi.string().required(),
   password: Joi.string().required(),
+  isAdmin: Joi.bool()
 });
 
 const userValidation: ObjectSchema<{

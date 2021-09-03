@@ -44,7 +44,23 @@
             </mat-error>
           </mat-form-field>
 
-          <!-- <mat-form-field> -->
+     
+            <!-- isAdmin Checkbox -->
+            <div class="checkbox-forgotpassword">
+              <section>
+                <input
+                  type="checkbox"
+                  name="isAdmin"
+                  id="isAdmin"
+                  formControlName="isAdmin"
+                />
+                <label for="isAdmin">Is Admin?</label>
+              </section>
+              <a routerLink="#">Forgot password</a>
+            </div>
+
+
+
           <button
             class="btn btn-block"
             type="submit"
@@ -54,13 +70,12 @@
           >
             {{"Login" | uppercase}}
           </button>
-          <!-- </mat-form-field> -->
         </form>
       </mat-card-content>
       <mat-card-footer>
         <p>
           Don't have an account?
-          <a routerLink="/signup"> Sign up here</a>
+          <a routerLink="/signup"> Register here</a>
         </p>
       </mat-card-footer>
     </mat-card>

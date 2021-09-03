@@ -125,11 +125,11 @@ const Signup = async (req: Request, res: Response) => {
 };
 
 const Login = async (req: Request, res: Response) => {
-  let { username, password } = req.body;
+  let { username, password, isAdmin } = req.body;
 
   try {
     const validation = await loginValidation.validateAsync(req.body);
-    const role = 'member'
+    const role = isAdmin ? 'admin' : 'member';
     const user = await Users.findOne({ username, password, role });
 
     if (!user) {
@@ -138,9 +138,14 @@ const Login = async (req: Request, res: Response) => {
         .json({ code: 403, message: 'Invalid credentials', status: 'error' });
     }
 
+    // check if user has activated account already
+    if(user.status != 'active') {
+      return res.status(403).json({code: 403, message: 'Account has not been activated. Request one now!', status: 'error'})
+    }
+
     let token = generateToken(
-      { username: user.username, role: user.role, id: user._id },
-      '24h'
+      { username: user.username, role: user.role, id: user._id, email: user.email },
+      '6h'
     );
 
     return res

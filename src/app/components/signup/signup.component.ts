@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-signup',
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
-  constructor(private fb: FormBuilder, private auth: AuthService) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.signupForm = this.fb.group({
       account: this.fb.group({
         surname: ['', [Validators.required]],
@@ -75,7 +76,12 @@ export class SignupComponent implements OnInit {
     this.auth.signup(user, account).subscribe(
       async (resp: any) => {
         console.log('signup', resp);
-        Swal.fire({ text: resp.message, icon: 'success', timer: 5000 });
+        Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then(
+          (result: SweetAlertResult<any>) => {
+            //
+            this.router.navigate(['login']);
+          }
+        );
       },
       (err) => {
         Swal.fire({

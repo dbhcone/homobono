@@ -32,14 +32,22 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    const { username, password } = this.loginForm.value;
-    console.log('You are about to submit the form', username, password);
-    this.auth.login({ username, password }).subscribe(
+    const { username, password, isAdmin } = this.loginForm.value;
+    console.log(
+      'You are about to submit the form',
+      username,
+      password,
+      isAdmin
+    );
+    this.auth.login({ username, password, isAdmin }).subscribe(
       async (resp: any) => {
         console.log('login', resp);
         Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then(
           (res) => {
-            this.router.navigate(['events']);
+            const usersession = this.auth.session();
+            this.router.navigate(
+              usersession.role === 'admin' ? ['admin/events'] : ['events']
+            );
           }
         );
       },

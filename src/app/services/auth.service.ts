@@ -52,9 +52,9 @@ export class AuthService implements OnInit {
       this.getToken() || undefined
     );
     const decodedToken = jwtHelper.decodeToken(this.getToken() || undefined);
-    const { username, email } = decodedToken;
+    const { username, email, role } = decodedToken;
 
-    return { username, isTokenExpired, email };
+    return { username, isTokenExpired, email, role };
   }
 
   isTokeExpired(): boolean {
