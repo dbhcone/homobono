@@ -24,10 +24,11 @@ const routes: Routes = [
     // pathMatch: 'full',
     component: LayoutComponent,
     children: [
+      {path: '', pathMatch: 'full', redirectTo: 'home'},
+      { path: 'home', component: HomeComponent },
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent },
       { path: 'logout', redirectTo: 'login' },
-      { path: 'home', component: HomeComponent },
       { path: 'events', component: EventsComponent },
       { path: 'gallery', component: GalleryComponent },
       // { path: 'contact', component: ContactComponent },
