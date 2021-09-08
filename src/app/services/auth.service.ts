@@ -52,6 +52,7 @@ export class AuthService implements OnInit {
       this.getToken() || undefined
     );
     const decodedToken = jwtHelper.decodeToken(this.getToken() || undefined);
+    console.log('decoded', decodedToken)
     const { username, email, role } = decodedToken;
 
     return { username, isTokenExpired, email, role };

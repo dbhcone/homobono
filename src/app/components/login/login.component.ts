@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
         console.log('login', resp);
         Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then(
           (res) => {
+            this.auth.setToken(resp.token);
             const usersession = this.auth.session();
             this.router.navigate(
               usersession.role === 'admin' ? ['admin/events'] : ['events']
