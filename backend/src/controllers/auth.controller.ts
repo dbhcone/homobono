@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { decodeToken, generateToken } from '../helpers/functions/auth.helpers';
 import { IAccount } from '../interfaces/account.interface';
 import { IUser } from '../interfaces/user.interface';
+import md5 from 'md5';
 
 import Account from '../models/account.model';
 import Users from '../models/user.model';
@@ -32,7 +33,9 @@ const Signup = async (req: Request, res: Response) => {
     return res.status(404).json({ error: 'user object required in body' });
   }
 
-  user = <IUser>data.user;
+  const userdata = {...data.user, password: md5(data.user.password)};
+
+  user = <IUser>userdata;
   account = <IAccount>data.account;
 
   /**
@@ -130,6 +133,9 @@ const Login = async (req: Request, res: Response) => {
   try {
     const validation = await loginValidation.validateAsync(req.body);
     const role = isAdmin ? 'admin' : 'member';
+
+    // hash password and find
+    password = md5(password)
     const user = await Users.findOne({ username, password, role });
 
     if (!user) {
