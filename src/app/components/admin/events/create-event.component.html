@@ -46,7 +46,7 @@
     </mat-form-field>
 
     <!-- Speaker -->
-    <mat-form-field appearance="outline">
+    <!-- <mat-form-field appearance="outline">
       <mat-label>Speaker</mat-label>
       <input
         matInput
@@ -58,7 +58,7 @@
       <mat-error *ngIf="speaker?.touched && speaker?.hasError('required')">
         Provide speaker
       </mat-error>
-    </mat-form-field>
+    </mat-form-field> -->
 
     <!-- Venue -->
     <mat-form-field appearance="outline">
@@ -76,8 +76,9 @@
     </mat-form-field>
 
     <!-- Flyer -->
-    <label>Flyer</label>
-    <input
+    <!-- <label>Upload a fly</label> -->
+    <div>
+      <input
       type="file"
       style="display: none"
       (change)="onFileSelected($event)"
@@ -86,11 +87,12 @@
     <img
       *ngIf="flyerSrc"
       [src]="flyerSrc"
-      style="height: 350px; width: 350px"
+      style="height: 300px; width: 300px"
     />
-    <button type="button" class="upload" (click)="fileInput.click()">
-      Browse for a flyer
+    <button mat-raised-button type="button" (click)="fileInput.click()">
+      <mat-icon color="primary">add_a_photo</mat-icon> Upload flyer
     </button>
+    </div>
 
     <!-- Description -->
     <mat-form-field appearance="outline">

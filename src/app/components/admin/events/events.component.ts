@@ -23,11 +23,12 @@ export class EventsComponent implements AfterViewInit, OnDestroy {
     'title',
     'date',
     'time',
-    'speaker',
+    // 'speaker',
     'venue',
     'description',
     'edit',
     'delete',
+    'settings',
   ];
   dataSource: MatTableDataSource<any>;
   subscription?: Subscription;
@@ -55,7 +56,7 @@ export class EventsComponent implements AfterViewInit, OnDestroy {
       console.log(res);
 
       this.dataSource.data = res.data.events;
-      this.uploadPath = res.data.uploadPath
+      this.uploadPath = res.data.uploadPath;
       // this.dataSource.data = res.data.map((member: any) => {
       //   return { username: member.username, ...member.accountOwner };
       // });
@@ -82,7 +83,7 @@ export class EventsComponent implements AfterViewInit, OnDestroy {
   }
 
   openEditEventDialog(data: any): void {
-    data.heading = "EDIT"
+    data.heading = 'EDIT';
     const dialogRef = this.dialog.open(CreateEventComponent, {
       width: '500px',
       disableClose: true,
@@ -130,7 +131,7 @@ export class EventsComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  displayFlyer (flyerFileName: string) {
-    return `${this.uploadPath}/${flyerFileName}`
+  displayFlyer(flyerFileName: string) {
+    return `${this.uploadPath}/${flyerFileName}`;
   }
 }

@@ -12,7 +12,7 @@
     #searchEventInput
   />
   <mat-hint
-    >Type anything (eg. speaker, title, venue) about the event to search
+    >Type anything (eg, title, venue) about the event to search
     for</mat-hint
   >
 </mat-form-field>
@@ -57,10 +57,10 @@
     </ng-container>
 
     <!-- Speaker Column -->
-    <ng-container matColumnDef="speaker">
+    <!-- <ng-container matColumnDef="speaker">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Speaker</th>
       <td mat-cell *matCellDef="let row">{{ row.speaker }}</td>
-    </ng-container>
+    </ng-container> -->
 
     <!-- Venue Column -->
     <ng-container matColumnDef="venue">
@@ -88,6 +88,14 @@
       <td mat-cell *matCellDef="let row">
         <button mat-flat-button (click)="triggerDeleteEvent(row._id)">
           <mat-icon color="warn">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="settings">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Settings</th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-flat-button (click)="triggerDeleteEvent(row._id)">
+          <mat-icon color="accent">settings</mat-icon>
         </button>
       </td>
     </ng-container>
