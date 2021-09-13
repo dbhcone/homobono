@@ -36,7 +36,7 @@ export class CreateEventComponent implements OnInit {
       ],
       date: ['', Validators.required],
       time: ['', Validators.required],
-      speaker: [null, Validators.required],
+      // speaker: [null, Validators.required],
       venue: [null, Validators.required],
       flyer: [null, Validators.required],
       extraDetails: [null],
@@ -65,9 +65,9 @@ export class CreateEventComponent implements OnInit {
     return this.createEventForm.get('time');
   }
 
-  public get speaker(): AbstractControl | null {
-    return this.createEventForm.get('speaker');
-  }
+  // public get speaker(): AbstractControl | null {
+  //   return this.createEventForm.get('speaker');
+  // }
 
   public get venue(): AbstractControl | null {
     return this.createEventForm.get('venue');

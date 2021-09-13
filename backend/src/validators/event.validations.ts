@@ -4,7 +4,7 @@ const createEventValidation: ObjectSchema<{
   title: string;
   date: Date;
   time: string;
-  speaker: string;
+  speaker?: string;
   venue: string;
   flyer: string;
   description: string;
@@ -14,7 +14,7 @@ const createEventValidation: ObjectSchema<{
   title: Joi.string().required(),
   date: Joi.date(),
   time: Joi.string().required(),
-  speaker: Joi.string().required(),
+  speaker: Joi.string().required().optional().allow(null),
   venue: Joi.string().required(),
   description: Joi.string().required(),
   extraDetails: Joi.object().allow(null),

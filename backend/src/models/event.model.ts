@@ -5,7 +5,7 @@ const EventSchema: Schema = new Schema({
   title: { type: String, required: true },
   date: { type: Date, required: true },
   time: { type: String, required: true },
-  speaker: { type: String, required: true },
+  speaker: { type: String, default: null },
   venue: { type: String, required: true },
   flyer: { type: Object, required: true },
   description: { type: String, required: true },
