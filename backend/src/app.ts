@@ -8,7 +8,7 @@ import path from 'path';
 import { indexRouter } from './routes/index';
 import { authRouter } from './routes/auth';
 import { userRouter } from './routes/user';
-import { eventRouter } from './routes/event';
+import { eventsRouter } from './routes/event';
 
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -28,15 +28,14 @@ app.use('/api/auth', authRouter);
 
 app.use('/api/user', userRouter);
 
-app.use('/api/events', eventRouter);
+app.use('/api/events', eventsRouter);
 
 // serve only the static files from the dist directory
 app.use(express.static(path.join(__dirname, '../public/fe')));
-app.use('/public/uploads', express.static(path.join(__dirname, '../public/uploads')))
-
-// app.get('/*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../public/fe/index.html'));
-// });
+app.use(
+  '/public/uploads',
+  express.static(path.join(__dirname, '../public/uploads'))
+);
 
 //#region  ======= CREATE SERVER AND START ===============
 var http = require('http');
@@ -108,7 +107,7 @@ try {
       }
     }
   );
-} catch (error) {
+} catch (error: any) {
   console.log('Error', error);
 }
 
