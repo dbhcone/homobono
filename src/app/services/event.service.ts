@@ -24,8 +24,30 @@ export class EventService {
     return this.client.GET(`${Events.all}`);
   }
 
+  updateEvent(id: string, event: any) {
+    return this.client.PATCH(`${Events.update}`, id, event);
+  }
+
+  getEvent(_id: string) {
+    return this.client.GET(`${Events.getOne}/${_id}`)
+  }
+
   deleteEvent(_id: string) {
     return this.client.POST(`${Events.deleteOne}`, {_id});
   }
+
+
+  //#region Event pricings
+  getEventPricings(eventId: string) {
+    return this.client.GET(`${Events.pricings}/${eventId}`)
+  }
+
+  addPricing(eventId: string, pricing: any) {
+    return this.client.POST(`${Events.addPricing}/${eventId}`, pricing);
+  }
+  updatePricing(id: string, pricing: any) {
+    return this.client.PATCH(`${Events.updatePricing}`, id, pricing);
+  }
+  //#endregion
 
 }

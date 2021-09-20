@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateEventComponent } from './create-event.component';
+import { EventformComponent } from './eventformcomponent';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { EventService } from 'src/app/services/event.service';
@@ -72,7 +72,7 @@ export class EventsComponent implements AfterViewInit, OnDestroy {
   }
 
   openCreateEventDialog(): void {
-    const dialogRef = this.dialog.open(CreateEventComponent, {
+    const dialogRef = this.dialog.open(EventformComponent, {
       width: '500px',
       disableClose: true,
     });
@@ -84,7 +84,7 @@ export class EventsComponent implements AfterViewInit, OnDestroy {
 
   openEditEventDialog(data: any): void {
     data.heading = 'EDIT';
-    const dialogRef = this.dialog.open(CreateEventComponent, {
+    const dialogRef = this.dialog.open(EventformComponent, {
       width: '500px',
       disableClose: true,
       data,

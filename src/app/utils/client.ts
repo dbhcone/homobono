@@ -25,4 +25,10 @@ export class Client {
             headers: headers || this.headers,
         });
     }
+
+    PATCH(endpoint: string, id: string, data: any, headers?: any) {
+        return this.http.patch<Record<string, unknown>>(`${environment.apiroot}${endpoint}/${id}`, data, {
+            headers: headers || this.headers,
+        });
+    }
 }

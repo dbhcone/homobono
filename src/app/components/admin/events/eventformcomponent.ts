@@ -1,15 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventService } from 'src/app/services/event.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-create-event',
-  templateUrl: './create-event.component.html',
-  styleUrls: ['./create-event.component.scss'],
+  selector: 'app-eventform',
+  templateUrl: './eventform.component.html',
+  styleUrls: ['./eventform.component.scss'],
 })
-export class CreateEventComponent implements OnInit {
+export class EventformComponent implements OnInit {
   createEventForm;
   flyerFile: File | undefined;
   flyerSrc: string | undefined;
@@ -22,26 +22,26 @@ export class CreateEventComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private eventService: EventService,
-    public dialogRef: MatDialogRef<CreateEventComponent>,
+    public dialogRef: MatDialogRef<EventformComponent>,
     @Inject(MAT_DIALOG_DATA) public data?: any
   ) {
     this.createEventForm = fb.group({
       title: [
-        '',
+        data?.title || null,
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(20),
+          Validators.minLength(5)
         ]),
       ],
-      date: ['', Validators.required],
-      time: ['', Validators.required],
+      date: [data?.date || null, Validators.required],
+      time: [data?.time || null, Validators.required],
       // speaker: [null, Validators.required],
-      venue: [null, Validators.required],
+      capacity: [data?.capacity || null],
+      venue: [data?.venue || null, Validators.required],
       flyer: [null, Validators.required],
-      extraDetails: [null],
+      extraDetails: fb.array([]),
       description: [
-        null,
+        data?.description || null,
         Validators.compose([Validators.required, Validators.minLength(10)]),
       ],
       photos: [null],
@@ -65,9 +65,9 @@ export class CreateEventComponent implements OnInit {
     return this.createEventForm.get('time');
   }
 
-  // public get speaker(): AbstractControl | null {
-  //   return this.createEventForm.get('speaker');
-  // }
+  public get capacity(): AbstractControl | null {
+    return this.createEventForm.get('capacity');
+  }
 
   public get venue(): AbstractControl | null {
     return this.createEventForm.get('venue');
@@ -85,22 +85,45 @@ export class CreateEventComponent implements OnInit {
     return this.createEventForm.get('photos');
   }
 
-  public get extraDetails(): AbstractControl | null {
-    return this.createEventForm.get('extraDetails');
+  // public get extraDetails(): AbstractControl | null {
+  //   return this.createEventForm.get('extraDetails');
+  // }
+
+  // Dynamic Extra details
+  extraDetails() : FormArray {
+    return this.createEventForm.get("extraDetails") as FormArray
+  }
+   
+  newDetail(): FormGroup {
+    return this.fb.group({
+      label: '',
+      value: '',
+    })
+  }
+   
+  addDetail() {
+    this.extraDetails().push(this.newDetail());
+  }
+   
+  removeDetail(i:number) {
+    this.extraDetails().removeAt(i);
   }
 
   onSubmit() {
     const formData = new FormData();
     const formValue = this.createEventForm.value;
     console.log('We are about submitting the form', formValue);
-    const { flyer, ...eventdata } = formValue;
-    formData.append('flyer', flyer);
-    formData.append('eventData', JSON.stringify({ ...eventdata }));
-
-    console.log('flyer', flyer);
-    console.log('eventdata', eventdata);
-
-    console.log('Form data being sent is ', formData.getAll('eventData'));
+   
+    for (const key in formValue) {
+      if (Object.prototype.hasOwnProperty.call(formValue, key)) {
+        let element = formValue[key];
+        // check for event details
+        if (key == 'extraDetails') {
+          element = JSON.stringify(element)
+        }
+        formData.append(key, element);
+      }
+    }
     this.eventService.createEvent(formData).subscribe(
       async (resp: any) => {
         Swal.fire({

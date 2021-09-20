@@ -9,9 +9,16 @@ const General = {
 };
 
 const Events = {
-  create: '/events/create-event',
+  create: '/events',
+  update: '/events',
+  getOne: '/events',
   all: '/events',
-  deleteOne: '/events/delete'
+  deleteOne: '/events',
+
+  // pricings
+  pricings: '/events/pricings',
+  addPricing: '/events/pricings',
+  updatePricing: '/events/pricings'
 }
 
 export { Auth, General, Events };

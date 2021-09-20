@@ -50,7 +50,7 @@ import { LayoutComponent } from './components/shared/layout/layout.component';
 import { FourZeroFourComponent } from './components/shared/four-zero-four/four-zero-four.component';
 import { EventsComponent } from './components/events/events.component';
 import { EventsComponent as AdminEventsComponent } from './components/admin/events/events.component';
-import { CreateEventComponent } from './components/admin/events/create-event.component';
+import { EventformComponent } from './components/admin/events/eventformcomponent';
 import { UsersComponent } from './components/admin/users/users.component';
 import { ClientsComponent } from './components/admin/clients/clients.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
@@ -63,6 +63,8 @@ import { ActivateaccountComponent } from './components/activateaccount/activatea
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { AdminNavigationComponent } from './components/admin/admin-navigation.component';
 import { SettingsComponent } from './components/admin/settings/settings.component';
+import { EventmanagementComponent } from './components/admin/events/eventmanagement.component';
+import { EventpricingComponent } from './components/admin/events/eventpricing.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,7 +74,7 @@ import { SettingsComponent } from './components/admin/settings/settings.componen
     UserLayoutComponent,
     FourZeroFourComponent,
     EventsComponent,
-    CreateEventComponent,
+    EventformComponent,
     UsersComponent,
     ClientsComponent,
     GalleryComponent,
@@ -86,6 +88,8 @@ import { SettingsComponent } from './components/admin/settings/settings.componen
     AdminNavigationComponent,
     SettingsComponent,
     AdminEventsComponent,
+    EventmanagementComponent,
+    EventpricingComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

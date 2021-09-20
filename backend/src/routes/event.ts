@@ -1,17 +1,18 @@
-import express, { Request, Response, NextFunction } from 'express';
-import path from 'path';
+import express from 'express';
 import {
-  CreateEvent,
-  DeleteEvent,
-  FetchAllEvents,
+  create, read, update, _delete, readOne, readPricings, createPricing
 } from '../controllers/event.controller';
 import { photograph } from '../validators/shared.validations';
 const router = express.Router();
 
-router.post('/create-event', photograph.single('flyer'), CreateEvent);
+router.post('/', photograph.single('flyer'), create);
+router.get('/', read);
+router.get('/:eventId', readOne);
+router.patch('/:eventId', update);
+router.delete('/:eventId', _delete);
 
-router.get('/', FetchAllEvents);
+// pricings
+router.get('/pricings/:eventId', readPricings);
+router.post('/pricings/:eventId', createPricing);
 
-router.post('/delete', DeleteEvent);
-
-export { router as eventRouter };
+export { router as eventsRouter };

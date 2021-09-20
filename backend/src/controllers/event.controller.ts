@@ -1,25 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 import { createEventValidation } from '../validators/event.validations';
 import Events from '../models/event.model';
+import Pricings from '../models/pricings.model';
 import config from 'config';
-import { mongoidValidation } from '../validators/shared.validations';
 import { deletePhoto } from '../helpers/functions/fs.helpers';
+import { IPricing } from '../interfaces/event.interface';
 
-const CreateEvent = async (req: Request, res: Response, next: NextFunction) => {
-  const data = req.body;
+const create = async (req: Request, res: Response, next: NextFunction) => {
+  let data = req.body;
   console.log('Data received at backend', data);
 
-  if (!req.body.eventData) {
-    return res
-      .status(404)
-      .json({ message: 'provide event data', status: 'error', code: 404 });
-  }
-
   try {
-    let { eventData } = data;
-    eventData = JSON.parse(eventData);
-
-    const validation = await createEventValidation.validateAsync(eventData);
+    const extraDetails = JSON.parse(data.extraDetails);
+    data = {...data, extraDetails}
 
     if (!req.file) {
       console.log('no file at the moment');
@@ -34,7 +27,7 @@ const CreateEvent = async (req: Request, res: Response, next: NextFunction) => {
     console.log('we have a file excl. buffer', mimetype, filename, size);
 
     const event = await new Events({
-      ...eventData,
+      ...data,
       flyer: { mimetype, filename, size },
     }).save();
 
@@ -57,7 +50,7 @@ const CreateEvent = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const FetchAllEvents = async (req: Request, res: Response) => {
+const read = async (req: Request, res: Response) => {
   try {
     const events = await Events.find().sort({ title: 'asc' });
     const uploadPath = `${config.get('APPROOT')}/public/uploads`;
@@ -69,12 +62,25 @@ const FetchAllEvents = async (req: Request, res: Response) => {
   }
 };
 
-const DeleteEvent = async (req: Request, res: Response) => {
+const readOne = async (req: Request, res: Response) => {
   try {
-    const validation = await mongoidValidation.validateAsync(req.body);
+    const id = req.params['eventId'];
+    const event = await Events.findById(id);
+    const uploadPath = `${config.get('APPROOT')}/public/uploads`;
+    return res.status(200).json({message: 'Event fetched successfully', status: 'ok', code: 200, data: { event, uploadPath}})
+  } catch (error: any) {
+    return res
+      .status(404)
+      .json({ message: error.message, code: 404, status: 'error' });
+  }
+};
+
+const _delete = async (req: Request, res: Response) => {
+  try {
+    const id = req.params['eventId'];
 
     // first delete the document from the collection
-    const deleteEvent = await Events.findByIdAndDelete(req.body._id);
+    const deleteEvent = await Events.findByIdAndDelete(id);
 
     // then now unlink the corresponding file
     if (deleteEvent) {
@@ -88,6 +94,73 @@ const DeleteEvent = async (req: Request, res: Response) => {
   }
 }
 
-const UpdateEvent = async () => {};
+const update = async (req: Request, res: Response) => {
+  const _id = req.params.eventId;
+  try {
+    
+    const data = req.body;
 
-export { CreateEvent, UpdateEvent, FetchAllEvents, DeleteEvent };
+    const event = await Events.findByIdAndUpdate(
+      _id,
+      { $set: { ...data } },
+      { new: true }
+    );
+
+    if (event) {
+      return res
+        .status(200)
+        .json({
+          status: 'ok',
+          message: 'Event updated successfully',
+          code: 200,
+          data: event,
+        });
+    } else {
+      return res
+        .status(404)
+        .json({
+          status: 'error',
+          message: 'Could not find event to be updated',
+          code: 404,
+        });
+    }
+  } catch (error: any) {
+    return res
+      .status(404)
+      .json({ status: 'error', message: error.message, code: 404 });
+  }
+};
+
+
+// Pricings
+const readPricings = async (req: Request, res: Response) => {
+  const eventId = req.params['eventId'];
+  try {
+    const pricings = await Pricings.find({event: eventId}).select("pricing").sort({"pricing.amount": "desc"});
+    if(pricings.length == 0) {
+      return res.status(404).json({message: "Event pricings not found", code: 404, status: 'error'})  
+    }
+    return res.status(200).json({message: "Pricings fetched successfully", code: 200, status: 'ok', data: pricings})
+  } catch (error: any) {
+    return res.status(404).json({message: error.message, code: 404, status: 'error'})
+  }
+}
+
+const createPricing = async (req: Request, res: Response) => {
+  const eventId = req.params['eventId'];
+  try {
+    const pricingdata = req.body;
+    const pricing = {event: eventId, pricing: pricingdata} ;
+
+    const data = await new Pricings(pricing).save();
+    return res.status(201).json({
+      message: 'Pricing added successfully',
+      code: 201,
+      status: 'ok',
+      data,
+    });
+  } catch (error: any) {
+    return res.status(404).json({message: error.message, code: 404, status: 'error'})
+  }
+}
+export { create, read, update, readOne, _delete, readPricings, createPricing };

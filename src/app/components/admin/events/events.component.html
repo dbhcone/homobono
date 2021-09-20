@@ -94,9 +94,9 @@
     <ng-container matColumnDef="settings">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Settings</th>
       <td mat-cell *matCellDef="let row">
-        <button mat-flat-button (click)="triggerDeleteEvent(row._id)">
+        <a mat-flat-button role="button" routerLink="/admin/eventmanagement/{{row._id}}">
           <mat-icon color="accent">settings</mat-icon>
-        </button>
+        </a>
       </td>
     </ng-container>
 
