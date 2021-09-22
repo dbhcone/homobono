@@ -1,0 +1,19 @@
+.event-flyer {
+  height: 50%;
+  width: 50%;
+}
+
+.other-events {
+  display: flex;
+  flex-direction: column;
+}
+
+.side-event-card {
+  max-width: 500px;
+  cursor: pointer;
+}
+
+// .example-header-image {
+//   background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+//   background-size: cover;
+// }

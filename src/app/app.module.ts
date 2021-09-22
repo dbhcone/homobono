@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/login/login.component';
 import { LayoutModule } from '@angular/cdk/layout';
-// Material Start
+//#region Material Start
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -40,7 +40,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
-// Material End
+//#endregionMaterial End
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShoppingCartModule } from 'ng-shopping-cart';
@@ -65,6 +65,8 @@ import { AdminNavigationComponent } from './components/admin/admin-navigation.co
 import { SettingsComponent } from './components/admin/settings/settings.component';
 import { EventmanagementComponent } from './components/admin/events/eventmanagement.component';
 import { EventpricingComponent } from './components/admin/events/eventpricing.component';
+import { EventdetailComponent } from './components/events/eventdetail.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,6 +92,7 @@ import { EventpricingComponent } from './components/admin/events/eventpricing.co
     AdminEventsComponent,
     EventmanagementComponent,
     EventpricingComponent,
+    EventdetailComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

@@ -19,6 +19,7 @@ import { EventsComponent as AdminEventsComponent } from './components/admin/even
 import { UsersComponent } from './components/admin/users/users.component';
 import { ClientsComponent } from './components/admin/clients/clients.component';
 import { EventmanagementComponent } from './components/admin/events/eventmanagement.component';
+import { EventdetailComponent } from './components/events/eventdetail.component';
 const routes: Routes = [
   {
     path: '',
@@ -31,8 +32,8 @@ const routes: Routes = [
       { path: 'signup', component: SignupComponent },
       { path: 'logout', redirectTo: 'login' },
       { path: 'events', component: EventsComponent },
+      { path: 'events/:id', component: EventdetailComponent },
       { path: 'gallery', component: GalleryComponent },
-      // { path: 'contact', component: ContactComponent },
       { path: 'contact-us', component: ContactusComponent },
       { path: 'about-us', component: AboutComponent },
       { path: 'activate-account', component: ActivateaccountComponent },

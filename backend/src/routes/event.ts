@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  create, read, update, _delete, readOne, readPricings, createPricing
+  create, read, update, _delete, readOne, readPricings, createPricing, updatePricing
 } from '../controllers/event.controller';
 import { photograph } from '../validators/shared.validations';
 const router = express.Router();
@@ -14,5 +14,5 @@ router.delete('/:eventId', _delete);
 // pricings
 router.get('/pricings/:eventId', readPricings);
 router.post('/pricings/:eventId', createPricing);
-
+router.patch('/pricings/:id', updatePricing);
 export { router as eventsRouter };

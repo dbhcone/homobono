@@ -4,7 +4,6 @@ import Events from '../models/event.model';
 import Pricings from '../models/pricings.model';
 import config from 'config';
 import { deletePhoto } from '../helpers/functions/fs.helpers';
-import { IPricing } from '../interfaces/event.interface';
 
 const create = async (req: Request, res: Response, next: NextFunction) => {
   let data = req.body;
@@ -12,7 +11,7 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const extraDetails = JSON.parse(data.extraDetails);
-    data = {...data, extraDetails}
+    data = { ...data, extraDetails };
 
     if (!req.file) {
       console.log('no file at the moment');
@@ -52,9 +51,27 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 
 const read = async (req: Request, res: Response) => {
   try {
-    const events = await Events.find().sort({ title: 'asc' });
+    // const events = await Events.find().sort({ title: 'asc' });
+    const events = await Events.aggregate([
+      {
+        $lookup:
+          {
+            from: "pricings", //another collection name
+            localField: "_id", // order collection field
+            foreignField: "event", // inventory collection field
+            as: "pricings"
+          }
+     }
+  ]);
     const uploadPath = `${config.get('APPROOT')}/public/uploads`;
-    return res.status(200).json({message: 'Events fetched successfully', status: 'ok', code: 200, data: {count: events.length, events, uploadPath}})
+    return res
+      .status(200)
+      .json({
+        message: 'Events fetched successfully',
+        status: 'ok',
+        code: 200,
+        data: { count: events.length, events, uploadPath },
+      });
   } catch (error: any) {
     return res
       .status(404)
@@ -66,8 +83,16 @@ const readOne = async (req: Request, res: Response) => {
   try {
     const id = req.params['eventId'];
     const event = await Events.findById(id);
+    const pricings = await Pricings.find({event: id}).select("-_id pricing")
     const uploadPath = `${config.get('APPROOT')}/public/uploads`;
-    return res.status(200).json({message: 'Event fetched successfully', status: 'ok', code: 200, data: { event, uploadPath}})
+    return res
+      .status(200)
+      .json({
+        message: 'Event fetched successfully',
+        status: 'ok',
+        code: 200,
+        data: { event, pricings, uploadPath },
+      });
   } catch (error: any) {
     return res
       .status(404)
@@ -84,20 +109,20 @@ const _delete = async (req: Request, res: Response) => {
 
     // then now unlink the corresponding file
     if (deleteEvent) {
-      deletePhoto(deleteEvent.flyer?.filename)
+      deletePhoto(deleteEvent.flyer?.filename);
     }
 
     return res.sendStatus(200);
-
   } catch (error: any) {
-    return res.status(404).json({message: error.message, code: 404, status: 'error'})
+    return res
+      .status(404)
+      .json({ message: error.message, code: 404, status: 'error' });
   }
-}
+};
 
 const update = async (req: Request, res: Response) => {
   const _id = req.params.eventId;
   try {
-    
     const data = req.body;
 
     const event = await Events.findByIdAndUpdate(
@@ -107,22 +132,18 @@ const update = async (req: Request, res: Response) => {
     );
 
     if (event) {
-      return res
-        .status(200)
-        .json({
-          status: 'ok',
-          message: 'Event updated successfully',
-          code: 200,
-          data: event,
-        });
+      return res.status(200).json({
+        status: 'ok',
+        message: 'Event updated successfully',
+        code: 200,
+        data: event,
+      });
     } else {
-      return res
-        .status(404)
-        .json({
-          status: 'error',
-          message: 'Could not find event to be updated',
-          code: 404,
-        });
+      return res.status(404).json({
+        status: 'error',
+        message: 'Could not find event to be updated',
+        code: 404,
+      });
     }
   } catch (error: any) {
     return res
@@ -131,26 +152,42 @@ const update = async (req: Request, res: Response) => {
   }
 };
 
-
 // Pricings
 const readPricings = async (req: Request, res: Response) => {
   const eventId = req.params['eventId'];
   try {
-    const pricings = await Pricings.find({event: eventId}).select("pricing").sort({"pricing.amount": "desc"});
-    if(pricings.length == 0) {
-      return res.status(404).json({message: "Event pricings not found", code: 404, status: 'error'})  
+    const pricings = await Pricings.find({ event: eventId })
+      .select('pricing')
+      .sort({ 'pricing.amount': 'desc' });
+    if (pricings.length == 0) {
+      return res
+        .status(404)
+        .json({
+          message: 'Event pricings not found',
+          code: 404,
+          status: 'error',
+        });
     }
-    return res.status(200).json({message: "Pricings fetched successfully", code: 200, status: 'ok', data: pricings})
+    return res
+      .status(200)
+      .json({
+        message: 'Pricings fetched successfully',
+        code: 200,
+        status: 'ok',
+        data: pricings,
+      });
   } catch (error: any) {
-    return res.status(404).json({message: error.message, code: 404, status: 'error'})
+    return res
+      .status(404)
+      .json({ message: error.message, code: 404, status: 'error' });
   }
-}
+};
 
 const createPricing = async (req: Request, res: Response) => {
   const eventId = req.params['eventId'];
   try {
     const pricingdata = req.body;
-    const pricing = {event: eventId, pricing: pricingdata} ;
+    const pricing = { event: eventId, pricing: pricingdata };
 
     const data = await new Pricings(pricing).save();
     return res.status(201).json({
@@ -160,7 +197,51 @@ const createPricing = async (req: Request, res: Response) => {
       data,
     });
   } catch (error: any) {
-    return res.status(404).json({message: error.message, code: 404, status: 'error'})
+    return res
+      .status(404)
+      .json({ message: error.message, code: 404, status: 'error' });
   }
-}
-export { create, read, update, readOne, _delete, readPricings, createPricing };
+};
+
+const updatePricing = async (req: Request, res: Response) => {
+  const id = req.params['id'];
+  try {
+    const pricing = req.body;
+    console.log('pricing data received', pricing);
+
+    const data = await Pricings.findByIdAndUpdate(
+      id,
+      { $set: { pricing } },
+      { new: true }
+    );
+    if (!data) {
+      return res
+        .status(404)
+        .json({
+          message: 'Could not find pricing to update!',
+          code: 404,
+          status: 'error',
+        });
+    }
+    return res.status(200).json({
+      message: 'Pricing modified successfully',
+      code: 200,
+      status: 'ok',
+      data,
+    });
+  } catch (error: any) {
+    return res
+      .status(404)
+      .json({ message: error.message, code: 404, status: 'error' });
+  }
+};
+export {
+  create,
+  read,
+  update,
+  readOne,
+  _delete,
+  readPricings,
+  createPricing,
+  updatePricing,
+};

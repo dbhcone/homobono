@@ -1,31 +1,56 @@
-<section>
-  <h3>Upcoming events</h3>
+<section class="container">
+  <h2>Upcoming events</h2>
+  <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
   <div class="row">
-    <div class="col-md-4" *ngFor="let event of events">
+    <div
+      class="col-md-4 col-sm-6 col-xs-12"
+      *ngFor="let event of obs | async"
+    >
       <mat-card>
         <mat-card-header>
-          <mat-card-title>{{ event.title }}</mat-card-title>
-          <mat-card-subtitle><b>SPEAKER: </b>{{ event.speaker }}</mat-card-subtitle>
+          <mat-card-title>
+            <h3><mat-icon matPrefix>event</mat-icon>{{ event.title }}</h3>
+          </mat-card-title>
+          <mat-card-subtitle
+            ><mat-icon matPrefix>schedule</mat-icon> <b>Date: </b
+            >{{ event.date | date: "EEE dd-MMM-yyyy" }}</mat-card-subtitle
+          >
         </mat-card-header>
-        <mat-card-content>
-          <img src="{{ displayFlyer(event.flyer.filename) }}" class="img-fluid flyer" />
+        <mat-card-content (click)="viewDetails(event._id)">
+          <img src="{{ displayFlyer(event.flyer.filename) }}" class="flyer" />
           <section class="event-description">
             <p>{{ event.description }}</p>
           </section>
         </mat-card-content>
+
+        <mat-card-footer>
+          <p>Price 1: GHS 5.00</p>
+          <p>Price 2: GHS 20.00</p>
+          <p>Price 3: GHS 44.80</p>
+          <p>Price 4: GHS 5.00</p>
+        </mat-card-footer>
+
         <mat-card-actions>
-          <button mat-raised-button color="accent">Book</button>
-          <button mat-raised-button color="primary">View details</button>
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="addToCart(event)"
+            class="small"
+          >
+            <mat-icon>add_shopping_cart</mat-icon> Add to cart
+          </button>
+          <button
+            class="small"
+            mat-raised-button
+            color="primary"
+            (click)="viewDetails(event._id)"
+          >
+            <mat-icon>info</mat-icon> Info
+          </button>
         </mat-card-actions>
       </mat-card>
     </div>
   </div>
-  <mat-paginator
-    [length]="events.length"
-    [pageSize]="pageSize"
-    (page)="pageEvent = $event"
-  >
-  </mat-paginator>
 </section>
 
 <hr />

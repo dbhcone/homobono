@@ -4,8 +4,13 @@ mat-card{
 
 .flyer {
     height: 300px;
+    width: 100%;
 }
 
 .event-description {
     height: 30px;
+}
+
+mat-card-content {
+    cursor: pointer;
 }

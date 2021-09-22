@@ -7,6 +7,7 @@ import { EventformComponent } from './eventformcomponent';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { EventService } from 'src/app/services/event.service';
+import { GeneralService } from 'src/app/services/general.service';
 
 /**
  * @title Data table with sorting, pagination, and filtering.
@@ -38,7 +39,7 @@ export class EventsComponent implements AfterViewInit, OnDestroy {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  constructor(private dialog: MatDialog, private eventService: EventService) {
+  constructor(private dialog: MatDialog, private eventService: EventService, private general: GeneralService) {
     this.dataSource = new MatTableDataSource();
     this.fetchEvents();
   }
@@ -133,5 +134,9 @@ export class EventsComponent implements AfterViewInit, OnDestroy {
 
   displayFlyer(flyerFileName: string) {
     return `${this.uploadPath}/${flyerFileName}`;
+  }
+
+  twelveHourTime(time: string) {
+    return this.general.twelveHourTime(time);
   }
 }

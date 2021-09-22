@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-7 px-1 position-fixed">
+      <h2>Event Details</h2>
+      <img class="event-flyer" [src]="displayFlyer()" alt="" srcset="" />
+    </div>
+    <div class="col offset-5">
+      <!-- Other Events can be here -->
+      <div class="other-events">
+          <h2>Other Events Available</h2>
+        <mat-card
+          class="side-event-card mb-3"
+          *ngFor="let ev of otherEvents"
+          (click)="viewDetails(ev._id)"
+        >
+          <mat-card-header>
+            <div
+              mat-card-avatar
+              [ngStyle]="{
+                'background-image':
+                  'url(' + displayImage(ev.flyer.filename) + ')',
+                'background-size': 'cover'
+              }"
+            ></div>
+            <mat-card-title>{{ ev.title }}</mat-card-title>
+            <mat-card-subtitle>{{
+              ev.date | date: "EEE dd-MMM-yyyy"
+            }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              {{ ev.description }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
