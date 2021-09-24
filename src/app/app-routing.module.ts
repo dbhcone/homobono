@@ -20,13 +20,13 @@ import { UsersComponent } from './components/admin/users/users.component';
 import { ClientsComponent } from './components/admin/clients/clients.component';
 import { EventmanagementComponent } from './components/admin/events/eventmanagement.component';
 import { EventdetailComponent } from './components/events/eventdetail.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 const routes: Routes = [
   {
     path: '',
-    // pathMatch: 'full',
     component: LayoutComponent,
     children: [
-      {path: '', pathMatch: 'full', redirectTo: 'home'},
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent },
@@ -37,6 +37,7 @@ const routes: Routes = [
       { path: 'contact-us', component: ContactusComponent },
       { path: 'about-us', component: AboutComponent },
       { path: 'activate-account', component: ActivateaccountComponent },
+      { path: 'checkout', component: CheckoutComponent },
     ],
   },
   {
@@ -46,7 +47,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'events', component: AdminEventsComponent },
-      {path: 'eventmanagement/:id', component: EventmanagementComponent},
+      { path: 'eventmanagement/:id', component: EventmanagementComponent },
       { path: 'settings', component: SettingsComponent },
       { path: 'users', component: UsersComponent },
       { path: 'clients', component: ClientsComponent },

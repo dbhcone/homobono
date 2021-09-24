@@ -1,13 +1,36 @@
 <div class="container">
   <div class="row">
-    <div class="col-7 px-1 position-fixed">
+    <div class="col-md-8 col-sm-6 col-xs-12">
       <h2>Event Details</h2>
       <img class="event-flyer" [src]="displayFlyer()" alt="" srcset="" />
+      <!-- choose a ticket -->
+      <section class="container">
+        <u><h2>Available Tickets</h2></u>
+        <div *ngIf="pricings.length > 0" class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Ticket Type</th>
+                <th>Amount</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pr of pricings">
+                <td>{{pr.pricing.name}}</td>
+                <td>{{pr.pricing.amount | number: '1.2-2'}} </td>
+                <td><button (click)="addToCart(pr._id)" color="accent" mat-raised-button><mat-icon matPrefix>add_shopping_cart</mat-icon></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <!-- choose a ticket -->
     </div>
-    <div class="col offset-5">
+    <div class="col-md-4 col-sm-6 col-xs-12">
       <!-- Other Events can be here -->
       <div class="other-events">
-          <h2>Other Events Available</h2>
+        <h2>Other Events Available</h2>
         <mat-card
           class="side-event-card mb-3"
           *ngFor="let ev of otherEvents"

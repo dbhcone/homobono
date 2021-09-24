@@ -83,7 +83,7 @@ const readOne = async (req: Request, res: Response) => {
   try {
     const id = req.params['eventId'];
     const event = await Events.findById(id);
-    const pricings = await Pricings.find({event: id}).select("-_id pricing")
+    const pricings = await Pricings.find({event: id}).select("pricing")
     const uploadPath = `${config.get('APPROOT')}/public/uploads`;
     return res
       .status(200)
@@ -235,6 +235,35 @@ const updatePricing = async (req: Request, res: Response) => {
       .json({ message: error.message, code: 404, status: 'error' });
   }
 };
+
+const readPricingDetails = async (req: Request, res: Response) => {
+  const pricingId = req.params['pricingId'];
+  // console.log('pricing id submitted', pricingId)
+  try {
+    const pricing = await Pricings.findById(pricingId).populate('event');
+    if (!pricing) {
+      return res
+        .status(404)
+        .json({
+          message: 'Event price not found',
+          code: 404,
+          status: 'error',
+        });
+    }
+    return res
+      .status(200)
+      .json({
+        message: 'Pricings fetched successfully',
+        code: 200,
+        status: 'ok',
+        data: pricing,
+      });
+  } catch (error: any) {
+    return res
+      .status(404)
+      .json({ message: error.message, code: 404, status: 'error' });
+  }
+};
 export {
   create,
   read,
@@ -244,4 +273,5 @@ export {
   readPricings,
   createPricing,
   updatePricing,
+  readPricingDetails
 };

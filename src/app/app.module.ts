@@ -66,6 +66,7 @@ import { SettingsComponent } from './components/admin/settings/settings.componen
 import { EventmanagementComponent } from './components/admin/events/eventmanagement.component';
 import { EventpricingComponent } from './components/admin/events/eventpricing.component';
 import { EventdetailComponent } from './components/events/eventdetail.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import { EventdetailComponent } from './components/events/eventdetail.component'
     EventmanagementComponent,
     EventpricingComponent,
     EventdetailComponent,
+    CheckoutComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

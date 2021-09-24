@@ -46,6 +46,11 @@
           >
         </li>
         <li class="nav-item" *ngIf="!username">
+          <a routerLink="/checkout" class="nav-link"
+            ><mat-icon matPrefix [matBadge]="cartCount" matBadgeSize="small" matBadgeColor="primary">shopping_cart</mat-icon> </a
+          >
+        </li>
+        <li class="nav-item" *ngIf="!username">
           <a routerLink="login" class="nav-link"
             ><mat-icon matPrefix>login</mat-icon>Login</a
           >

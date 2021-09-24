@@ -24,10 +24,8 @@
         </mat-card-content>
 
         <mat-card-footer>
-          <p>Price 1: GHS 5.00</p>
-          <p>Price 2: GHS 20.00</p>
-          <p>Price 3: GHS 44.80</p>
-          <p>Price 4: GHS 5.00</p>
+          <h4>Available ticket price(s)</h4>
+          <p>{{ displayPriceRange(event.pricings) }}</p>
         </mat-card-footer>
 
         <mat-card-actions>

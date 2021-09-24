@@ -3,7 +3,7 @@ import { IPricing } from '../interfaces/event.interface';
 
 const PricingSchema: Schema = new Schema(
   {
-    event: { type: Schema.Types.ObjectId, required: true },
+    event: { type: Schema.Types.ObjectId, required: true, ref: "event" },
     pricing: { type: Object },
   },
   { timestamps: true }

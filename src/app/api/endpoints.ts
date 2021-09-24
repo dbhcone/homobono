@@ -16,9 +16,11 @@ const Events = {
   deleteOne: '/events',
 
   // pricings
-  pricings: '/events/pricings',
-  addPricing: '/events/pricings',
-  updatePricing: '/events/pricings'
+  pricings: '/events/pricelist',
+  addPricing: '/events/pricelist',
+  updatePricing: '/events/pricelist',
+
+  getPrice: '/events/pricings'
 }
 
 export { Auth, General, Events };
