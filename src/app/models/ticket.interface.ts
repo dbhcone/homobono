@@ -4,5 +4,6 @@ export interface Ticket {
     name: string;
     price: number;
     quantity: number;
+    eventId: string;
     ticketImage?: string;
 }

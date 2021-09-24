@@ -13,10 +13,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
   constructor(private cart: CartService<TicketItem>) {
     this.subscription = this.cart.onChange.subscribe((item) => {
-      if (item.change == 'items') {
+      // if (item.change == 'items') {
         console.log('cart items changed')
         this.displayCartItems();
-      }
+      // }
     })
   }
 
@@ -37,14 +37,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   increment(ticketItem: TicketItem) {
-    let quantity = ticketItem.getQuantity() + 1;
-    ticketItem.quantity = quantity;
+    const items = this.cart.getItems();
+    const index = items.findIndex((itm) => {itm.id === ticketItem.id});
+    ticketItem.quantity += 1;
+    this.cartItems.splice(index, 1, ticketItem);
     console.log('to increase');
   }
 
   decrement(ticketItem: TicketItem) {
-    let quantity = ticketItem.getQuantity() - 1;
-    ticketItem.quantity = quantity;
+    const items = this.cart.getItems();
+    const index = items.findIndex((itm) => {itm.id === ticketItem.id});
+    ticketItem.quantity -= 1;
+    this.cartItems.splice(index, 1, ticketItem);
     console.log('to decrease');
   }
 

@@ -43,7 +43,8 @@ export class CheckoutService {
           name: `${pricing.name} - ${event.title}`,
           // image: '',
           quantity: 1,
-          price: pricing.amount
+          price: pricing.amount,
+          eventId: event._id
         });
         this.cart.addItem(ticketItem);
         Swal.fire({

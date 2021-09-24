@@ -2,6 +2,7 @@ import { CartItem } from 'ng-shopping-cart';
 
 export class TicketItem extends CartItem {
     public id: string;
+    public eventId: string;
     public name: string;
     public price: number;
     public quantity: number;
@@ -11,6 +12,7 @@ export class TicketItem extends CartItem {
     constructor(ticket: any = {}) {
         super();
         this.id = ticket.id;
+        this.eventId = ticket.eventId
         this.name = ticket.name;
         this.image = ticket.image;
         this.price = ticket.price;

@@ -67,6 +67,7 @@ import { EventmanagementComponent } from './components/admin/events/eventmanagem
 import { EventpricingComponent } from './components/admin/events/eventpricing.component';
 import { EventdetailComponent } from './components/events/eventdetail.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { TicketItem } from './cart/ticket-item';
 
 @NgModule({
   declarations: [
@@ -142,7 +143,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     FormsModule,
     ReactiveFormsModule,
     ShoppingCartModule.forRoot({
-      // itemType: PurchaseItem,
+      itemType: TicketItem,
       serviceType: 'localStorage',
       serviceOptions: {
         storageKey: 'HomoBonoShoppingCart',
