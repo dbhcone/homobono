@@ -1,34 +1,21 @@
-<section class="container">
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Handle</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr>
-              </tbody>
-        </table>
-      </div>
-</section>
+<h3>Total amount in cart {{displayCartTotal()}}</h3>
+<mat-card class="example-card" *ngFor="let cartItem of cartItems">
+  <mat-card-title-group>
+    <mat-card-title>{{cartItem.name}}</mat-card-title>
+    <!-- <mat-card-subtitle>Small</mat-card-subtitle> -->
+    <!-- <img
+      mat-card-sm-image
+      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+    /> -->
+  </mat-card-title-group>
+  <mat-card-content>
+    <!-- {{ longText }} -->
+  </mat-card-content>
+  <mat-divider inset></mat-divider>
+  <mat-card-actions>
+    <button mat-icon-button color="primary" (click)="decrement(cartItem)"><mat-icon>remove_circle</mat-icon></button>
+    <input type="text" name="" [value]="cartItem.price" class="cart-item-qty">
+    <button mat-icon-button color="primary" (click)="increment(cartItem)"><mat-icon>add_circle</mat-icon></button>
+    <button mat-icon-button color="warn" (click)="remove(cartItem)"><mat-icon>delete</mat-icon></button>
+  </mat-card-actions>
+</mat-card>

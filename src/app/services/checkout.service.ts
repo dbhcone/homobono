@@ -36,6 +36,16 @@ export class CheckoutService {
     this.getTicket(ticketId).subscribe(
       async (res: any) => {
         console.log('res to add', res)
+        const data = res.data;
+        const {_id, event, pricing} = data;
+        let ticketItem = new TicketItem({
+          id: _id,
+          name: `${pricing.name} - ${event.title}`,
+          // image: '',
+          quantity: 1,
+          price: pricing.amount
+        });
+        this.cart.addItem(ticketItem);
         Swal.fire({
           title: 'Item added to cart',
           toast: true,
