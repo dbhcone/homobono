@@ -29,7 +29,7 @@ export class AuthGuard
   canActivate() {
     const session = this.auth.session();
     if (session.isTokenExpired) {
-      this.router.navigate(['login']);
+      this.router.navigate(['/login']);
       return false;
     }
     return true;

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { CartService } from 'ng-shopping-cart';
+import { Observable } from 'rxjs';
 import { TicketItem } from 'src/app/cart/ticket-item';
 import { AuthService } from 'src/app/services/auth.service';
+import { AppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +12,12 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  cartCount = 0;
   username = null;
-  constructor(private auth: AuthService, private cartService: CartService<TicketItem>) {
+  cartStore: Observable<{items: [], shipping: number, taxRate: number}>
+  constructor(private auth: AuthService, private cartService: CartService<TicketItem>, private store: Store<AppState>) {
     // this.username = this.auth.session().username;
-    this.cartCount = this.cartService.itemCount();
+    // this.cartCount = this.cartService.itemCount();
+    this.cartStore = store.select('cart'); //store.select("obj");
    }
 
   ngOnInit(): void {

@@ -48,12 +48,19 @@ export class AuthService implements OnInit {
   session() {
     const jwtHelper = new JwtHelperService();
 
-    const isTokenExpired = jwtHelper.isTokenExpired(
-      this.getToken() || undefined
-    );
-    const decodedToken = jwtHelper.decodeToken(this.getToken() || undefined);
+    const token = this.getToken();
+    const isTokenExpired = token ? jwtHelper.isTokenExpired(token) : true;
+
+    const decodedToken = token ? jwtHelper.decodeToken(token) : null;
     console.log('decoded', decodedToken)
-    const { username, email, role } = decodedToken;
+
+    let [username, email, role] = [null, null, null];
+
+    if (decodedToken != null || decodedToken != undefined) {
+      username = decodedToken.username;
+      email = decodedToken.email;
+      role = decodedToken.role;
+    }
 
     return { username, isTokenExpired, email, role };
   }

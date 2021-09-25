@@ -1,22 +1,25 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { CartService } from 'ng-shopping-cart';
 import Swal from 'sweetalert2';
 import { Events } from '../api/endpoints';
 import { TicketItem } from '../cart/ticket-item';
 import { Ticket } from '../models/ticket.interface';
+import { addCartItem } from '../store/actions/cart.actions';
+import { AppState } from '../store/app.state';
 import { Client } from '../utils/client';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CheckoutService {
-  constructor(private cart: CartService<TicketItem>, private client: Client) {}
+  constructor(private cart: CartService<TicketItem>, private client: Client, private store: Store<AppState>) {}
 
   alreadyInCart(ticketId: string) {
     const item = this.cart.getItems().find((item) => {
       item.id == ticketId;
     });
-    return item ? true : false;
+    return item !== undefined ? true : false;
   }
 
   getTicket(ticketId: string) {
@@ -47,6 +50,8 @@ export class CheckoutService {
           eventId: event._id
         });
         this.cart.addItem(ticketItem);
+        this.store.dispatch(addCartItem({cart: {...ticketItem}}))
+
         Swal.fire({
           title: 'Item added to cart',
           toast: true,

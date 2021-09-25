@@ -3,10 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
 import { ActivateaccountComponent } from './components/activateaccount/activateaccount.component';
 import { AdminNavigationComponent } from './components/admin/admin-navigation.component';
-import { EventformComponent } from './components/admin/events/eventformcomponent';
 import { DashboardComponent as AdminDashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { SettingsComponent } from './components/admin/settings/settings.component';
-// import { ContactComponent } from './components/contact/contact.component';
 import { ContactusComponent } from './components/contactus/contactus.component';
 import { EventsComponent } from './components/events/events.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
@@ -21,6 +19,7 @@ import { ClientsComponent } from './components/admin/clients/clients.component';
 import { EventmanagementComponent } from './components/admin/events/eventmanagement.component';
 import { EventdetailComponent } from './components/events/eventdetail.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
@@ -43,6 +42,8 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminNavigationComponent,
+    canActivate: [AuthGuard],
+    // canActivateChild: [AuthGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboardComponent },

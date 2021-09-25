@@ -47,7 +47,7 @@
         </li>
         <li class="nav-item" *ngIf="!username">
           <a routerLink="/checkout" class="nav-link"
-            ><mat-icon matPrefix [matBadge]="cartCount" matBadgeSize="small" matBadgeColor="primary">shopping_cart</mat-icon> </a
+            ><mat-icon matPrefix [matBadge]="(cartStore | async)?.items?.length" matBadgeSize="small" matBadgeColor="primary">shopping_cart</mat-icon> </a
           >
         </li>
         <li class="nav-item" *ngIf="!username">

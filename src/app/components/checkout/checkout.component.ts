@@ -12,9 +12,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   cartItems: TicketItem[] = [];
   subscription!: Subscription;
   constructor(private cart: CartService<TicketItem>) {
-    this.subscription = this.cart.onChange.subscribe((item) => {
+    this.subscription = this.cart.onItemsChanged.subscribe((item) => {
       // if (item.change == 'items') {
-        console.log('cart items changed')
+        console.log('cart items changed', item)
         this.displayCartItems();
       // }
     })

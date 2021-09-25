@@ -68,6 +68,8 @@ import { EventpricingComponent } from './components/admin/events/eventpricing.co
 import { EventdetailComponent } from './components/events/eventdetail.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { TicketItem } from './cart/ticket-item';
+import { StoreModule } from '@ngrx/store';
+import { cartReducer } from './store/reducers/cart.reducers';
 
 @NgModule({
   declarations: [
@@ -150,6 +152,7 @@ import { TicketItem } from './cart/ticket-item';
         clearOnError: true,
       },
     }),
+    StoreModule.forRoot({ cart: cartReducer }),
   ],
   providers: [],
   bootstrap: [AppComponent],
