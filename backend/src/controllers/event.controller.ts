@@ -3,7 +3,7 @@ import { createEventValidation } from '../validators/event.validations';
 import Events from '../models/event.model';
 import Pricings from '../models/pricings.model';
 import config from 'config';
-import { deletePhoto } from '../helpers/functions/fs.helpers';
+import { deletePhoto, uploadFile } from '../helpers/functions/fs.helpers';
 
 const create = async (req: Request, res: Response, next: NextFunction) => {
   let data = req.body;
@@ -31,6 +31,8 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
     }).save();
 
     if (event) {
+      // TODO: try uploading and let's see
+      // uploadFile(filename);
       return res.status(201).json({
         message: 'Event created successfully',
         code: 201,

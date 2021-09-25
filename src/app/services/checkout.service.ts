@@ -16,9 +16,7 @@ export class CheckoutService {
   constructor(private cart: CartService<TicketItem>, private client: Client, private store: Store<AppState>) {}
 
   alreadyInCart(ticketId: string) {
-    const item = this.cart.getItems().find((item) => {
-      item.id == ticketId;
-    });
+    const item = this.cart.getItem(ticketId);
     return item !== undefined ? true : false;
   }
 
