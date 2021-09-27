@@ -18,13 +18,11 @@ import { GeneralService } from 'src/app/services/general.service';
   templateUrl: './events.component.html',
 })
 export class EventsComponent implements AfterViewInit, OnDestroy {
-  uploadPath = null;
   displayedColumns: string[] = [
     'flyer',
     'title',
     'date',
     'time',
-    // 'speaker',
     'venue',
     'description',
     'edit',
@@ -57,10 +55,6 @@ export class EventsComponent implements AfterViewInit, OnDestroy {
       console.log(res);
 
       this.dataSource.data = res.data.events;
-      this.uploadPath = res.data.uploadPath;
-      // this.dataSource.data = res.data.map((member: any) => {
-      //   return { username: member.username, ...member.accountOwner };
-      // });
     });
   }
   applyFilter(event: Event): void {
@@ -132,8 +126,8 @@ export class EventsComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  displayFlyer(flyerFileName: string) {
-    return `${this.uploadPath}/${flyerFileName}`;
+  displayFlyer(flyer?: any) {
+    return `${flyer?.fileBaseUrl}/${flyer?.filename}`;
   }
 
   twelveHourTime(time: string) {

@@ -4,6 +4,7 @@ export class TicketItem extends CartItem {
     public id: string;
     public eventId: string;
     public name: string;
+    public ticketName: string;
     public price: number;
     public quantity: number;
     public image: string;
@@ -14,6 +15,7 @@ export class TicketItem extends CartItem {
         this.id = ticket.id;
         this.eventId = ticket.eventId
         this.name = ticket.name;
+        this.ticketName = ticket.ticketName;
         this.image = ticket.image;
         this.price = ticket.price;
         this.quantity = ticket.quantity;
@@ -26,6 +28,10 @@ export class TicketItem extends CartItem {
 
     getName() {
         return this.name;
+    }
+
+    getTicketName() {
+        return this.ticketName;
     }
 
     getPrice() {

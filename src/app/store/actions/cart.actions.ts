@@ -21,4 +21,6 @@ const increaseQuantity = createAction(
   }>()
 );
 
-export { addCartItem, increaseQuantity };
+const removeItem = createAction('Remove [Cart Item]', props<{itemid: string}>())
+
+export { addCartItem, increaseQuantity, removeItem };

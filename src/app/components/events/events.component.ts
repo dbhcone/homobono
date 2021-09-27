@@ -10,7 +10,6 @@ import { EventService } from 'src/app/services/event.service';
   styleUrls: ['./events.component.scss'],
 })
 export class EventsComponent implements OnInit, OnDestroy {
-  uploadPath = null;
   events: any[] = [];
   pageEvent?: PageEvent;
 
@@ -37,12 +36,11 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.eventService.getAllEvents().subscribe(async (resp: any) => {
       this.events = resp.data.events;
       this.dataSource.data = this.events;
-      this.uploadPath = resp.data.uploadPath;
     });
   }
 
-  displayFlyer(flyerFileName: string) {
-    return `${this.uploadPath}/${flyerFileName}`;
+  displayFlyer(flyer?: any) {
+    return `${flyer?.fileBaseUrl}/${flyer?.filename}`;
   }
 
   viewDetails(id: string) {

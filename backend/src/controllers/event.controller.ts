@@ -25,9 +25,10 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
     const { mimetype, filename, size } = req.file;
     console.log('we have a file excl. buffer', mimetype, filename, size);
 
+    const fileBaseUrl = <string>config.get('UPLOADPATH');
     const event = await new Events({
       ...data,
-      flyer: { mimetype, filename, size },
+      flyer: { mimetype, filename, size, fileBaseUrl },
     }).save();
 
     if (event) {
@@ -65,14 +66,13 @@ const read = async (req: Request, res: Response) => {
           }
      }
   ]);
-    const uploadPath = `${config.get('APPROOT')}/public/uploads`;
     return res
       .status(200)
       .json({
         message: 'Events fetched successfully',
         status: 'ok',
         code: 200,
-        data: { count: events.length, events, uploadPath },
+        data: { count: events.length, events },
       });
   } catch (error: any) {
     return res
@@ -86,14 +86,13 @@ const readOne = async (req: Request, res: Response) => {
     const id = req.params['eventId'];
     const event = await Events.findById(id);
     const pricings = await Pricings.find({event: id}).select("pricing")
-    const uploadPath = `${config.get('APPROOT')}/public/uploads`;
     return res
       .status(200)
       .json({
         message: 'Event fetched successfully',
         status: 'ok',
         code: 200,
-        data: { event, pricings, uploadPath },
+        data: { event, pricings },
       });
   } catch (error: any) {
     return res

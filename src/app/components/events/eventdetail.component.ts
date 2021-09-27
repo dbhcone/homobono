@@ -11,7 +11,6 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class EventdetailComponent implements OnInit, OnDestroy {
   eventId: any;
-  uploadPath: any;
   pricings: any;
   event: any;
   otherEvents: any;
@@ -39,7 +38,6 @@ export class EventdetailComponent implements OnInit, OnDestroy {
   getEventDetails(id: string) {
     this.eventService.getEvent(id).subscribe(async (resp: any) => {
       this.event = resp.data.event;
-      this.uploadPath = resp.data.uploadPath;
       this.pricings = resp.data.pricings;
       console.log('pricings', this.pricings)
       console.log('event', this.event);
@@ -60,11 +58,11 @@ export class EventdetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   displayFlyer() {
-    return this.displayImage(this.event?.flyer?.filename);
+    return this.displayImage(this.event?.flyer);
   }
   
-  displayImage(fileName: string) {
-    return `${this.uploadPath}/${fileName}`;
+  displayImage(flyer?: any) {
+    return `${flyer?.fileBaseUrl}/${flyer?.filename}`;
   }
 
   viewDetails(id: string) {

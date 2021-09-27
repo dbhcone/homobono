@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { CartService } from 'ng-shopping-cart';
 import { Subscription } from 'rxjs';
 import { TicketItem } from 'src/app/cart/ticket-item';
+import { removeItem } from 'src/app/store/actions/cart.actions';
+import { AppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'app-checkout',
@@ -11,12 +14,10 @@ import { TicketItem } from 'src/app/cart/ticket-item';
 export class CheckoutComponent implements OnInit, OnDestroy {
   cartItems: TicketItem[] = [];
   subscription!: Subscription;
-  constructor(private cart: CartService<TicketItem>) {
+  constructor(private cart: CartService<TicketItem>, private store: Store<AppState>) {
     this.subscription = this.cart.onItemsChanged.subscribe((item) => {
-      // if (item.change == 'items') {
-        console.log('cart items changed', item)
-        this.displayCartItems();
-      // }
+      console.log('cart items changed', item)
+      this.displayCartItems();
     })
   }
 
@@ -54,6 +55,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   remove(ticketItem: TicketItem) {
     this.cart.removeItem(ticketItem.id);
+    this.store.dispatch(removeItem({itemid: ticketItem.id}));
   }
 
   ngOnDestroy() {

@@ -17,7 +17,7 @@
           >
         </mat-card-header>
         <mat-card-content (click)="viewDetails(event._id)">
-          <img src="{{ displayFlyer(event.flyer.filename) }}" class="flyer" />
+          <img src="{{ displayFlyer(event.flyer) }}" class="flyer" />
           <section class="event-description">
             <p>{{ event.description }}</p>
           </section>

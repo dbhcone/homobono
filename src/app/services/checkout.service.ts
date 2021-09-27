@@ -41,8 +41,9 @@ export class CheckoutService {
         const {_id, event, pricing} = data;
         let ticketItem = new TicketItem({
           id: _id,
-          name: `${pricing.name} - ${event.title}`,
-          // image: '',
+          name: event.title,
+          ticketName: pricing.name,
+          image: '',
           quantity: 1,
           price: pricing.amount,
           eventId: event._id
