@@ -20,6 +20,8 @@ import { EventmanagementComponent } from './components/admin/events/eventmanagem
 import { EventdetailComponent } from './components/events/eventdetail.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { AuthGuard } from './guards/auth.guard';
+import { CartComponent } from './components/checkout/cart.component';
+import { ScannerComponent } from './components/scanner/scanner.component';
 const routes: Routes = [
   {
     path: '',
@@ -35,6 +37,7 @@ const routes: Routes = [
       { path: 'contact-us', component: ContactusComponent },
       { path: 'about-us', component: AboutComponent },
       { path: 'activate-account', component: ActivateaccountComponent },
+      { path: 'cart', component: CartComponent },
       { path: 'checkout', component: CheckoutComponent },
     ],
   },
@@ -53,6 +56,7 @@ const routes: Routes = [
       { path: 'clients', component: ClientsComponent },
     ],
   },
+  { path: 'scanner', component: ScannerComponent },
   { path: '**', component: FourZeroFourComponent },
 ];
 

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/services/auth.service';
+import { logoutUser, setUsername } from 'src/app/store/actions/user.actions';
+import { AppState } from 'src/app/store/app.state';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,13 +17,15 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {
     this.loginForm = fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
       isAdmin: [false],
     });
+    this.store.dispatch(logoutUser());
   }
 
   get username() {
@@ -39,16 +44,19 @@ export class LoginComponent implements OnInit {
       password,
       isAdmin
     );
-    this.auth.login({ username, password, isAdmin }).subscribe(
+    this.auth?.login({ username, password, isAdmin })?.subscribe(
       async (resp: any) => {
         console.log('login', resp);
         Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then(
-          (res) => {
-            this.auth.setToken(resp.token);
+          async (res) => {
+            let set = await this.auth.setToken(resp.token);
+            console.log('after set', set);
             const usersession = this.auth.session();
-            this.router.navigate(
-              usersession.role === 'admin' ? ['admin/events'] : ['events']
-            );
+            this.store.dispatch(setUsername({username: usersession?.username}))
+            // this.router.navigate(
+            //   usersession.role === 'admin' ? ['admin/events'] : ['events']
+            // );
+            this.router.navigate(['events']);
           }
         );
       },

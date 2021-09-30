@@ -4,7 +4,6 @@ import { CartService } from 'ng-shopping-cart';
 import Swal from 'sweetalert2';
 import { Events } from '../api/endpoints';
 import { TicketItem } from '../cart/ticket-item';
-import { Ticket } from '../models/ticket.interface';
 import { addCartItem } from '../store/actions/cart.actions';
 import { AppState } from '../store/app.state';
 import { Client } from '../utils/client';
@@ -12,7 +11,7 @@ import { Client } from '../utils/client';
 @Injectable({
   providedIn: 'root',
 })
-export class CheckoutService {
+export class ShoppingCartService {
   constructor(private cart: CartService<TicketItem>, private client: Client, private store: Store<AppState>) {}
 
   alreadyInCart(ticketId: string) {

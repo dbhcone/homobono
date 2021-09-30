@@ -3,24 +3,27 @@ import { Auth } from '../api/endpoints';
 import { IAccount, ICredentials, IUser } from '../models/auth.interface';
 import { Client } from '../utils/client';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/app.state';
+import { setUsername } from '../store/actions/user.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService implements OnInit {
-  constructor(private client: Client) {}
+  constructor(private client?: Client) {}
 
   ngOnInit(): void {}
   login(credentials: ICredentials) {
-    return this.client.POST(`${Auth.login}`, { ...credentials });
+    return this.client?.POST(`${Auth.login}`, { ...credentials });
   }
 
   signup(user: IUser, accountData: IAccount) {
-    return this.client.POST(`${Auth.signup}`, { user, account: accountData });
+    return this.client?.POST(`${Auth.signup}`, { user, account: accountData });
   }
 
   activateAccount(token: string, pin: string) {
-    return this.client.POST(`${Auth.activate}`, { token, pin });
+    return this.client?.POST(`${Auth.activate}`, { token, pin });
   }
   setToken(token: string) {
     const promise = new Promise((resolve, reject) => {
@@ -29,6 +32,10 @@ export class AuthService implements OnInit {
       reject(Error('There was an error'));
     });
     return promise;
+  }
+
+  unsetToken() {
+    localStorage.removeItem('access-token');
   }
 
   getToken() {
@@ -54,7 +61,7 @@ export class AuthService implements OnInit {
     const decodedToken = token ? jwtHelper.decodeToken(token) : null;
     console.log('decoded', decodedToken)
 
-    let [username, email, role] = [null, null, null];
+    let username, email, role;
 
     if (decodedToken != null || decodedToken != undefined) {
       username = decodedToken.username;

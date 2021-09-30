@@ -14,10 +14,12 @@ import { AppState } from 'src/app/store/app.state';
 export class HeaderComponent implements OnInit {
   username = null;
   cartStore: Observable<{items: [], shipping: number, taxRate: number}>
+  userStore: Observable<{username: string}>
   constructor(private auth: AuthService, private cartService: CartService<TicketItem>, private store: Store<AppState>) {
     // this.username = this.auth.session().username;
     // this.cartCount = this.cartService.itemCount();
     this.cartStore = store.select('cart'); //store.select("obj");
+    this.userStore = store.select('user');
    }
 
   ngOnInit(): void {

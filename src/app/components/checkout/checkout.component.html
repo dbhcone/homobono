@@ -1,23 +1,96 @@
-<h3>Total amount in cart {{displayCartTotal()}}</h3>
-<mat-card class="example-card" *ngFor="let cartItem of cartItems">
-  <mat-card-title-group>
-      <!-- TODO: Link to event id not pricing id -->
-    <mat-card-title><a routerLink="/events/{{cartItem.eventId}}"> {{cartItem.name}} </a></mat-card-title>
-    <!-- <mat-card-subtitle>Small</mat-card-subtitle> -->
-    <img
-      mat-card-sm-image
-      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-    />
-  </mat-card-title-group>
-  <mat-card-content>
-    <!-- {{ longText }} -->
-  </mat-card-content>
-  <mat-divider inset></mat-divider>
-  <mat-card-actions>
-      <p>Subtotal: <b>GHS {{cartItem.total()}}</b></p>
-    <button mat-icon-button color="primary" (click)="decrement(cartItem)"><mat-icon>remove_circle</mat-icon></button>
-    <input type="text" name="" [value]="cartItem.quantity" class="cart-item-qty">
-    <button mat-icon-button color="primary" (click)="increment(cartItem)"><mat-icon>add_circle</mat-icon></button>
-    <button mat-icon-button color="warn" (click)="remove(cartItem)"><mat-icon>delete</mat-icon></button>
-  </mat-card-actions>
-</mat-card>
+<div class="container h-100 login-container">
+  <div class="row h-100 justify-content-center align-items-center">
+    <!-- <div class="col-md-12"> -->
+    <mat-card>
+      <mat-card-header class="center-content">
+        <mat-card-title class="text-center">PAYMENT OF TICKETS</mat-card-title>
+        <mat-card-subtitle class="text-center"
+          >Select your mode of payment and follow the prompt!</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+            <mat-radio-group
+              formControlName="paymentType"
+              aria-label="Select an option for payment type"
+              (change)="onPaymentTypeChanged($event)"
+            >
+              <mat-label>Select payment mode</mat-label>
+              <mat-radio-button id="mobileMoney" value="mobileMoney">
+                <img 
+                class="img img-fluid"
+                src="assets/img/logos/all-networks-momo.png"
+                />
+              </mat-radio-button>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Mobile Number</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  formControlName="mobileNumber"
+                  placeholder="Eg. 0541234567"
+                  required
+                />
+                <mat-icon matSuffix>call</mat-icon>
+                <mat-hint> Example: 0541234567 </mat-hint>
+                <mat-error
+                  *ngIf="
+                    mobileNumber?.touched && mobileNumber?.hasError('required')
+                  "
+                >
+                  Please, provide your mobile number
+                </mat-error>
+              </mat-form-field>
+
+              
+              <mat-form-field appearance="outline">
+                <mat-label>Email address</mat-label>
+                <input
+                  matInput
+                  type="email"
+                  formControlName="email"
+                />
+                
+                <mat-error
+                  *ngIf="
+                    email?.touched && email?.hasError('required')
+                  "
+                >
+                  Please, provide your email address
+                </mat-error>
+              </mat-form-field>
+            
+              <mat-radio-button id="mastercard" value="mastercard">
+                <img 
+               class="img img-fluid"
+                src="assets/img/logos/master-card.png"
+                />
+              </mat-radio-button>
+            </mat-radio-group>
+
+            
+          <!-- Submit button -->
+          <button
+            mat-raised-button
+            aria-label="Sign up button"
+            color="accent"
+            type="submit"
+            [disabled]="!paymentForm.valid"
+            class="full-width"
+          >
+            {{ "Pay" | uppercase }}
+          </button>
+        </form>
+      </mat-card-content>
+
+      <mat-card-footer>
+        <p class="center-content">
+          Already have an account?
+          <a routerLink="/login"> Log in</a>
+        </p>
+      </mat-card-footer>
+    </mat-card>
+    <!-- </div> -->
+  </div>
+</div>

@@ -34,13 +34,12 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 
     if (event) {
       // TODO: try uploading and let's see
-      let upl = await uploadFile(filename);
+      uploadFile(filename, event._id);
       return res.status(201).json({
         message: 'Event created successfully',
         code: 201,
         status: 'ok',
-        data: event,
-        up: UPLOADPATH
+        data: event
       });
     } else {
       return res
@@ -123,6 +122,10 @@ const _delete = async (req: Request, res: Response) => {
   }
 };
 
+
+const updateFlyerUrl = async (eventId: string, url: string) => {
+  return await Events.findByIdAndUpdate(eventId, {"flyer.url": url}, {new: true});
+}
 const update = async (req: Request, res: Response) => {
   const _id = req.params.eventId;
   try {
@@ -276,5 +279,6 @@ export {
   readPricings,
   createPricing,
   updatePricing,
-  readPricingDetails
+  readPricingDetails,
+  updateFlyerUrl
 };

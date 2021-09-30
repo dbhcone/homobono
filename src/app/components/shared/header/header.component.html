@@ -40,27 +40,28 @@
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form> -->
       <ul class="navbar-nav d-flex">
-        <li class="nav-item" *ngIf="!username">
+        <li class="nav-item" *ngIf="!(userStore | async)?.username">
           <a routerLink="signup" class="nav-link"
             ><mat-icon matPrefix>account_circle</mat-icon> Register</a
           >
         </li>
-        <li class="nav-item" *ngIf="!username">
-          <a routerLink="/checkout" class="nav-link"
+        <li class="nav-item" *ngIf="(userStore | async)?.username != ''">
+          <a routerLink="/cart" class="nav-link"
             ><mat-icon matPrefix [matBadge]="(cartStore | async)?.items?.length" matBadgeSize="small" matBadgeColor="primary">shopping_cart</mat-icon> </a
           >
         </li>
-        <li class="nav-item" *ngIf="!username">
+        <li class="nav-item" *ngIf="!(userStore | async)?.username">
           <a routerLink="login" class="nav-link"
             ><mat-icon matPrefix>login</mat-icon>Login</a
           >
         </li>
-        <li *ngIf="username">
-          <button mat-button [matMenuTriggerFor]="beforeMenu">Welcome {{username}}!</button>
+        <li *ngIf="(userStore | async)?.username">
+          <button  mat-button [matMenuTriggerFor]="beforeMenu">Welcome {{ (userStore| async)?.username }}!</button>
           <mat-menu #beforeMenu="matMenu" xPosition="before">
             <button mat-menu-item><a class="btn" role="button"><mat-icon matPrefix>person</mat-icon> View Profile</a></button>
+            <button mat-menu-item><a class="btn" role="button" routerLink="/admin/dashboard"><mat-icon matPrefix>dashboard</mat-icon> My Dashboard</a></button>
             <mat-divider></mat-divider>
-            <button mat-menu-item><a class="btn" role="button" routerLink="logout"><mat-icon matPrefix>logout</mat-icon> Logout</a></button>
+            <button mat-menu-item><a class="btn" role="button" routerLink="/logout"><mat-icon matPrefix>logout</mat-icon> Logout</a></button>
           </mat-menu>
         </li>
       </ul>

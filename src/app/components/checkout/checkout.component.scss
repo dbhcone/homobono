@@ -1,10 +1,14 @@
-.example-card {
-    max-width: 400px;
-    margin-bottom: 8px;
-  }
+mat-radio-button {
+  margin-left: 15px;
+}
 
-  .cart-item-qty {
-      border: none;
-      text-align: center;
-      max-width: 50px;
-  }
+mat-radio-group {
+    display: block;
+}
+mat-form-field{
+    display: block;
+}
+
+mat-card {
+    max-width: 400px;
+}

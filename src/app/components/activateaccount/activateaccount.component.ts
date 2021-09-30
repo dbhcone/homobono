@@ -38,7 +38,7 @@ export class ActivateaccountComponent implements OnInit {
   }
 
   onSubmit() {
-    this.auth.activateAccount(this.token || '', this.pin?.value).subscribe(
+    this.auth.activateAccount(this.token || '', this.pin?.value)?.subscribe(
       async (resp: any) => {
         console.log('activation', resp);
         Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then((res) => {

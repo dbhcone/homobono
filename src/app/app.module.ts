@@ -70,6 +70,12 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { TicketItem } from './cart/ticket-item';
 import { StoreModule } from '@ngrx/store';
 import { cartReducer } from './store/reducers/cart.reducers';
+import { userReducer } from './store/reducers/user.reducers';
+import { CartComponent } from './components/checkout/cart.component';
+import { ScannerComponent } from './components/scanner/scanner.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { QRCodeModule } from 'angular2-qrcode';
+
 
 @NgModule({
   declarations: [
@@ -98,6 +104,8 @@ import { cartReducer } from './store/reducers/cart.reducers';
     EventpricingComponent,
     EventdetailComponent,
     CheckoutComponent,
+    CartComponent,
+    ScannerComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -152,7 +160,9 @@ import { cartReducer } from './store/reducers/cart.reducers';
         clearOnError: true,
       },
     }),
-    StoreModule.forRoot({ cart: cartReducer }),
+    StoreModule.forRoot({ cart: cartReducer, user: userReducer }),
+    ZXingScannerModule,
+    QRCodeModule
   ],
   providers: [],
   bootstrap: [AppComponent],

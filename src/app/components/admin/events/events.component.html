@@ -30,7 +30,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Flyer</th>
       <td mat-cell *matCellDef="let row">
         <img mat-card-image
-          src="{{ displayFlyer(row.flyer) }}"
+          src="{{row.flyer.url}}"
           alt="flyer of {{ row.title }}"
           class="thumbnail"
         />

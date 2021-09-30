@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CheckoutService } from 'src/app/services/checkout.service';
+import { ShoppingCartService } from 'src/app/services/shoppingcart.service';
 import { EventService } from 'src/app/services/event.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class EventdetailComponent implements OnInit, OnDestroy {
     private actRoute: ActivatedRoute,
     private eventService: EventService,
     private router: Router,
-    private checkout: CheckoutService
+    private cart: ShoppingCartService
   ) {
     this.subscription = this.actRoute.paramMap.subscribe((pm) => {
       if(pm.has('id')) {
@@ -71,7 +71,7 @@ export class EventdetailComponent implements OnInit, OnDestroy {
 
   addToCart(ticketId: string) {
     console.log('we are adding to cart', ticketId);
-    this.checkout.addToCart(ticketId);
+    this.cart.addToCart(ticketId);
   }
 
 }

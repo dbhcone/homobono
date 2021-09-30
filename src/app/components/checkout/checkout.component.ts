@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatRadioChange } from '@angular/material/radio';
 import { Store } from '@ngrx/store';
-import { CartService } from 'ng-shopping-cart';
-import { Subscription } from 'rxjs';
-import { TicketItem } from 'src/app/cart/ticket-item';
-import { removeItem } from 'src/app/store/actions/cart.actions';
+import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 
 @Component({
@@ -12,55 +11,46 @@ import { AppState } from 'src/app/store/app.state';
   styleUrls: ['./checkout.component.scss'],
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
-  cartItems: TicketItem[] = [];
-  subscription!: Subscription;
-  constructor(private cart: CartService<TicketItem>, private store: Store<AppState>) {
-    this.subscription = this.cart.onItemsChanged.subscribe((item) => {
-      console.log('cart items changed', item)
-      this.displayCartItems();
-    })
+  paymentForm!: FormGroup;
+
+  cartStore: Observable<{items: [], shipping: number, taxRate: number}>
+
+  constructor(private fb: FormBuilder, private store: Store<AppState>) {
+    this.paymentForm = this.fb.group({
+      paymentType: [null],
+      mobileNumber: [null],
+      email: [null, Validators.compose([Validators.email])]
+    });
+    this.cartStore = store.select('cart');
   }
 
   longText = `The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog
   from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
   originally bred for hunting.`;
 
-  ngOnInit(): void {
-    this.displayCartItems();
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {}
+
+  onPaymentTypeChanged(event: MatRadioChange) {
+    console.log('radio change', event);
   }
 
-  displayCartItems() {
-    this.cartItems = this.cart.getItems();
+  
+  public get paymentType() : AbstractControl | null {
+    return this.paymentForm.get('paymentType');
   }
 
-  displayCartTotal() {
-    return this.cart.totalCost();
+  public get mobileNumber() : AbstractControl | null {
+    return this.paymentForm.get('mobileNumber');
   }
 
-  increment(ticketItem: TicketItem) {
-    const items = this.cart.getItems();
-    const index = items.findIndex((itm) => {itm.id === ticketItem.id});
-    ticketItem.quantity += 1;
-    this.cartItems.splice(index, 1, ticketItem);
-    console.log('to increase');
+  public get email() : AbstractControl | null {
+    return this.paymentForm.get('email');
   }
 
-  decrement(ticketItem: TicketItem) {
-    const items = this.cart.getItems();
-    const index = items.findIndex((itm) => {itm.id === ticketItem.id});
-    ticketItem.quantity -= 1;
-    this.cartItems.splice(index, 1, ticketItem);
-    console.log('to decrease');
+  onSubmit() {
+    console.log('form being submitted', this.paymentForm.value);
   }
-
-  remove(ticketItem: TicketItem) {
-    this.cart.removeItem(ticketItem.id);
-    this.store.dispatch(removeItem({itemid: ticketItem.id}));
-  }
-
-  ngOnDestroy() {
-    if(this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
+  
 }
