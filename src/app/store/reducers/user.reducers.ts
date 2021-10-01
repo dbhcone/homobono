@@ -1,26 +1,26 @@
 import { Action, createReducer, on, State } from "@ngrx/store";
 import { AuthService } from "src/app/services/auth.service";
-import { logoutUser, setUsername } from "../actions/user.actions";
-
+import { logoutUser, setUserData } from "../actions/user.actions";
 
 const auth = new AuthService();
-const init = auth.session().username;
-const initialState = {username: init};
+const {username,email, role} = auth.session();
+const init = {username, email, role };
+const initialState = {user: init};
 
 const reducer = createReducer(
     initialState,
-    on(setUsername, (state, action) => {
+    on(setUserData, (state, action) => {
         console.log('state', state);
         console.log('action', action);
-        return {...state, username: action.username}
+        return {...state, user: action.user}
     }),
     on(logoutUser, (state, action) => {
         auth.unsetToken();
-        return {...state, username: null}
+        return {...state, user: {username: null, email: null, role: null}}
     })
     
  );
 
-export function userReducer (state: {username: string } | undefined, action: Action) {
+export function userReducer (state: {user: {username: string, email: string, role: string} } | undefined, action: Action) {
     return reducer(state, action);
 }

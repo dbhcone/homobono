@@ -14,14 +14,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   paymentForm!: FormGroup;
 
   cartStore: Observable<{items: [], shipping: number, taxRate: number}>
+  userStore: Observable<{user: {username: string, email: string, role: string}}>
+
+  useremail!: string;
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
+    this.cartStore = store.select('cart');
+    this.userStore = store.select('userObj');
+
+    this.userStore.subscribe((cs) => {
+      this.useremail = cs.user.email;
+    })
     this.paymentForm = this.fb.group({
       paymentType: [null],
       mobileNumber: [null],
-      email: [null, Validators.compose([Validators.email])]
+      email: [this.useremail || null, Validators.compose([Validators.email])]
     });
-    this.cartStore = store.select('cart');
   }
 
   longText = `The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog

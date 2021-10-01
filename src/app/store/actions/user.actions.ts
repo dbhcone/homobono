@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 
-const setUsername = createAction(
-  'Set [User Username]',
+const setUserData = createAction(
+  'Set [User UserDetails]',
   props<{
-    username: string
+    user: {username: string, email: string, role: string}
   }>()
 );
 
@@ -11,4 +11,4 @@ const logoutUser = createAction(
   'Logout [User token]'
 );
 
-export { setUsername, logoutUser };
+export { setUserData, logoutUser };

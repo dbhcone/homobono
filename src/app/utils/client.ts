@@ -10,7 +10,7 @@ export class Client {
     
     constructor(private http: HttpClient) {}
     headers = new HttpHeaders({
-        Authorization: `Bearer ${localStorage.getItem('access-token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('access-token')}`,
         'Content-Type': 'application/json',
     });
 

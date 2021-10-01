@@ -3,9 +3,6 @@ import { Auth } from '../api/endpoints';
 import { IAccount, ICredentials, IUser } from '../models/auth.interface';
 import { Client } from '../utils/client';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Store } from '@ngrx/store';
-import { AppState } from '../store/app.state';
-import { setUsername } from '../store/actions/user.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +24,7 @@ export class AuthService implements OnInit {
   }
   setToken(token: string) {
     const promise = new Promise((resolve, reject) => {
-      localStorage.setItem('access-token', token);
+      sessionStorage.setItem('access-token', token);
       resolve(token);
       reject(Error('There was an error'));
     });
@@ -35,11 +32,11 @@ export class AuthService implements OnInit {
   }
 
   unsetToken() {
-    localStorage.removeItem('access-token');
+    sessionStorage.removeItem('access-token');
   }
 
   getToken() {
-    return localStorage.getItem('access-token');
+    return sessionStorage.getItem('access-token');
   }
 
   data(): IUser {

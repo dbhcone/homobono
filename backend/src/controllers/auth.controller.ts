@@ -132,7 +132,7 @@ const Login = async (req: Request, res: Response) => {
 
   try {
     const validation = await loginValidation.validateAsync(req.body);
-    const role = isAdmin ? 'admin' : 'member';
+    const role = isAdmin ? 'admin' : 'user';
 
     // hash password and find
     password = md5(password)

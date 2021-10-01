@@ -75,6 +75,8 @@ import { CartComponent } from './components/checkout/cart.component';
 import { ScannerComponent } from './components/scanner/scanner.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QRCodeModule } from 'angular2-qrcode';
+import { UserdashboardComponent } from './components/user/dashboard/userdashboard.component';
+import { UserNavigationComponent } from './components/user/user-navigation.component';
 
 
 @NgModule({
@@ -105,7 +107,9 @@ import { QRCodeModule } from 'angular2-qrcode';
     EventdetailComponent,
     CheckoutComponent,
     CartComponent,
-    ScannerComponent
+    ScannerComponent,
+    UserdashboardComponent,
+    UserNavigationComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -160,7 +164,7 @@ import { QRCodeModule } from 'angular2-qrcode';
         clearOnError: true,
       },
     }),
-    StoreModule.forRoot({ cart: cartReducer, user: userReducer }),
+    StoreModule.forRoot({ cart: cartReducer, userObj: userReducer }),
     ZXingScannerModule,
     QRCodeModule
   ],

@@ -11,7 +11,7 @@ export class EventService {
   httpOptions = {
     headers: new HttpHeaders({
         'Access-Control-Allow-Origin': '*',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('access-token')}`,
     }),
 };
   constructor(private client: Client) {}

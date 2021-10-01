@@ -22,8 +22,11 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CartComponent } from './components/checkout/cart.component';
 import { ScannerComponent } from './components/scanner/scanner.component';
+import { UserNavigationComponent } from './components/user/user-navigation.component';
+import { UserdashboardComponent } from './components/user/dashboard/userdashboard.component';
 const routes: Routes = [
   {
+    //#region General routes
     path: '',
     component: LayoutComponent,
     children: [
@@ -41,11 +44,13 @@ const routes: Routes = [
       { path: 'checkout', component: CheckoutComponent },
     ],
   },
+  //#endregion
+
+  //#region Admin routes
   {
     path: 'admin',
     component: AdminNavigationComponent,
     canActivate: [AuthGuard],
-    // canActivateChild: [AuthGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboardComponent },
@@ -56,6 +61,16 @@ const routes: Routes = [
       { path: 'clients', component: ClientsComponent },
     ],
   },
+//#endregion
+  
+{
+  path: 'user', component: UserNavigationComponent, 
+  children: [
+    {path: '', redirectTo: "dashboard", pathMatch: "full"},
+    {path: 'dashboard', component: UserdashboardComponent}
+  ]
+},
+//#region Other routes
   { path: 'scanner', component: ScannerComponent },
   { path: '**', component: FourZeroFourComponent },
 ];

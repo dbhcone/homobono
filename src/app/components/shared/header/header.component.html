@@ -40,66 +40,54 @@
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form> -->
       <ul class="navbar-nav d-flex">
-        <li class="nav-item" *ngIf="!(userStore | async)?.username">
+        <li class="nav-item" *ngIf="!(userStore | async)?.user?.username">
           <a routerLink="signup" class="nav-link"
             ><mat-icon matPrefix>account_circle</mat-icon> Register</a
           >
         </li>
-        <li class="nav-item" *ngIf="(userStore | async)?.username != ''">
+        <li class="nav-item" *ngIf="(userStore | async)?.user?.username != ''">
           <a routerLink="/cart" class="nav-link"
-            ><mat-icon matPrefix [matBadge]="(cartStore | async)?.items?.length" matBadgeSize="small" matBadgeColor="primary">shopping_cart</mat-icon> </a
-          >
+            ><mat-icon
+              matPrefix
+              [matBadge]="(cartStore | async)?.items?.length"
+              matBadgeSize="small"
+              matBadgeColor="primary"
+              >shopping_cart</mat-icon
+            >
+          </a>
         </li>
-        <li class="nav-item" *ngIf="!(userStore | async)?.username">
+        <li class="nav-item" *ngIf="!(userStore | async)?.user?.username">
           <a routerLink="login" class="nav-link"
             ><mat-icon matPrefix>login</mat-icon>Login</a
           >
         </li>
-        <li *ngIf="(userStore | async)?.username">
-          <button  mat-button [matMenuTriggerFor]="beforeMenu">Welcome {{ (userStore| async)?.username }}!</button>
+        <li *ngIf="(userStore | async)?.user?.username">
+          <button mat-button [matMenuTriggerFor]="beforeMenu">
+            Welcome {{ (userStore | async)?.user?.username }}!
+          </button>
           <mat-menu #beforeMenu="matMenu" xPosition="before">
-            <button mat-menu-item><a class="btn" role="button"><mat-icon matPrefix>person</mat-icon> View Profile</a></button>
-            <button mat-menu-item><a class="btn" role="button" routerLink="/admin/dashboard"><mat-icon matPrefix>dashboard</mat-icon> My Dashboard</a></button>
+            <button mat-menu-item>
+              <a class="btn" role="button"
+                ><mat-icon matPrefix>person</mat-icon> View Profile</a
+              >
+            </button>
+            <button mat-menu-item>
+              <a
+                class="btn"
+                role="button"
+                routerLink="/{{(userStore | async)?.user?.role }}/dashboard"
+                ><mat-icon matPrefix>dashboard</mat-icon> My Dashboard</a
+              >
+            </button>
             <mat-divider></mat-divider>
-            <button mat-menu-item><a class="btn" role="button" routerLink="/logout"><mat-icon matPrefix>logout</mat-icon> Logout</a></button>
+            <button mat-menu-item>
+              <a class="btn" role="button" routerLink="/logout"
+                ><mat-icon matPrefix>logout</mat-icon> Logout</a
+              >
+            </button>
           </mat-menu>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-
-<!-- <nav id="navbar-example2" class="navbar navbar-light bg-light px-3">
-    <a class="navbar-brand" routerLink="#">Navbar</a>
-    <ul class="nav nav-pills">
-        <li class="nav-item">
-            <a routerLink="events" class="nav-link"><mat-icon matPrefix>events</mat-icon> Events</a>
-        </li>
-        <li class="nav-item">
-            <a routerLink="gallery" class="nav-link"><mat-icon matPrefix>collections</mat-icon>Gallery</a>
-        </li>
-        <li class="nav-item">
-            <a routerLink="login" class="nav-link"><mat-icon matPrefix>login</mat-icon>Login</a>
-        </li>
-        <li class="nav-item">
-            <a routerLink="signup" class="nav-link"><mat-icon matPrefix>account_circle</mat-icon>    Register</a>
-        </li>
-        
-      <li class="nav-item">
-        <a class="nav-link" routerLink="#scrollspyHeading1">First</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="#scrollspyHeading2">Second</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" routerLink="#" role="button" aria-expanded="false">Dropdown</a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" routerLink="#scrollspyHeading3">Third</a></li>
-          <li><a class="dropdown-item" routerLink="#scrollspyHeading4">Fourth</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" routerLink="#scrollspyHeading5">Fifth</a></li>
-        </ul>
-      </li>
-       
-    </ul>
-  </nav> -->

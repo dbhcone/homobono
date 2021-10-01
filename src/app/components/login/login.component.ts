@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/services/auth.service';
-import { logoutUser, setUsername } from 'src/app/store/actions/user.actions';
+import { logoutUser, setUserData } from 'src/app/store/actions/user.actions';
 import { AppState } from 'src/app/store/app.state';
 import Swal from 'sweetalert2';
 
@@ -52,10 +52,8 @@ export class LoginComponent implements OnInit {
             let set = await this.auth.setToken(resp.token);
             console.log('after set', set);
             const usersession = this.auth.session();
-            this.store.dispatch(setUsername({username: usersession?.username}))
-            // this.router.navigate(
-            //   usersession.role === 'admin' ? ['admin/events'] : ['events']
-            // );
+            const {username, email, role} = usersession;
+            this.store.dispatch(setUserData({user: {username, email,role}}))
             this.router.navigate(['events']);
           }
         );
