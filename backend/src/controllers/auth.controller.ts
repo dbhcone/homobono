@@ -136,7 +136,8 @@ const Login = async (req: Request, res: Response) => {
 
     // hash password and find
     password = md5(password)
-    const user = await Users.findOne({ username, password, role });
+    // const user = await Users.findOne({ username, password, role });
+    const user = await Users.findOne({password, role, $or: [{username}, {email: username}]});
 
     if (!user) {
       return res
@@ -151,7 +152,7 @@ const Login = async (req: Request, res: Response) => {
 
     let token = generateToken(
       { username: user.username, role: user.role, id: user._id, email: user.email },
-      '6h'
+      '2h'
     );
 
     return res

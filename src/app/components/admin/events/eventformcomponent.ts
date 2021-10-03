@@ -1,5 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventService } from 'src/app/services/event.service';
 import Swal from 'sweetalert2';
@@ -10,6 +16,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./eventform.component.scss'],
 })
 export class EventformComponent implements OnInit {
+  submitting = false;
   createEventForm;
   flyerFile: File | undefined;
   flyerSrc: string | undefined;
@@ -28,10 +35,7 @@ export class EventformComponent implements OnInit {
     this.createEventForm = fb.group({
       title: [
         data?.title || null,
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(5)
-        ]),
+        Validators.compose([Validators.required, Validators.minLength(5)]),
       ],
       date: [data?.date || null, Validators.required],
       time: [data?.time || null, Validators.required],
@@ -46,9 +50,9 @@ export class EventformComponent implements OnInit {
       ],
       photos: [null],
     });
-     if (this.data) {
-       this.HEADING = 'EDIT EVENT DETAILS';
-     }
+    if (this.data) {
+      this.HEADING = 'EDIT EVENT DETAILS';
+    }
   }
 
   ngOnInit(): void {}
@@ -90,22 +94,22 @@ export class EventformComponent implements OnInit {
   // }
 
   // Dynamic Extra details
-  extraDetails() : FormArray {
-    return this.createEventForm.get("extraDetails") as FormArray
+  extraDetails(): FormArray {
+    return this.createEventForm.get('extraDetails') as FormArray;
   }
-   
+
   newDetail(): FormGroup {
     return this.fb.group({
       label: '',
       value: '',
-    })
+    });
   }
-   
+
   addDetail() {
     this.extraDetails().push(this.newDetail());
   }
-   
-  removeDetail(i:number) {
+
+  removeDetail(i: number) {
     this.extraDetails().removeAt(i);
   }
 
@@ -113,13 +117,13 @@ export class EventformComponent implements OnInit {
     const formData = new FormData();
     const formValue = this.createEventForm.value;
     console.log('We are about submitting the form', formValue);
-   
+    this.submitting = true;
     for (const key in formValue) {
       if (Object.prototype.hasOwnProperty.call(formValue, key)) {
         let element = formValue[key];
         // check for event details
         if (key == 'extraDetails') {
-          element = JSON.stringify(element)
+          element = JSON.stringify(element);
         }
         formData.append(key, element);
       }
@@ -134,6 +138,7 @@ export class EventformComponent implements OnInit {
         });
       },
       (err) => {
+        this.submitting = false;
         Swal.fire({
           icon: 'error',
           title: 'Error',

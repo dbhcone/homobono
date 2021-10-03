@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./eventpricing.component.scss'],
 })
 export class EventpricingComponent implements OnInit {
+  submitting = false;
   pricingForm;
   HEADING = 'ADD PRICING DETAIL';
   SAVE = 'SAVE';
@@ -51,6 +52,7 @@ export class EventpricingComponent implements OnInit {
 
   onSubmit() {
     let obs;
+    this.submitting = true;
     if (this.data._id) {
       console.log('updating ticket');
       obs = this.eventService.updatePricing(
@@ -71,6 +73,7 @@ export class EventpricingComponent implements OnInit {
         Swal.fire({ text: resp.message, icon: 'success', timer: 5000 });
       },
       (err) => {
+        this.submitting = false;
         Swal.fire({
           title: `${err.error.status} - ${err.error.code}`,
           text: `${err.error.message}`,

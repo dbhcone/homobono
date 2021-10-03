@@ -40,8 +40,9 @@
         [mat-dialog-close]="pricingForm.value"
         cdkFocusInitial
         type="submit"
+        [disabled]="!pricingForm.valid || submitting"
       >
-        Save
+      (submitting ? "Saving" : "Save") | uppercase
       </button>
     </mat-dialog-actions>
   </form>

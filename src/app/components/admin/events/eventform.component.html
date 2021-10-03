@@ -169,9 +169,9 @@
       color="primary"
       cdkFocusInitial
       type="submit"
-      [disabled]="!this.createEventForm.valid"
+      [disabled]="!this.createEventForm.valid || submitting"
     >
-      Save
+      (submitting ? "Saving" : "Save") | uppercase
     </button>
   </mat-dialog-actions>
 </form>

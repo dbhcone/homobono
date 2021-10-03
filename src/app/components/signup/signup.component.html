@@ -176,9 +176,9 @@
             aria-label="Sign up button"
             color="accent"
             type="submit"
-            [disabled]="!signupForm.valid"
+            [disabled]="!signupForm.valid || submitting"
           >
-            {{ "Sign up" | uppercase }}
+            {{ (submitting ? "Please wait ..." : "Sign up") | uppercase }}
           </button>
         </form>
       </mat-card-content>

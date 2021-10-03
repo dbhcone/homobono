@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  submitting = false;
   loginForm: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -21,8 +22,8 @@ export class LoginComponent implements OnInit {
     private store: Store<AppState>
   ) {
     this.loginForm = fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      username: [null, [Validators.required]],
+      password: [null, [Validators.required]],
       isAdmin: [false],
     });
     this.store.dispatch(logoutUser());
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const { username, password, isAdmin } = this.loginForm.value;
+    this.submitting = true;
     console.log(
       'You are about to submit the form',
       username,
@@ -59,6 +61,7 @@ export class LoginComponent implements OnInit {
         );
       },
       (err) => {
+        this.submitting = false;
         Swal.fire({
           title: `${err.error.status.toUpperCase()}`,
           text: `${err.error.message}`,

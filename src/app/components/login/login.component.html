@@ -11,19 +11,19 @@
       <mat-card-content>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <mat-form-field appearance="outline">
-            <mat-label>Username</mat-label>
+            <mat-label>Username or Email</mat-label>
             <input
               matInput
               type="text"
               formControlName="username"
-              placeholder="enter your username"
+              placeholder="enter your username or email"
               required
             />
             <mat-icon matSuffix>account_circle</mat-icon>
             <mat-error
               *ngIf="username?.touched && username?.hasError('required')"
             >
-              Provide username
+              Provide username or email
             </mat-error>
           </mat-form-field>
 
@@ -66,9 +66,9 @@
             type="submit"
             mat-raised-button
             color="accent"
-            [disabled]="!loginForm.valid"
+            [disabled]="!loginForm.valid || submitting"
           >
-            {{"Login" | uppercase}}
+            {{(submitting ? "Authenticating ..." : "Login") | uppercase}}
           </button>
         </form>
       </mat-card-content>

@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class ActivateaccountComponent implements OnInit {
   activateAccountForm;
+  submitting = false;
   token: any;
   constructor(
     private fb: FormBuilder,
@@ -38,6 +39,7 @@ export class ActivateaccountComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitting  = true;
     this.auth.activateAccount(this.token || '', this.pin?.value)?.subscribe(
       async (resp: any) => {
         console.log('activation', resp);
@@ -46,6 +48,7 @@ export class ActivateaccountComponent implements OnInit {
         });
       },
       (err) => {
+        this.submitting  = false
         Swal.fire({
           title: `${err.error.status} - ${err.error.code}`,
           text: `${err.error.message}`,

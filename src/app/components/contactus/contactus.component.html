@@ -67,7 +67,7 @@
               color="accent"
               [disabled]="!contactusForm.valid"
             >
-              {{"submit" | uppercase}}
+              {{(submitting ? "submitting ..." : "submit") | uppercase}}
             </button>
           </form>
         </mat-card-content>

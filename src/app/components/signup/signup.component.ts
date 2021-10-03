@@ -10,6 +10,7 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
+  submitting = false;
   signupForm: FormGroup;
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.signupForm = this.fb.group({
@@ -69,6 +70,7 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
+    this.submitting = true;
     const userdata = this.signupForm.get('user')?.value;
     const { confirmPassword, ...user } = userdata;
     const account = this.signupForm.get('account')?.value;
@@ -84,6 +86,7 @@ export class SignupComponent implements OnInit {
         );
       },
       (err) => {
+        this.submitting = false;
         Swal.fire({
           title: `${err.error.status} - ${err.error.code}`,
           text: `${err.error.message}`,

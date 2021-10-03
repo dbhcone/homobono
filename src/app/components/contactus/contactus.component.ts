@@ -15,6 +15,7 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 })
 export class ContactusComponent implements OnInit {
   contactusForm: FormGroup;
+  submitting = false;
   constructor(private fb: FormBuilder, private general: GeneralService) {
     this.contactusForm = fb.group({
       message: [
@@ -60,6 +61,7 @@ export class ContactusComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitting = true;
     this.general.contactUs({ ...this.contactusForm.value }).subscribe(
       async (resp: any) => {
         Swal.fire({
@@ -71,6 +73,7 @@ export class ContactusComponent implements OnInit {
         });
       },
       (err) => {
+        this.submitting = false
         Swal.fire({
           icon: 'error',
           title: 'Error',
