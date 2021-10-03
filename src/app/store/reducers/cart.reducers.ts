@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from "@ngrx/store";
-import { addCartItem, increaseQuantity, removeItem } from "../actions/cart.actions";
+import { addCartItem, clearCart, increaseQuantity, removeItem } from "../actions/cart.actions";
 let shoppingCart = localStorage.getItem('HomoBonoShoppingCart');
 let init = {items: [{}], taxRate: 0, shipping: 0};
 if (shoppingCart) {
@@ -35,6 +35,12 @@ const reducer = createReducer(
         let items = stateItems.filter((item: any) => item.id != action.itemid);
 
         return {...state, items}
+    }),
+    on(clearCart, (state, action) => {
+        console.log('state', state);
+        console.log('action', action);
+        localStorage.removeItem('HomoBonoShoppingCart')
+        return {...state, items: []}
     })
  );
 

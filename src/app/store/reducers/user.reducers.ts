@@ -3,8 +3,8 @@ import { AuthService } from "src/app/services/auth.service";
 import { logoutUser, setUserData } from "../actions/user.actions";
 
 const auth = new AuthService();
-const {username,email, role} = auth.session();
-const init = {username, email, role };
+const {username,email, role, id} = auth.session();
+const init = {username, email, role, id };
 const initialState = {user: init};
 
 const reducer = createReducer(
@@ -16,11 +16,11 @@ const reducer = createReducer(
     }),
     on(logoutUser, (state, action) => {
         auth.unsetToken();
-        return {...state, user: {username: null, email: null, role: null}}
+        return {...state, user: {id: null, username: null, email: null, role: null}}
     })
     
  );
 
-export function userReducer (state: {user: {username: string, email: string, role: string} } | undefined, action: Action) {
+export function userReducer (state: {user: {username: string, email: string, role: string, id: string} } | undefined, action: Action) {
     return reducer(state, action);
 }

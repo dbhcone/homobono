@@ -58,15 +58,16 @@ export class AuthService implements OnInit {
     const decodedToken = token ? jwtHelper.decodeToken(token) : null;
     console.log('decoded', decodedToken)
 
-    let username, email, role;
+    let username, email, role, id;
 
     if (decodedToken != null || decodedToken != undefined) {
       username = decodedToken.username;
       email = decodedToken.email;
       role = decodedToken.role;
+      id = decodedToken.id
     }
 
-    return { username, isTokenExpired, email, role };
+    return { username, isTokenExpired, email, role, id };
   }
 
   isTokeExpired(): boolean {

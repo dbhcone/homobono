@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import { ContactUs } from '../controllers/index.controller';
+import qr from 'qrcode'
 const router = express.Router();
 
 /* GET home page. */
@@ -18,6 +19,18 @@ router.get('/test', function (req: Request, res: Response, next: NextFunction) {
       data: [dir, me]
     });
 });
+
+router.post('/getqrcode', (req: Request, res: Response, next: NextFunction) => {
+  const content = JSON.stringify(req.body);
+  console.log('content', content);
+  qr.toDataURL(content, (err, src) => {
+    if (err) res.send("Error occured");
+
+    res.status(201).json({src});
+  })
+
+  // res.status(200).json({message: 'scan completed!'})
+})
 
 router.post('/contactus', ContactUs)
 

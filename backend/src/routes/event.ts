@@ -2,6 +2,7 @@ import express from 'express';
 import {
   create, read, update, _delete, readOne, readPricings, createPricing, updatePricing, readPricingDetails
 } from '../controllers/event.controller';
+import {create as makePayment} from '../controllers/purchase.controller';
 import { photograph } from '../validators/shared.validations';
 const router = express.Router();
 
@@ -18,4 +19,8 @@ router.patch('/pricelist/:id', updatePricing);
 
 // pricing details
 router.get('/pricings/:pricingId', readPricingDetails)
+
+
+// purchases
+router.post('/purchase', makePayment )
 export { router as eventsRouter };

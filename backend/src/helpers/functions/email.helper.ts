@@ -3,6 +3,8 @@ import nodemailer from 'nodemailer';
 import config from 'config';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import { NextFunction, Request, Response } from 'express';
+import table from './ticket.helper';
+import { ITicket } from '../../interfaces/event.interface';
 
 const mailer = <string>config.get('MAILER_EMAIL') || '';
 const pwd = <string>config.get('MAILER_PWD') || '';
@@ -109,4 +111,47 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
     res.sendStatus(403);
   }
 }
-export { accountActivationEmail, passwordResetRequestEmail, generatPin };
+
+const sendTicketEmail = async (email: string, firstname: string, items: ITicket[], qrcode: string) => {
+  const preamble = `<header>
+  <h2>HB EVENTS TICKET PURCHASE</h2>
+</header>
+<section>
+  <p>
+    Hello <b>"${firstname}"</b>. Thank you for choosing
+    <b>"HB EVENTS & USHERING SERVICES"</b>. <br />
+  </p>
+</section>
+<section>
+  <p>
+    Please, keep this qrcode safe. You will be required to provide it for
+    authentication at the gate entry during the event.
+  </p>
+  <img
+    src="${qrcode}"
+    alt="qr code ticket of ${firstname}"
+    height="200"
+    width="200"
+  />
+</section>`;
+
+  let tbl = table(items);
+  const mailOptions = {
+    from: `HB Events<${mailer}>`,
+    to: `${email}`,
+    subject: 'Ticket Purchase',
+    html: `${preamble}${tbl}`,
+  };
+
+  try {
+    const resp = await transporter.sendMail(mailOptions);
+    return {
+      message: 'Email sent: ' + resp.response,
+      status: 'ok',
+      code: 200,
+    };
+  } catch (error: any) {
+    return { message: error.message, status: 'error', code: error.name };
+  }
+};
+export { accountActivationEmail, passwordResetRequestEmail, generatPin, sendTicketEmail };

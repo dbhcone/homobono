@@ -52,8 +52,8 @@ export class LoginComponent implements OnInit {
             let set = await this.auth.setToken(resp.token);
             console.log('after set', set);
             const usersession = this.auth.session();
-            const {username, email, role} = usersession;
-            this.store.dispatch(setUserData({user: {username, email,role}}))
+            const {username, email, role, id} = usersession;
+            this.store.dispatch(setUserData({user: {username, email,role, id}}))
             this.router.navigate(['events']);
           }
         );

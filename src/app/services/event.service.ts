@@ -50,4 +50,9 @@ export class EventService {
   }
   //#endregion
 
+  //#region Purchases
+  makePayment(user: any, items: []) {
+    return this.client.POST(Events.purchase, {user, items});
+  }
+
 }

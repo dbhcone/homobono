@@ -76,20 +76,13 @@
             aria-label="Sign up button"
             color="accent"
             type="submit"
-            [disabled]="!paymentForm.valid"
+            [disabled]="!paymentForm.valid || submitting "
             class="full-width"
           >
-            {{ "Pay" | uppercase }}
+            {{ (submitting ? "Payment in progress ..." : "Pay") | uppercase }}
           </button>
         </form>
       </mat-card-content>
-
-      <mat-card-footer>
-        <p class="center-content">
-          Already have an account?
-          <a routerLink="/login"> Log in</a>
-        </p>
-      </mat-card-footer>
     </mat-card>
     <!-- </div> -->
   </div>

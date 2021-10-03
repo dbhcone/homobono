@@ -3,7 +3,7 @@ import { createAction, props } from '@ngrx/store';
 const setUserData = createAction(
   'Set [User UserDetails]',
   props<{
-    user: {username: string, email: string, role: string}
+    user: {id: string, username: string, email: string, role: string}
   }>()
 );
 

@@ -21,4 +21,13 @@ const createEventValidation: ObjectSchema<{
   // photos: Joi.array().allow(null),
 });
 
-export { createEventValidation };
+
+const createPurchase: ObjectSchema<{}> = Joi.object({
+  user: Joi.object({
+    id: Joi.string().required(),
+    email: Joi.string().email()
+  }).required(),
+  items: Joi.array()
+})
+
+export { createEventValidation, createPurchase };
