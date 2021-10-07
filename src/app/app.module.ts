@@ -40,7 +40,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
-//#endregionMaterial End
+//#endregion Material End
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShoppingCartModule } from 'ng-shopping-cart';
@@ -77,6 +77,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QRCodeModule } from 'angular2-qrcode';
 import { UserdashboardComponent } from './components/user/dashboard/userdashboard.component';
 import { UserNavigationComponent } from './components/user/user-navigation.component';
+import { NgxSimpleCountdownModule } from 'ngx-simple-countdown';
 
 
 @NgModule({
@@ -109,7 +110,8 @@ import { UserNavigationComponent } from './components/user/user-navigation.compo
     CartComponent,
     ScannerComponent,
     UserdashboardComponent,
-    UserNavigationComponent
+    UserNavigationComponent,
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -166,7 +168,8 @@ import { UserNavigationComponent } from './components/user/user-navigation.compo
     }),
     StoreModule.forRoot({ cart: cartReducer, userObj: userReducer }),
     ZXingScannerModule,
-    QRCodeModule
+    QRCodeModule,
+    NgxSimpleCountdownModule
   ],
   providers: [],
   bootstrap: [AppComponent],

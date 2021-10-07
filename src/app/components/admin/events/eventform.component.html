@@ -171,7 +171,7 @@
       type="submit"
       [disabled]="!this.createEventForm.valid || submitting"
     >
-      (submitting ? "Saving" : "Save") | uppercase
+      {{(submitting ? "Saving" : "Save") | uppercase}}
     </button>
   </mat-dialog-actions>
 </form>

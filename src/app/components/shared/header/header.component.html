@@ -64,6 +64,7 @@
         <li *ngIf="(userStore | async)?.user?.username">
           <button mat-button [matMenuTriggerFor]="beforeMenu">
             Welcome {{ (userStore | async)?.user?.username }}!
+            <mat-icon>arrow_drop_down</mat-icon>
           </button>
           <mat-menu #beforeMenu="matMenu" xPosition="before">
             <button mat-menu-item>

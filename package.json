@@ -53,6 +53,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
     "ng-shopping-cart": "^1.0.0",
+    "ngx-simple-countdown": "^1.2.3",
     "nodemailer": "^6.6.3",
     "qr-code-scanner": "^1.0.8",
     "qrcode": "^1.4.4",

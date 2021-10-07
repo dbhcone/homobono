@@ -74,4 +74,18 @@ export class EventdetailComponent implements OnInit, OnDestroy {
     this.cart.addToCart(ticketId);
   }
 
+  timestamp (date: string) {
+    console.log('date', date);
+    console.log('type of ', typeof date);
+    // let timestamp = date.getTime();
+    // return timestamp;
+    const indexOfT = date.indexOf("T");
+    let newstrdate = date.substr(0, indexOfT);
+    let datesplit = newstrdate.split("-");
+    // var newDate = new Date( Number(datesplit[2]), Number(datesplit[1]) - 1, Number(datesplit[0]));
+    let newDate = new Date(newstrdate);
+    let ts = newDate.getTime();
+    return ts;
+  }
+ 
 }

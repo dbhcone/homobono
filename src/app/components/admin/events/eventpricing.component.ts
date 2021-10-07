@@ -23,11 +23,11 @@ export class EventpricingComponent implements OnInit {
     this.pricingForm = fb.group({
       name: [data?.pricing?.name || null, Validators.compose([Validators.required])],
       allowableNumberOfPersons: [
-        data?.pricing?.allowableNumberOfPersons || null,
+        data?.pricing?.allowableNumberOfPersons || 1,
         Validators.compose([Validators.required, Validators.min(0)]),
       ],
       amount: [
-        data?.pricing?.amount || null,
+        data?.pricing?.amount || 0,
         Validators.compose([Validators.min(0), Validators.required]),
       ],
     });

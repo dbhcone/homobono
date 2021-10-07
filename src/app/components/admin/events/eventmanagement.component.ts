@@ -45,36 +45,48 @@ export class EventmanagementComponent implements OnInit {
     this.getEventDetails(id);
     this.dataSource = new MatTableDataSource();
     this.getPricings(id);
-  }
 
-  generateForm(event?: any) {
     this.eventDetailsForm = this.fb.group({
       title: [
-        event?.title || null,
+        this.eventDetail?.event?.title || null,
         Validators.compose([Validators.required, Validators.minLength(5)]),
       ],
-      date: [event?.date || null, Validators.required],
-      time: [event?.time || null, Validators.required],
-      capacity: [event?.capacity || null],
-      venue: [event?.venue || null, Validators.required],
+      date: [this.eventDetail?.event?.date || null, Validators.required],
+      time: [this.eventDetail?.event?.time || null, Validators.required],
+      capacity: [this.eventDetail?.event?.capacity || null],
+      venue: [this.eventDetail?.event?.venue || null, Validators.required],
       description: [
-        event?.description || null,
+        this.eventDetail?.event?.description || null,
         Validators.compose([Validators.required, Validators.minLength(10)]),
       ],
     });
   }
+
+  // generateForm(event?: any) {
+  //   this.eventDetailsForm = this.fb.group({
+  //     title: [
+  //       event?.title || null,
+  //       Validators.compose([Validators.required, Validators.minLength(5)]),
+  //     ],
+  //     date: [event?.date || null, Validators.required],
+  //     time: [event?.time || null, Validators.required],
+  //     capacity: [event?.capacity || null],
+  //     venue: [event?.venue || null, Validators.required],
+  //     description: [
+  //       event?.description || null,
+  //       Validators.compose([Validators.required, Validators.minLength(10)]),
+  //     ],
+  //   });
+  // }
 
   getEventDetails(id: string) {
     this.eventService.getEvent(id).subscribe(
       async (resp: any) => {
         this.eventDetail = resp.data;
         console.log('event detail', this.eventDetail);
-        let event = this.eventDetail?.event;
-        this.generateForm(event);
       },
       (err: any) => {
         console.log('error', err);
-        this.generateForm();
       }
     );
   }
