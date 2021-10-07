@@ -71,7 +71,7 @@
 
         </div>
         <!-- Event details -->
-        <div class="col-md-5">
+        <div class="col-md-5" *ngIf="eventDetailsForm">
             <h2>Make Changes to Event Details</h2>
             <form [formGroup]="eventDetailsForm" (ngSubmit)="saveEventChanges()">
                   <!-- Title -->
