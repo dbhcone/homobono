@@ -43,6 +43,7 @@
     "debug": "^4.3.2",
     "dropbox": "^10.10.0",
     "express": "^4.17.1",
+    "googleapis": "^88.2.0",
     "joi": "^17.4.2",
     "jquery": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
