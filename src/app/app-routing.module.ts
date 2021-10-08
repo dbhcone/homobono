@@ -24,6 +24,8 @@ import { CartComponent } from './components/checkout/cart.component';
 import { ScannerComponent } from './components/scanner/scanner.component';
 import { UserNavigationComponent } from './components/user/user-navigation.component';
 import { UserdashboardComponent } from './components/user/dashboard/userdashboard.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 const routes: Routes = [
   {
     //#region General routes
@@ -42,6 +44,8 @@ const routes: Routes = [
       { path: 'activate-account', component: ActivateaccountComponent },
       { path: 'cart', component: CartComponent },
       { path: 'checkout', component: CheckoutComponent },
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'reset-password', component: ResetPasswordComponent },
     ],
   },
   //#endregion

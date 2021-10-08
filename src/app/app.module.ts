@@ -78,6 +78,8 @@ import { QRCodeModule } from 'angular2-qrcode';
 import { UserdashboardComponent } from './components/user/dashboard/userdashboard.component';
 import { UserNavigationComponent } from './components/user/user-navigation.component';
 import { NgxSimpleCountdownModule } from 'ngx-simple-countdown';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -111,6 +113,8 @@ import { NgxSimpleCountdownModule } from 'ngx-simple-countdown';
     ScannerComponent,
     UserdashboardComponent,
     UserNavigationComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
