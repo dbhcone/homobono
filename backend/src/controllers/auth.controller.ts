@@ -21,6 +21,9 @@ import {
   generatPin,
 } from '../helpers/functions/email.helper';
 
+import {intlTelNumberGh, sendDtechSms} from '../helpers/functions/sms.helpers';
+import { accountCreationMsg } from '../helpers/functions/messages.helpers';
+
 const Signup = async (req: Request, res: Response) => {
   let user: IUser, account: IAccount;
   const data = req.body;
@@ -78,6 +81,15 @@ const Signup = async (req: Request, res: Response) => {
           );
 
           const pin = generatPin(6);
+          // try sending sms only if there was a primary number
+          if (account.primaryMobileNumber) {
+            const standardNumber = intlTelNumberGh(account.primaryMobileNumber);
+
+            if (standardNumber) {
+              const sendSMS = await sendDtechSms(accountCreationMsg(account.firstName, temp_token, pin), standardNumber);
+              console.log('sms response', sendSMS, standardNumber)
+            }
+          }
 
           const sendmail = await accountActivationEmail(
             account.firstName,
@@ -99,6 +111,7 @@ const Signup = async (req: Request, res: Response) => {
               status: 'ok',
             });
           }
+
         } else {
           return res.status(400).json({
             message: 'Could not create user',

@@ -15,12 +15,12 @@ export class SignupComponent implements OnInit {
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.signupForm = this.fb.group({
       account: this.fb.group({
-        surname: ['', [Validators.required]],
-        firstName: ['', [Validators.required]],
+        surname: [null, [Validators.required]],
+        firstName: [null, [Validators.required]],
         otherNames: [null],
-        gender: ['', [Validators.required]],
+        gender: [null, [Validators.required]],
         primaryMobileNumber: [
-          '',
+          null,
           [
             Validators.required,
             Validators.maxLength(10),
@@ -29,10 +29,10 @@ export class SignupComponent implements OnInit {
         ],
       }),
       user: this.fb.group({
-        email: ['', [Validators.email, Validators.required]],
-        username: ['', [Validators.required, Validators.minLength(8)]],
-        password: ['', [Validators.required, Validators.minLength(8)]],
-        confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
+        email: [null, [Validators.email, Validators.required]],
+        username: [null, [Validators.required, Validators.minLength(8)]],
+        password: [null, [Validators.required, Validators.minLength(8)]],
+        confirmPassword: [null, [Validators.required, Validators.minLength(8)]],
       }),
     });
   }
