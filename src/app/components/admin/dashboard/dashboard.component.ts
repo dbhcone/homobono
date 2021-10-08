@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { GeneralService } from 'src/app/services/general.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,6 +10,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
+  statistics: any;
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
@@ -29,5 +32,20 @@ export class DashboardComponent {
     })
   );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver, private genService: GeneralService) {
+    this.getGeneralOverviewStats();
+  }
+
+  getGeneralOverviewStats () {
+    this.genService.overView().subscribe(
+      async (resp: any) => {
+          console.log('response ', resp);
+          this.statistics = resp.data;
+          
+      },
+      (err) => {
+          console.log('Error ' + err.error.message, err.error.code);
+      },
+  );
+  }
 }

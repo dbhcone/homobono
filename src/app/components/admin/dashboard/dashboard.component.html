@@ -1,24 +1,42 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
-  <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-      <mat-card class="dashboard-card">
+  <h2>Gender Statistics</h2>
+  <div class="row">
+    <!-- TOTAL EVENTS -->
+    <div class="col-md-4 col-sm-6 py-2">
+      <mat-card class="dashboard-card voilet">
         <mat-card-header>
-          <mat-card-title>
-            {{card.title}}
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>Expand</button>
-              <button mat-menu-item>Remove</button>
-            </mat-menu>
-          </mat-card-title>
+          <mat-card-title> TOTAL EVENTS </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <div>Card Content Here</div>
+          <!-- <mat-icon color="accent">male</mat-icon> -->
+          <p>{{ statistics?.eventsCount }}</p>
         </mat-card-content>
       </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
+
+    <!-- MALES -->
+    <div class="col-md-4 col-sm-6 py-2">
+      <mat-card class="dashboard-card burlywood">
+        <mat-card-header>
+          <mat-card-title> MALES </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <!-- <mat-icon color="primary">female</mat-icon> -->
+          <p>{{ statistics?.maleAccounts }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- FEMALES -->
+    <div class="col-md-4 col-sm-6 py-2">
+      <mat-card class="dashboard-card darkkhaki">
+        <mat-card-header>
+          <mat-card-title> FEMALES </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <p>{{ statistics?.femaleAccounts }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 </div>

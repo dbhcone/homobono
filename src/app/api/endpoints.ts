@@ -25,4 +25,8 @@ const Events = {
   purchase: '/events/purchase'
 }
 
-export { Auth, General, Events };
+
+const Statistics = {
+  generalOverview: '/admin/stats/generaloverview'
+}
+export { Auth, General, Events, Statistics };

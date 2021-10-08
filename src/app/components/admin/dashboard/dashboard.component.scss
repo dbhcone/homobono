@@ -2,13 +2,13 @@
   margin: 20px;
 }
 
-.dashboard-card {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
-}
+// .dashboard-card {
+//   position: absolute;
+//   top: 15px;
+//   left: 15px;
+//   right: 15px;
+//   bottom: 15px;
+// }
 
 .more-button {
   position: absolute;
@@ -18,4 +18,23 @@
 
 .dashboard-card-content {
   text-align: center;
+}
+
+
+.burlywood {
+  background-color: burlywood;
+}
+
+.darkkhaki {
+  background-color: darkkhaki;
+}
+
+.voilet {
+  background-color: violet;
+}
+
+mat-card {
+  height: 100px;
+  padding: 10px;
+  align-items: center;
 }

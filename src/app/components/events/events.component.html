@@ -2,10 +2,7 @@
   <h2>Upcoming events</h2>
   <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
   <div class="row">
-    <div
-      class="col-md-4 col-sm-6 col-xs-12"
-      *ngFor="let event of obs | async"
-    >
+    <div class="col-md-4 col-sm-6 col-xs-12" *ngFor="let event of obs | async">
       <mat-card>
         <mat-card-header>
           <mat-card-title>
@@ -17,7 +14,7 @@
           >
         </mat-card-header>
         <mat-card-content (click)="viewDetails(event._id)">
-          <img src="{{event.flyer.url}}" class="flyer" />
+          <img src="{{ displayFlyer(event.flyer) }}" class="flyer" />
           <section class="event-description">
             <p>{{ event.description }}</p>
           </section>
@@ -57,10 +54,7 @@
   <h2>Past events</h2>
   <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
   <div class="row">
-    <div
-      class="col-md-4 col-sm-6 col-xs-12"
-      *ngFor="let event of obs | async"
-    >
+    <div class="col-md-4 col-sm-6 col-xs-12" *ngFor="let event of obs | async">
       <mat-card>
         <mat-card-header>
           <mat-card-title>
@@ -72,7 +66,7 @@
           >
         </mat-card-header>
         <mat-card-content (click)="viewDetails(event._id)">
-          <img src="{{event.flyer.url}}" class="flyer" />
+          <img src="{{ event.flyer.url }}" class="flyer" />
           <section class="event-description">
             <p>{{ event.description }}</p>
           </section>

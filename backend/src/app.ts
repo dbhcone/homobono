@@ -9,6 +9,7 @@ import { indexRouter } from './routes/index';
 import { authRouter } from './routes/auth';
 import { userRouter } from './routes/user';
 import { eventsRouter } from './routes/event';
+import { statsRouter } from './routes/stats';
 
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -29,6 +30,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 
 app.use('/api/events', eventsRouter);
+app.use('/api/admin/stats', statsRouter);
 
 // serve only the static files from the dist directory
 app.use(express.static(path.join(__dirname, '../public/fe')));
