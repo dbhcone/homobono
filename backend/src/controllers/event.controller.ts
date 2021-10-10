@@ -5,6 +5,7 @@ import Pricings from '../models/pricings.model';
 import config from 'config';
 import { deletePhoto, uploadFile } from '../helpers/functions/fs.helpers';
 import { UPLOADPATH } from '../const';
+import { createAndUploadFile } from '../helpers/functions/googleapis.helpers';
 
 const create = async (req: Request, res: Response, next: NextFunction) => {
   let data = req.body;
@@ -34,12 +35,14 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 
     if (event) {
       // TODO: try uploading and let's see
-      uploadFile(filename, event._id);
+      // uploadFile(filename, event._id);
+      let upresp = await createAndUploadFile(filename, mimetype);
       return res.status(201).json({
         message: 'Event created successfully',
         code: 201,
         status: 'ok',
-        data: event
+        data: event,
+        extra: upresp.data
       });
     } else {
       return res

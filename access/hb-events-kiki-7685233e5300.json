@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "hb-events-kiki",
+  "private_key_id": "7685233e5300491990881b3f11eea3c2d341f2e4",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCUyD6fptBiUgoO\nrdUxYACAWo77FCP8+yPogUn8yXequcOMX0agjylk4nsbH7vhJIBzdZ2A46TpkLHz\ntDPQ29bzfHjSW3PpPo8na6aNv5Vjydg+dvL6FGeI7l3BODF03fFE42CX8PkK/epQ\nlU70onl3FuPIMNDoGieVOO3RHemo+F7JoWW1oevZMfCIV7v6QRyaXgGwZUr4Xjb5\n6Hnpp/kUjk30yUT3lI67Q7CL0ttpfxblUd8PiJlUq1n2rjWiiVn2wVM1DpdSa/07\nboUDu2CwnnIluNhlQwAjVq3MrM9RfM3aSoasl4NePzIjBf53onC1FoIidQ4YeSVv\nU4ujdiBPAgMBAAECggEASdOzf3U/IgqjgvUvPPjuRsKpAF3WHcpg3xaIqC8wej8D\nkbwVR8bCO5VGkQcGK4n5U1Ghfjt3sY5jPxLEQ3dTCi9RpNBMjAjG8ECyvNO8RW/7\nJcPQfddyKLhfPWms4Njgx9YsMDka2yF0C9iK/UlCDJ4HGWdfwkx4J8u/9mxpbbZP\nRnJdY4slBtn0/ypXXatzxfXOgEBTyTw0DThLVAPQushBatUl11ABNrzI3UZIbobP\nepUQ8XgKjGuAuz3Lw15evn3EtMPaO/ryogsX6uYtVEwAstxFyy4gtvzPvrhPTIY9\n6vwBkp+quqccEw6VlTy6INYTokaAL+asGFM6RiOnQQKBgQDJ74o2Zb/Uyu3MjZE2\n4HmkmPlz2bSHHn5ny3IGaMZhHAT2qws+g6G11DqyqkeLtTJ0EMBOC7VaJKMD65kS\npDfycrOkRqyj9Z7NASrS6gS2hG/u0wVt8MNw3alAJgdkA2cxPKncD3HnWmS56j3v\neA+WgDQW6DtSW0MLY4G69HLmVQKBgQC8nZ6+SRPWTM9aATRMvI00O0GBAbZ20X+a\nNPpiBmX/AvucST/w0Rum6LAyo6UWO1PEo0j9WKWewEOuuWnZHNhInnfWNWp12fVQ\nv0n6WbZ5WKH5CQrCX+/hGf27xvPnVLdhJ/jcYE0+GUA/93QrLok40RCbx5dcN1T9\n50xpA2roEwKBgBZFcPzm4+1YJDn3MxjWURQyOvDoBd0RI+fWrFDApYB4UqPR4X+X\njPI84exqk1F5PoNGha8V4355o/D+vvcrXXBD7kQj905t/IGnq01vue1XVfEFHQgv\nEZ8VE2Gb0Bzbszne8uzuVyWo9or6prIOj8mNgjE0k7ZVkmNjKh+wbiuxAoGAOiCF\nPHU+9MslF8LJQGDXT2J3lG9XsRRtM7Ph+fWo10cvDYIRf4Ch+fU539FI3ioYbcA4\njUMVf3AXK7CeazeVfAPCQLSjg4BRNrpM7Sdasdjbyei8dRyly4R8CrOMlR0pinqM\nGjZfd6TGhTAYj/o+ddEQQkHnZpbyzXDLvo08FBsCgYBYRQyBhbGrp90ofdk080b4\nsGdH5uvrJLpRoqSRcUtwmgnIKjPMnXMUkmExPIQANXWBq5IjCkZM/QqskI/Cc4y+\nvI1bH7yWiCghZZVPEhl3H3AG8ACRenWAAJY1iOb1zNFrio57nUl59hL0IZ/UFiod\nrqQlMi0MT/hBqDuHqoeq3g==\n-----END PRIVATE KEY-----\n",
+  "client_email": "sa-hb-events@hb-events-kiki.iam.gserviceaccount.com",
+  "client_id": "114790981809154317491",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/sa-hb-events%40hb-events-kiki.iam.gserviceaccount.com"
+}

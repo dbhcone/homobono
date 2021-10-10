@@ -1,14 +1,19 @@
 <p>scanner works!</p>
+<!-- API Documentation here -->
+<!-- https://github.com/zxing-js/ngx-scanner/wiki/Component-API#api -->
+<!-- 
+    - scanSuccess
+    - scanFailure
+    - scanError
+    - scanComplete
+    - camerasFound
+    - camerasNotFound
+ -->
 
-<!-- <div id="reader" width="600px"></div> -->
-
-
-<!-- <zxing-scanner></zxing-scanner> -->
-
-<!-- <zxing-scanner *ngIf="scannerEnabled" #scanner (scanSuccess)="scanSuccessHandler($event)">
+<zxing-scanner *ngIf="scannerEnabled" #scanner (scanSuccess)="scanSuccessHandler($event)">
 </zxing-scanner>
-<button (click)="enableScanner()" *ngIf="!scannerEnabled" type="button" class="btn btn-success">LEER
-    OTRO</button> -->
+<button mat-raised-button color="primary" (click)="startScanner()" *ngIf="!scannerEnabled" type="button">Start Scanner</button>
+<button type="button" class="btn btn-danger" (click)="stopScanner()" *ngIf="scannerEnabled">Stop Scanner</button>
 
 <!-- <qr-code [value]="qrInfo" [size]="350"></qr-code> -->
 

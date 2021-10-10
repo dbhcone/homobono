@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class ScannerComponent implements OnInit {
 
   // allowedFormats = [ BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX /*, ...*/ ];
-  // public scannerEnabled: boolean = true;
+  public scannerEnabled: boolean = false;
   item = [{
     'name': 'Agatha Harkness',
     'played by': 'Kathryn Hahn',
@@ -28,6 +28,12 @@ export class ScannerComponent implements OnInit {
 
   startScanner() {
     console.log('we have started the scanner');
+    this.scannerEnabled = true;
+  }
+
+  stopScanner() {
+    console.log('we are stopping the scanner');
+    this.scannerEnabled = false;
   }
 
   // trigger() {
@@ -36,26 +42,26 @@ export class ScannerComponent implements OnInit {
   //   html5QrcodeScanner.render(this.onScanSuccess, this.onScanFailure);
   // }
 
-  onScanSuccess(decodedText: any, decodedResult: any) {
-    // handle the scanned code as you like, for example:
-    console.log(`Code matched = ${decodedText}`, decodedResult);
-  }
+  // onScanSuccess(decodedText: any, decodedResult: any) {
+  //   // handle the scanned code as you like, for example:
+  //   console.log(`Code matched = ${decodedText}`, decodedResult);
+  // }
   
-  onScanFailure(error: any) {
-    // handle scan failure, usually better to ignore and keep scanning.
-    // for example:
-    console.warn(`Code scan error = ${error}`);
-  }
+  // onScanFailure(error: any) {
+  //   // handle scan failure, usually better to ignore and keep scanning.
+  //   // for example:
+  //   console.warn(`Code scan error = ${error}`);
+  // }
 
 
 
-  public enableScanner() {
-    // this.scannerEnabled = !this.scannerEnabled;
-    // this.information = "No se ha detectado información de ningún código. Acerque un código QR para escanear.";
-  }
+  // public enableScanner() {
+  //   this.scannerEnabled = !this.scannerEnabled;
+  //   // this.information = "No se ha detectado información de ningún código. Acerque un código QR para escanear.";
+  // }
 
   public scanSuccessHandler($event: any) {
-    // this.scannerEnabled = false;
+    this.stopScanner();
     // this.information = "Espera recuperando información... ";
     console.log('event success', $event);
 
