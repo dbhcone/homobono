@@ -50,6 +50,7 @@ const create = async (req: Request, res: Response) => {
         if (foundItem) {
             console.log('found', foundItem);
             const ticket: ITicket = {
+                eventId: foundItem.eventId,
                 eventName: pr.event.title,
                 ticketType: pr.pricing.name,
                 unitPrice: pr.pricing.amount,

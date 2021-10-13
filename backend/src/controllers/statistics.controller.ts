@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Events from '../models/event.model';
+import Purchases from '../models/purchase.model';
 import Users from '../models/user.model';
 const generalOverview = async (req: Request, res: Response) => {
 
@@ -26,4 +27,26 @@ const generalOverview = async (req: Request, res: Response) => {
   }
 };
 
-export { generalOverview };
+const portalStats = async (req: Request, res: Response) => {
+  const eventId = req.params["eventId"];
+  // const purchases = await Purchases
+//   .find({})
+//    .aggregate([
+//     // matching only the current year
+//     { $match: { _id: eventId } },
+
+//     // group based on the month
+//     {
+//         $group: {
+//             _id: '$month',
+//             amount: { $sum: '$amount' },
+//             count: { $sum: 1 },
+//         },
+//     },
+// ]);
+const sales = await Purchases.find({"tickets.eventId": eventId});
+
+return res.status(200).json({message: 'Sales fetched', data: sales, code: 200, status: 'ok'})
+}
+
+export { generalOverview, portalStats };

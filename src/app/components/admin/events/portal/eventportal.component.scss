@@ -1,0 +1,9 @@
+:host zxing-scanner::ng-deep video {
+    // max-height: 30vh;    
+    object-fit: contain;
+    width: 100%;
+}
+:host zxing-scanner::ng-deep {
+    border: #5d78ff solid 1px;
+    width: 30vw;
+} 

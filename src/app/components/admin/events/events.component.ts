@@ -28,6 +28,7 @@ export class EventsComponent implements AfterViewInit, OnDestroy {
     'edit',
     'delete',
     'settings',
+    'portal'
   ];
   dataSource: MatTableDataSource<any>;
   subscription?: Subscription;

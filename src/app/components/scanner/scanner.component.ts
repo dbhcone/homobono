@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 // import { BarcodeFormat } from '@zxing/library';
 // let Html5QrcodeScanner  = require('html5-qrcode');
 // import Html5QrcodeScanner from 'html5-qrcode'
@@ -11,6 +12,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScannerComponent implements OnInit {
 
+  formValueJson: string = "";
+  submitting: boolean = false;
+  scannerForm;
+  scanSuccess: boolean = false;
   // allowedFormats = [ BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX /*, ...*/ ];
   public scannerEnabled: boolean = false;
   item = [{
@@ -21,7 +26,19 @@ export class ScannerComponent implements OnInit {
   }]
 
   qrInfo = JSON.stringify(this.item);
-  constructor() { }
+  constructor(private fb: FormBuilder) {
+    this.scannerForm = fb.group({
+      username: [null, [Validators.compose([Validators.required, Validators.minLength(5)])]],
+      eventId: [null, [Validators.compose([Validators.required, Validators.minLength(5)])]],
+      somethingElse: [null, [Validators.compose([Validators.required, Validators.minLength(5)])]],
+      ticketNumber: [null, [Validators.compose([Validators.required, Validators.minLength(5)])]]
+    })
+   }
+
+   onSubmit () {
+     console.log('We are submitting the form with these values', this.scannerForm.value);
+     this.formValueJson = JSON.stringify(this.scannerForm.value, null, 4);
+   }
 
   ngOnInit(): void {
   }

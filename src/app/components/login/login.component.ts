@@ -46,29 +46,34 @@ export class LoginComponent implements OnInit {
       password,
       isAdmin
     );
-    this.auth?.login({ username, password, isAdmin })?.subscribe(
-      async (resp: any) => {
-        console.log('login', resp);
-        Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then(
-          async (res) => {
-            let set = await this.auth.setToken(resp.token);
-            console.log('after set', set);
-            const usersession = this.auth.session();
-            const {username, email, role, id} = usersession;
-            this.store.dispatch(setUserData({user: {username, email,role, id}}))
-            this.router.navigate(['events']);
-          }
-        );
-      },
-      (err) => {
-        this.submitting = false;
-        Swal.fire({
-          title: `${err.error.status.toUpperCase()}`,
-          text: `${err.error.message}`,
-          icon: 'error',
-        });
-      }
-    );
+    try {
+      this.auth?.login({ username, password, isAdmin })?.subscribe(
+        async (resp: any) => {
+          console.log('login', resp);
+          Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then(
+            async (res) => {
+              let set = await this.auth.setToken(resp.token);
+              console.log('after set', set);
+              const usersession = this.auth.session();
+              const {username, email, role, id} = usersession;
+              this.store.dispatch(setUserData({user: {username, email,role, id}}))
+              this.router.navigate(['events']);
+            }
+          );
+        },
+        (err) => {
+          this.submitting = false;
+          Swal.fire({
+            title: `${err.error.status.toUpperCase()}`,
+            text: `${err.error.message}`,
+            icon: 'error',
+          });
+        }
+      );
+    } catch (error: any) {
+      console.log('error', error);
+      Swal.fire({title: "Error", text:error.message})
+    }
   }
 
   ngOnInit(): void {}

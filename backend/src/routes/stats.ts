@@ -1,7 +1,8 @@
 import express from 'express';
-import { generalOverview } from '../controllers/statistics.controller';
+import { generalOverview, portalStats } from '../controllers/statistics.controller';
 const router = express.Router();
 
 router.get('/generaloverview', generalOverview);
+router.get('/portal/:eventId', portalStats)
 
 export { router as statsRouter };

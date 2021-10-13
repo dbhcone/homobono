@@ -63,8 +63,8 @@ import { ActivateaccountComponent } from './components/activateaccount/activatea
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { AdminNavigationComponent } from './components/admin/admin-navigation.component';
 import { SettingsComponent } from './components/admin/settings/settings.component';
-import { EventmanagementComponent } from './components/admin/events/eventmanagement.component';
-import { EventpricingComponent } from './components/admin/events/eventpricing.component';
+import { EventmanagementComponent } from './components/admin/events/management/eventmanagement.component';
+import { EventpricingComponent } from './components/admin/events/management/eventpricing.component';
 import { EventdetailComponent } from './components/events/eventdetail.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { TicketItem } from './cart/ticket-item';
@@ -80,6 +80,7 @@ import { UserNavigationComponent } from './components/user/user-navigation.compo
 import { NgxSimpleCountdownModule } from 'ngx-simple-countdown';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { EventPortalComponent } from './components/admin/events/portal/eventportal.component';
 
 
 @NgModule({
@@ -115,6 +116,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     UserNavigationComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    EventPortalComponent
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

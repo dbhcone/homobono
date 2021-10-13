@@ -32,6 +32,7 @@ export interface IPrice {
 }
 
 export interface ITicket {
+  eventId: string;
   eventName: string;
   ticketType: string;
   unitPrice: number;

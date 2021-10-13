@@ -16,7 +16,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { EventsComponent as AdminEventsComponent } from './components/admin/events/events.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import { ClientsComponent } from './components/admin/clients/clients.component';
-import { EventmanagementComponent } from './components/admin/events/eventmanagement.component';
+import { EventmanagementComponent } from './components/admin/events/management/eventmanagement.component';
 import { EventdetailComponent } from './components/events/eventdetail.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -26,6 +26,7 @@ import { UserNavigationComponent } from './components/user/user-navigation.compo
 import { UserdashboardComponent } from './components/user/dashboard/userdashboard.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { EventPortalComponent } from './components/admin/events/portal/eventportal.component';
 const routes: Routes = [
   {
     //#region General routes
@@ -58,8 +59,10 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboardComponent },
-      { path: 'events', component: AdminEventsComponent },
+      { path: 'events', component: AdminEventsComponent, pathMatch: 'full' },
       { path: 'eventmanagement/:id', component: EventmanagementComponent },
+      // { path: 'events/portal', component:  },
+      { path: 'events/portal/:id', component: EventPortalComponent },
       { path: 'settings', component: SettingsComponent },
       { path: 'users', component: UsersComponent },
       { path: 'clients', component: ClientsComponent },
