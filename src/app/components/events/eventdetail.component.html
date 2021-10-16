@@ -146,7 +146,7 @@
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
       <!-- Other Events can be here -->
-      <div class="other-events">
+      <div *ngIf="otherEvents?.length > 0" class="other-events">
         <h2>Other Events Available</h2>
         <mat-card
           class="side-event-card mb-3"

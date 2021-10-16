@@ -9,5 +9,10 @@ const accountCreationMsg = (firstName: string, token: string, pin: string) => {
     return str;
 }
 
+const ticketPurchaseMsg = (firstName: string, ticketId: string) => {
+    const str = `Hi ${firstName}. Your purchase was successful. Kindly click this link ${callbackurl}/user/tickets/${ticketId} to see ticket details`;
 
-export { accountCreationMsg }
+    return str;
+}
+
+export { accountCreationMsg, ticketPurchaseMsg }

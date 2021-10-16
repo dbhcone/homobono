@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import Account from '../models/account.model';
 import Users from '../models/user.model';
 import { mongoidValidation } from '../validators/shared.validations';
+import Purchase from '../models/purchase.model';
+import { CResponse } from '../helpers/classes/response.class';
 // import config from 'config';
 // import fs from 'fs';
 
@@ -127,4 +129,18 @@ const UploadProfilePhoto = async (
   }
 };
 
-export { GetUserDetails, UploadProfilePhoto };
+
+const GetUserPurchases = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params["userId"];
+    const userPurchases = await Purchase.find({user: userId});
+    const count = userPurchases.length;
+
+    let message = count > 0 ? "Fetched user purchases" : "No purchases found";
+    return CResponse.success(res, { message, data: {count, purchases: userPurchases} });
+  } catch (error: any) {
+    return CResponse.error(res, { message: error.message });
+  }
+};
+
+export { GetUserDetails, UploadProfilePhoto, GetUserPurchases };

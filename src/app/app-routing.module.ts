@@ -27,6 +27,9 @@ import { UserdashboardComponent } from './components/user/dashboard/userdashboar
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { EventPortalComponent } from './components/admin/events/portal/eventportal.component';
+import { UserGuard } from './guards/user.guard';
+import { AdminGuard } from './guards/admin.guard';
+import { UserpurchasesComponent } from './components/user/purchases/userpurchases.component';
 const routes: Routes = [
   {
     //#region General routes
@@ -55,7 +58,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminNavigationComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboardComponent },
@@ -68,16 +71,19 @@ const routes: Routes = [
       { path: 'clients', component: ClientsComponent },
     ],
   },
-//#endregion
-  
-{
-  path: 'user', component: UserNavigationComponent, 
-  children: [
-    {path: '', redirectTo: "dashboard", pathMatch: "full"},
-    {path: 'dashboard', component: UserdashboardComponent}
-  ]
-},
-//#region Other routes
+  //#endregion
+
+  {
+    path: 'user',
+    component: UserNavigationComponent,
+    canActivate: [AuthGuard, UserGuard],
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: UserdashboardComponent },
+      { path: 'purchase-history', component: UserpurchasesComponent },
+    ],
+  },
+  //#region Other routes
   { path: 'scanner', component: ScannerComponent },
   { path: '**', component: FourZeroFourComponent },
 ];

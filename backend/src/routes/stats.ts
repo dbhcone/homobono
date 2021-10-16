@@ -3,6 +3,6 @@ import { generalOverview, portalStats } from '../controllers/statistics.controll
 const router = express.Router();
 
 router.get('/generaloverview', generalOverview);
-router.get('/portal/:eventId', portalStats)
+router.get('/eventportal/:eventId', portalStats)
 
 export { router as statsRouter };

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { CResponse } from '../helpers/classes/response.class';
 import Events from '../models/event.model';
 import Purchases from '../models/purchase.model';
 import Users from '../models/user.model';
@@ -27,8 +28,8 @@ const generalOverview = async (req: Request, res: Response) => {
   }
 };
 
-const portalStats = async (req: Request, res: Response) => {
-  const eventId = req.params["eventId"];
+// const portalStats = async (req: Request, res: Response) => {
+//   const eventId = req.params["eventId"];
   // const purchases = await Purchases
 //   .find({})
 //    .aggregate([
@@ -44,9 +45,21 @@ const portalStats = async (req: Request, res: Response) => {
 //         },
 //     },
 // ]);
-const sales = await Purchases.find({"tickets.eventId": eventId});
+// const sales = await Purchases.find({"tickets.eventId": eventId});
 
-return res.status(200).json({message: 'Sales fetched', data: sales, code: 200, status: 'ok'})
+// return res.status(200).json({message: 'Sales fetched', data: sales, code: 200, status: 'ok'})
+// }
+
+const portalStats = async (req: Request, res: Response) => {
+  try {
+    const eventId = req.params['eventId'];
+
+    const event = await Events.findById(eventId);
+
+    return CResponse.success(res, {data: {capacity: event?.capacity, totalCount: 0}});
+  } catch (error: any) {
+    return CResponse.error(res, {message: error.message});
+  }
 }
 
 export { generalOverview, portalStats };

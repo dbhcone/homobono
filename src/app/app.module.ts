@@ -81,6 +81,7 @@ import { NgxSimpleCountdownModule } from 'ngx-simple-countdown';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { EventPortalComponent } from './components/admin/events/portal/eventportal.component';
+import { UserpurchasesComponent } from './components/user/purchases/userpurchases.component';
 
 
 @NgModule({
@@ -116,7 +117,8 @@ import { EventPortalComponent } from './components/admin/events/portal/eventport
     UserNavigationComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    EventPortalComponent
+    EventPortalComponent,
+    UserpurchasesComponent
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

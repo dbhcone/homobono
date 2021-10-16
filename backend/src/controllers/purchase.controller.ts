@@ -6,6 +6,7 @@ import qr from 'qrcode';
 import { sendTicketEmail } from '../helpers/functions/email.helper';
 import Users from '../models/user.model';
 import { ITicket } from '../interfaces/event.interface';
+import { CResponse } from '../helpers/classes/response.class';
 
 const create = async (req: Request, res: Response) => {
   const data = req.body;
@@ -18,21 +19,6 @@ const create = async (req: Request, res: Response) => {
     // console.log('data', data);
 
     let tickets: ITicket[] = [];
-    // newItems.map(async (item: any) => {
-    //   const price = await Pricings.findById(item.id).populate('event');
-    //   // console.log ('price', price)
-    //   if (price) {
-    //     const ticket: ITicket = {
-    //       eventName: price.event.title,
-    //       ticketType: price.pricing.name,
-    //       unitPrice: price.pricing.amount,
-    //       quantity: item.quantity,
-    //       subTotal: price.pricing.amount * item.quantity,
-    //     };
-    //     console.log('ticket', ticket);
-    //     tickets.push(ticket);
-    //   }
-    // });
 
     const ids: any[] = [];
     newItems.map((item) => {
@@ -46,21 +32,21 @@ const create = async (req: Request, res: Response) => {
     // return res.status(200).json({ data: { prs, ids } });
 
     prs.map((pr) => {
-        let foundItem = newItems.find((item) => item.id == pr._id);
-        if (foundItem) {
-            console.log('found', foundItem);
-            const ticket: ITicket = {
-                eventId: foundItem.eventId,
-                eventName: pr.event.title,
-                ticketType: pr.pricing.name,
-                unitPrice: pr.pricing.amount,
-                quantity: foundItem.quantity,
-                subTotal: pr.pricing.amount * foundItem.quantity,
-            };
-            console.log('ticket', ticket);
-            tickets.push(ticket);      
-        }
-    })
+      let foundItem = newItems.find((item) => item.id == pr._id);
+      if (foundItem) {
+        console.log('found', foundItem);
+        const ticket: ITicket = {
+          eventId: foundItem.eventId,
+          eventName: pr.event.title,
+          ticketType: pr.pricing.name,
+          unitPrice: pr.pricing.amount,
+          quantity: foundItem.quantity,
+          subTotal: pr.pricing.amount * foundItem.quantity,
+        };
+        console.log('ticket', ticket);
+        tickets.push(ticket);
+      }
+    });
 
     let total = 0;
     tickets.map((ticket) => {
@@ -129,4 +115,46 @@ const create = async (req: Request, res: Response) => {
   }
 };
 
-export { create };
+const read = async (req: Request, res: Response) => {
+  try {
+    const allPurchases = await Purchase.find();
+
+    return CResponse.success(res, { message: 'Success', data: allPurchases });
+  } catch (error: any) {
+    return CResponse.error(res, { message: error.message });
+  }
+};
+
+const readOne = async (req: Request, res: Response) => {
+  try {
+    const purchaseId = req.params['purchaseId'];
+    const purchase = await Purchase.findById(purchaseId);
+    if (!purchase)
+      return CResponse.error(res, { message: 'Could not find purchase' });
+
+    return CResponse.success(res, {
+      message: 'Purchase details fetched',
+      data: purchase,
+    });
+  } catch (error: any) {
+    return CResponse.error(res, { message: error.message });
+  }
+};
+
+const _delete = async (req: Request, res: Response) => {
+  try {
+    const purchaseId = req.params['purchaseId'];
+
+    const deletedPurchase = await Purchase.findByIdAndDelete(purchaseId);
+    if (!deletedPurchase)
+      return CResponse.error(res, { message: 'Could not delete purchase' });
+
+    return CResponse.success(res, {
+      message: 'Successfully deleted purchase',
+      data: deletedPurchase,
+    });
+  } catch (error: any) {
+    return CResponse.error(res, { message: error.message });
+  }
+};
+export { create, read, readOne, _delete };

@@ -21,19 +21,21 @@
         </mat-card-content>
 
         <mat-card-footer>
-          <h4>Available ticket price(s)</h4>
-          <p>{{ displayPriceRange(event.pricings) }}</p>
+          <section class="container">
+            <h4>Available ticket price(s)</h4>
+            <p>{{ displayPriceRange(event.pricings) }}</p>
+          </section>
         </mat-card-footer>
 
         <mat-card-actions>
-          <button
+          <!-- <button
             mat-raised-button
             color="accent"
             (click)="addToCart(event)"
             class="small"
           >
             <mat-icon>add_shopping_cart</mat-icon> Add to cart
-          </button>
+          </button> -->
           <button
             class="small"
             mat-raised-button

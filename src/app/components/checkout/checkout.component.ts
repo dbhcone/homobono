@@ -42,7 +42,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.cartStore = store.select('cart');
     this.userStore = store.select('userObj');
 
-    this.userStore.subscribe((cs) => {
+    this.userSubscription = this.userStore.subscribe((cs) => {
       this.useremail = cs.user.email;
     });
     this.paymentForm = this.fb.group({

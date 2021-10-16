@@ -10,10 +10,8 @@ import { EventService } from 'src/app/services/event.service';
   styleUrls: ['./eventportal.component.scss'],
 })
 export class EventPortalComponent implements OnInit, OnDestroy {
+  statistics: any;
   eventId: any;
-  pricings: any;
-  event: any;
-  otherEvents: any;
   subscription: Subscription;
 
   formValueJson: string = "";
@@ -31,7 +29,7 @@ export class EventPortalComponent implements OnInit, OnDestroy {
       if(pm.has('id')) {
         this.eventId = pm.get('id');
         console.log('id changed', this.eventId);
-        
+        this.getEventStats();
       }
     })
   }
@@ -41,6 +39,19 @@ export class EventPortalComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  getEventStats () {
+    this.eventService.getEventPortalStats(this.eventId).subscribe(
+      async (resp: any) => {
+          console.log('response ', resp);
+          this.statistics = resp.data;
+          
+      },
+      (err) => {
+          console.log('Error ' + err.error.message, err.error.code);
+      },
+  );
   }
 
   startScanner() {

@@ -21,12 +21,19 @@ const Events = {
   updatePricing: '/events/pricelist',
   getPrice: '/events/pricings',
 
-  // purchases
-  purchase: '/events/purchase'
+};
+
+const Purchases = {
+  create: '/purchases',
+  
+  
+  // user purchase
+  userPurchases: '/user/purchases'
 }
 
 
 const Statistics = {
-  generalOverview: '/admin/stats/generaloverview'
+  generalOverview: '/admin/stats/generaloverview',
+  eventPortal: '/admin/stats/eventportal'
 }
-export { Auth, General, Events, Statistics };
+export { Auth, General, Events, Statistics, Purchases };
