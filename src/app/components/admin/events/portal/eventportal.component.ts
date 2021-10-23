@@ -70,5 +70,9 @@ export class EventPortalComponent implements OnInit, OnDestroy {
 
   }
 
+  public redeem (hashTicketId: string) {
+    
+  }
+
    
 }

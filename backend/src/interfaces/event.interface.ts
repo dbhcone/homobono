@@ -39,3 +39,11 @@ export interface ITicket {
   quantity: number;
   subTotal: number;
 }
+
+export interface IRedemption extends Document {
+  userId: string;
+  purchaseId: string;
+  redemptionCode: string;
+  redeemed?: boolean;
+  dateRedeemed?: Date
+}

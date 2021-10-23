@@ -28,7 +28,9 @@ const Purchases = {
   
   
   // user purchase
-  userPurchases: '/user/purchases'
+  userPurchases: '/user/purchases',
+
+  redeemTicket: '/user/ticket/redeem'
 }
 
 

@@ -15,4 +15,10 @@ const ticketPurchaseMsg = (firstName: string, ticketId: string) => {
     return str;
 }
 
-export { accountCreationMsg, ticketPurchaseMsg }
+const ticketVerificationMsg = (firstName: string, pin: string) => {
+    const str = `Hello ${firstName}, your verification code is ${pin}. Kindly mention it to the agent.`;
+
+    return str;
+}
+
+export { accountCreationMsg, ticketPurchaseMsg, ticketVerificationMsg }

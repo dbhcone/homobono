@@ -4,6 +4,7 @@
     "JWT_SECRET": "SinnersJe$u$TheQu1ckBrownFoxJumped0verTheL@zyDog$WillReceive",
     "MAILER_EMAIL": "dev.kiki@outlook.com",
     "MAILER_PWD": "Hell1sRe@L.dev.outlook",
+    "PASSPHRASE": "#ThyWordIs&ALampToMy%Feet,ALightToMy@PathAlway",
     "CALLBACK_URL": "https://hb-events.herokuapp.com",
     "BE_URL": "https://hb-events.herokuapp.com",
     "APPROOT": "https://hb-events.herokuapp.com",

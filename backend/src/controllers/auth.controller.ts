@@ -18,7 +18,7 @@ import {
 } from '../validators/auth.validations';
 import {
   accountActivationEmail,
-  generatPin,
+  generatePin,
 } from '../helpers/functions/email.helper';
 
 import {intlTelNumberGh, sendDtechSms} from '../helpers/functions/sms.helpers';
@@ -80,7 +80,7 @@ const Signup = async (req: Request, res: Response) => {
             '24h'
           );
 
-          const pin = generatPin(6);
+          const pin = generatePin(6);
           // try sending sms only if there was a primary number
           if (account.primaryMobileNumber) {
             const standardNumber = intlTelNumberGh(account.primaryMobileNumber);

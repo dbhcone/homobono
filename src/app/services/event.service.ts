@@ -62,5 +62,9 @@ export class EventService {
     getEventPortalStats(eventId: string) {
       return this.client.GET(`${Statistics.eventPortal}/${eventId}`);
     }
+
+    redeemTicket(hashTicketId: string, userId: string) {
+        return this.client.POST(`${Purchases.redeemTicket}`, {hashTicketId, userId });
+    }
     //#endregion
 }

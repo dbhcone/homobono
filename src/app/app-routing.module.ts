@@ -59,6 +59,7 @@ const routes: Routes = [
     path: 'admin',
     component: AdminNavigationComponent,
     canActivate: [AuthGuard, AdminGuard],
+    canActivateChild: [AuthGuard, AdminGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboardComponent },
@@ -77,6 +78,7 @@ const routes: Routes = [
     path: 'user',
     component: UserNavigationComponent,
     canActivate: [AuthGuard, UserGuard],
+    canActivateChild: [AuthGuard, UserGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: UserdashboardComponent },
