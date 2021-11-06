@@ -102,7 +102,7 @@ app.use(
 // DB Connection
 try {
   mongoose.connect(
-    config.get('CONN_STR_LOC'),
+    config.get('CONN_STR'),
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
