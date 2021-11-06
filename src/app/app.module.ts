@@ -82,6 +82,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { EventPortalComponent } from './components/admin/events/portal/eventportal.component';
 import { UserpurchasesComponent } from './components/user/purchases/userpurchases.component';
+import { ProcesspaymentComponent } from './components/checkout/processpayment/processpayment.component';
 
 
 @NgModule({
@@ -118,7 +119,8 @@ import { UserpurchasesComponent } from './components/user/purchases/userpurchase
     ForgotPasswordComponent,
     ResetPasswordComponent,
     EventPortalComponent,
-    UserpurchasesComponent
+    UserpurchasesComponent,
+    ProcesspaymentComponent
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

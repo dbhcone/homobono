@@ -9,7 +9,7 @@ import { MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { EventService } from 'src/app/services/event.service';
+import { PaymentService } from 'src/app/services/payment.service';
 import { clearCart } from 'src/app/store/actions/cart.actions';
 import { AppState } from 'src/app/store/app.state';
 import Swal, { SweetAlertResult } from 'sweetalert2';
@@ -36,7 +36,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private store: Store<AppState>,
-    private eventService: EventService,
+    private eventService: PaymentService,
     private router: Router
   ) {
     this.cartStore = store.select('cart');

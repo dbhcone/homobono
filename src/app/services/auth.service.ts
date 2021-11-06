@@ -3,6 +3,7 @@ import { Auth } from '../api/endpoints';
 import { IAccount, ICredentials, IUser } from '../models/auth.interface';
 import { Client } from '../utils/client';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { IMerchant } from '../models/merchant';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,10 @@ export class AuthService implements OnInit {
 
   signup(user: IUser, accountData: IAccount) {
     return this.client?.POST(`${Auth.signup}`, { user, account: accountData });
+  }
+
+  merchantSignup(merchantData: IMerchant) {
+    return this.client?.POST(`${Auth.signup}`, merchantData );
   }
 
   activateAccount(token: string, pin: string) {

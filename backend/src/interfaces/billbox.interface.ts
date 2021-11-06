@@ -1,13 +1,10 @@
 export interface IPaymentOptions {
-    requestId: string;
-    appReference: string;
-    secret: string;
+    // requestId: string;
 }
 
 export interface IInvoiceWithItems {
-    requestId: string;
-    appReference: string;
-    secret: string;
+    // requestId: string;
+
     merchantOrderId: string;
     reference: string;
     currency: 'GHS' | 'USD';
@@ -25,8 +22,6 @@ export interface IInvoiceWithItems {
 }
 
 export interface IInvoiceWithoutItems {
-    appReference: string;
-    secret: string;
     merchantOrderId: string;
     currency: 'GHS' | 'USD';
     reference: string;
@@ -34,44 +29,37 @@ export interface IInvoiceWithoutItems {
 }
 
 export interface IIvoiceSummaryWInvNum {
-    requestId: string;
-    appReference: string;
-    secret: string;
+    // requestId: string;
+
     invoiceNum: string;
 }
 
 export interface IInvoiceSummaryWMerchOId {
-    requestId: string;
-    appReference: string;
-    secret: string;
+    // requestId: string;
+
     merchantOrderId: string;
 }
 
 export interface IInvoiceFullWInvNum {
-    requestId: string;
-    appReference: string;
-    secret: string;
+    // requestId: string;
+
     invoiceNum: string;
 }
 
 export interface IInvoiceFullWMerchOId {
-    requestId: string;
-    appReference: string;
-    secret: string;
+    // requestId: string;
+
     merchantOrderId: string;
 }
 
 export interface ICancelInvoice {
-    requestId: string;
-    appReference: string;
-    secret: string;
+    // requestId: string;
+
     merchantOrderId: string;
 }
 
 export interface IProcessPayment {
-    appReference: string;
-    secret: string;
-    requestId: string;
+    // requestId: string;
     invoiceNum: string;
     transactionId: string;
     provider:
@@ -87,11 +75,10 @@ export interface IProcessPayment {
 }
 
 export interface IPayNow {
-    requestId: string;
-    appReference: string;
-    secret: string;
+    // requestId: string;
+
     amount: number;
-    currency: "GHS"| "USD";
+    currency: 'GHS' | 'USD';
     transactionId: string;
     reference: string;
     provider:

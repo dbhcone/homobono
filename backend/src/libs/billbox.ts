@@ -1,28 +1,37 @@
 /**
  * https://documenter.getpostman.com/view/8139575/TVYJ6HHZ
  */
-
+ import * as dotenv from 'dotenv';
+ import path from 'path';
+ const envpath = path.join(__dirname, '../../.env');
+ console.log('env path bill', envpath);
+ dotenv.config({path: envpath});
 import { POST } from '../helpers/functions/http';
+import { IPayNow } from '../interfaces/billbox.interface';
 
-const BASE_URL = 'https://posapi.usebillbox.com';
-const APP_ID = ''; // TODO: Get it from billbox
+const BASE_URL = process.env.BASE_URL;
+const APP_ID = process.env.APP_ID;
+const APP_REFERENCE = process.env.APP_REFERENCE;
+const SECRET = process.env.SECRET;
+const SERVICE_CODE = process.env.SERVICE_CODE;
 
 const URL = (endpoint: string) => {
     return `${BASE_URL}${endpoint}`;
 };
-const listPaymentOptions = (
-    requestId: string,
-    appReference: string,
-    secret: string
-) => {
+
+const defaultData = { appReference: APP_REFERENCE, secret: SECRET };
+
+const listPaymentOptions = (requestId: string) => {
     const url = URL('/webpos/listPayOptions');
-    const data = { requestId, appReference, secret };
+    const data = { requestId, ...defaultData };
+
     return POST(url, data, { appId: APP_ID });
 };
 
-const createInvoice = () => {
+const createInvoice = (requestId: string) => {
     const url = URL('/webpos/createInvoice');
-    const data = {};
+    const data = { requestId, ...defaultData };
+
     return POST(url, data, { appId: APP_ID });
 };
 
@@ -30,15 +39,21 @@ const getInvoiceSummary = () => {};
 
 const getInvoice = () => {};
 
-const cancelInvoice = () => {
+const cancelInvoice = (requestId: string) => {
     const url = URL('/webpos/cancelInvoice');
-    const data = {  };
+    const data = {};
+    
     return POST(url, data, { appId: APP_ID });
 };
 
 const processPayment = () => {};
 
-const payNow = () => {};
+const payNow = (requestId: string, payNowData: IPayNow ) => {
+    const url = URL('/webpos/payNow');
+    const data = {requestId, serviceCode: SERVICE_CODE, ...defaultData,...payNowData };
+
+    return POST(url, data, { appId: APP_ID });
+};
 export {
     listPaymentOptions,
     createInvoice,

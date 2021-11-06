@@ -1,5 +1,5 @@
 var createError = require('http-errors');
-
+// import * as dotenv from 'dotenv'
 import config from 'config';
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
@@ -10,7 +10,9 @@ import { authRouter } from './routes/auth';
 import { userRouter } from './routes/user';
 import { eventsRouter } from './routes/event';
 import { purchasesRouter } from './routes/purchase';
+import { paymentsRouter } from './routes/payment';
 import { statsRouter } from './routes/stats';
+
 
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -23,15 +25,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// const envpath = path.join(__dirname, '../.env');
+// console.log('env path', envpath)
+// dotenv.config({path: envpath});
+
 app.use('/api', indexRouter);
 // #region ================== AUTH ROUTES
 app.use('/api/auth', authRouter);
 //  #endregion
 
 app.use('/api/user', userRouter);
-
 app.use('/api/events', eventsRouter);
 app.use('/api/purchases', purchasesRouter);
+app.use('/api/payments', paymentsRouter);
 app.use('/api/admin/stats', statsRouter);
 
 // serve only the static files from the dist directory
@@ -96,7 +102,7 @@ app.use(
 // DB Connection
 try {
   mongoose.connect(
-    config.get('CONN_STR'),
+    config.get('CONN_STR_LOC'),
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

@@ -30,6 +30,7 @@ import { EventPortalComponent } from './components/admin/events/portal/eventport
 import { UserGuard } from './guards/user.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { UserpurchasesComponent } from './components/user/purchases/userpurchases.component';
+import { ProcesspaymentComponent } from './components/checkout/processpayment/processpayment.component';
 const routes: Routes = [
   {
     //#region General routes
@@ -47,7 +48,8 @@ const routes: Routes = [
       { path: 'about-us', component: AboutComponent },
       { path: 'activate-account', component: ActivateaccountComponent },
       { path: 'cart', component: CartComponent },
-      { path: 'checkout', component: CheckoutComponent },
+      // { path: 'checkout', component: CheckoutComponent },
+      { path: 'checkout', component: ProcesspaymentComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'reset-password', component: ResetPasswordComponent },
     ],

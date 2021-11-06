@@ -1,0 +1,195 @@
+<div class="container h-100 login-container">
+  <div class="row h-100 justify-content-center align-items-center">
+    <!-- <div class="col-md-12"> -->
+    <mat-card>
+      <mat-card-header class="center-content">
+        <mat-card-title class="text-center">CREATE YOUR OWN ACCOUNT</mat-card-title>
+        <mat-card-subtitle class="text-center"
+          >Get your personal account here!</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+          <!-- Account Details -->
+          <div formGroupName="account">
+            <mat-form-field appearance="outline">
+              <mat-label>Surname</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="surname"
+                placeholder="provide your surname"
+                required
+              />
+              <mat-icon matSuffix>person</mat-icon>
+              <mat-error
+                *ngIf="surname?.touched && surname?.hasError('required')"
+              >
+                Please, provide the surname!
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="firstName"
+                placeholder="provide your first name"
+                required
+              />
+              <mat-icon matSuffix>person</mat-icon>
+              <mat-error
+                *ngIf="firstName?.touched && firstName?.hasError('required')"
+              >
+                Please, provide the first name!
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Other Name(s) [if any]</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="otherNames"
+                placeholder="provide your other names"
+              />
+              <mat-icon matSuffix>person</mat-icon>
+              <mat-error
+                *ngIf="firstName?.touched && firstName?.hasError('required')"
+              >
+                Please, provide the first name!
+              </mat-error>
+            </mat-form-field>
+
+            <mat-radio-group
+              formControlName="gender"
+              aria-label="Select an option for gender"
+            >
+              <mat-label>Gender</mat-label>
+              <mat-radio-button id="male" value="M">Male</mat-radio-button>
+              <mat-radio-button id="female" value="F">Female</mat-radio-button>
+            </mat-radio-group>
+
+            <mat-error
+              *ngIf="!gender?.valid && (gender?.dirty || gender?.touched)"
+            >
+              <div [hidden]="!gender?.errors?.required">gender is required</div>
+            </mat-error>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Mobile Number</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="primaryMobileNumber"
+                placeholder="Eg. 0541234567"
+                required
+              />
+              <mat-icon matSuffix>call</mat-icon>
+              <mat-hint> Example: 0541234567 </mat-hint>
+              <mat-error
+                *ngIf="
+                  primaryMobileNumber?.touched && primaryMobileNumber?.hasError('required')
+                "
+              >
+                Please, provide your mobile number
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!-- Account Details -->
+
+          <!-- User Details -->
+          <div formGroupName="user">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                type="email"
+                formControlName="email"
+                placeholder="provide username"
+                required
+              />
+              <mat-icon matSuffix>email</mat-icon>
+              <mat-error
+                *ngIf="email?.hasError('email') && !email?.hasError('required')"
+              >
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="email?.hasError('required')">
+                Email is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Username</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="username"
+                placeholder="provide username"
+                required
+              />
+              <mat-icon matSuffix>account_circle</mat-icon>
+              <mat-error
+                *ngIf="username?.touched && username?.hasError('required')"
+              >
+                Please, provide username!
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                type="password"
+                formControlName="password"
+                placeholder="provide password"
+                required
+              />
+              <mat-icon matSuffix>password</mat-icon>
+
+              <mat-error
+                *ngIf="password?.touched && password?.hasError('required')"
+              >
+                Please, provide password!
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Confirm password</mat-label>
+              <input
+                matInput
+                type="password"
+                formControlName="confirmPassword"
+                placeholder="re-enter password"
+                required
+              />
+              <mat-icon matSuffix>password</mat-icon>
+            </mat-form-field>
+          </div>
+          <!-- User Details -->
+
+          <!-- Submit button -->
+          <button
+            mat-raised-button
+            aria-label="Sign up button"
+            color="accent"
+            type="submit"
+            [disabled]="!signupForm.valid || submitting"
+          >
+            {{ (submitting ? "Please wait ..." : "Sign up") | uppercase }}
+          </button>
+        </form>
+      </mat-card-content>
+
+      <mat-card-footer>
+        <p class="center-content">
+          Already have an account?
+          <a routerLink="/login"> Log in</a>
+        </p>
+      </mat-card-footer>
+    </mat-card>
+    <!-- </div> -->
+  </div>
+</div>
