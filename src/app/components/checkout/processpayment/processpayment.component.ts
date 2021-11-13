@@ -64,9 +64,10 @@ export class ProcesspaymentComponent implements OnInit {
             async (resp: any) => {
                 console.log('payment options', resp);
                 let options: [] = resp.data.result;
-                this.paymentOptions = options.filter(
-                    (option: any) => option.type == 'MOBILE_MONEY'
-                );
+                // this.paymentOptions = options.filter(
+                //     (option: any) => option.type == 'MOBILE_MONEY'
+                // );
+                this.paymentOptions = options;
             },
             (err: any) => {
                 console.log('error', err);
@@ -122,7 +123,7 @@ export class ProcesspaymentComponent implements OnInit {
                             email: this.email?.value || us.user.email,
                         },
                         items,
-                        paymentDetails
+                        // paymentDetails
                     )
                     .subscribe(
                         async (resp: any) => {

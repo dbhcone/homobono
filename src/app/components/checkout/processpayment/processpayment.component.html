@@ -13,78 +13,59 @@
             </mat-card-header>
             <mat-card-content>
                 <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mobile Number</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            formControlName="mobileNumber"
+                            placeholder="Eg. 0541234567"
+                            required
+                        />
+                        <mat-icon matSuffix>call</mat-icon>
+                        <mat-hint> Example: 0541234567 </mat-hint>
+                        <mat-error
+                            *ngIf="
+                                mobileNumber?.touched &&
+                                mobileNumber?.hasError('required')
+                            "
+                        >
+                            Please, provide your mobile number
+                        </mat-error>
+                    </mat-form-field>
+
                     <mat-radio-group
                         formControlName="paymentType"
                         aria-label="Select an option for payment type"
                         (change)="onPaymentTypeChanged($event)"
                     >
-                        <div *ngFor="let option of paymentOptions">
-                            <mat-label><h3>{{ option.name }}</h3></mat-label>
-                            <p>{{ option.authNotice }}</p>
+                        <div class="payment-option" *ngFor="let option of paymentOptions">
                             <!-- <p>{{ option.preAuthNotice }}</p> -->
                             <mat-radio-button value="{{ option.provider }}">
+                                <mat-label
+                                    ><h3>{{ option.name }}</h3></mat-label
+                                >
                                 <img
-                                    class="img img-fluid"
+                                    class="img-payment-avatar"
                                     src="{{ option.logo }}"
                                 />
                             </mat-radio-button>
+                            <p>{{ option.authNotice }}</p>
                         </div>
-
-                        <!-- <mat-label>AIRTELTIGO MONEY</mat-label>
-                <mat-radio-button value="mobileMoney3">
-                  <img 
-                  class="img img-fluid"
-                  src="assets/img/logos/all-networks-momo.png"
-                  />
-                </mat-radio-button>
-
-                <mat-label>VODAFONE CASH</mat-label>
-                <mat-radio-button value="mobileMoney4">
-                  <img 
-                  class="img img-fluid"
-                  src="assets/img/logos/all-networks-momo.png"
-                  />
-                </mat-radio-button> -->
-
-                        <mat-form-field appearance="outline">
-                            <mat-label>Mobile Number</mat-label>
-                            <input
-                                matInput
-                                type="text"
-                                formControlName="mobileNumber"
-                                placeholder="Eg. 0541234567"
-                                required
-                            />
-                            <mat-icon matSuffix>call</mat-icon>
-                            <mat-hint> Example: 0541234567 </mat-hint>
-                            <mat-error
-                                *ngIf="
-                                    mobileNumber?.touched &&
-                                    mobileNumber?.hasError('required')
-                                "
-                            >
-                                Please, provide your mobile number
-                            </mat-error>
-                        </mat-form-field>
-
-                        <mat-form-field appearance="outline">
-                            <mat-label>Email address</mat-label>
-                            <input
-                                matInput
-                                type="email"
-                                formControlName="email"
-                            />
-
-                            <mat-error
-                                *ngIf="
-                                    email?.touched &&
-                                    email?.hasError('required')
-                                "
-                            >
-                                Please, provide your email address
-                            </mat-error>
-                        </mat-form-field>
                     </mat-radio-group>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email address</mat-label>
+                        <input matInput type="email" formControlName="email" />
+
+                        <mat-error
+                            *ngIf="
+                                email?.touched && email?.hasError('required')
+                            "
+                        >
+                            Please, provide your email address
+                        </mat-error>
+                    </mat-form-field>
 
                     <!-- Submit button -->
                     <button

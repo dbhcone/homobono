@@ -14,7 +14,8 @@ const create = async (req: Request, res: Response) => {
 
     try {
         const validation = await createPurchase.validateAsync(data);
-        let { user, items, paymentDetails } = data;
+        // let { user, items, paymentDetails } = data;
+        let { user, items } = data;
         const newItems = <any[]>items;
 
         // console.log('data', data);
