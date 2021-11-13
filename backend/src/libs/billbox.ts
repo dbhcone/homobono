@@ -7,7 +7,7 @@
  console.log('env path bill', envpath);
  dotenv.config({path: envpath});
 import { POST } from '../helpers/functions/http';
-import { IPayNow } from '../interfaces/billbox.interface';
+import { IInvoiceWithItems, IInvoiceWithoutItems, IPayNow } from '../interfaces/billbox.interface';
 
 const BASE_URL = process.env.BASE_URL;
 const APP_ID = process.env.APP_ID;
@@ -28,9 +28,16 @@ const listPaymentOptions = (requestId: string) => {
     return POST(url, data, { appId: APP_ID });
 };
 
-const createInvoice = (requestId: string) => {
+const createInvoiceWithItems = (requestId: string, invoiceData: IInvoiceWithItems) => {
     const url = URL('/webpos/createInvoice');
-    const data = { requestId, ...defaultData };
+    const data = { requestId, ...defaultData, ...invoiceData };
+
+    return POST(url, data, { appId: APP_ID });
+};
+
+const createInvoiceWithoutItems = (requestId: string, invoiceData: IInvoiceWithoutItems) => {
+    const url = URL('/webpos/createInvoice');
+    const data = { requestId, ...defaultData,...invoiceData };
 
     return POST(url, data, { appId: APP_ID });
 };
@@ -54,12 +61,22 @@ const payNow = (requestId: string, payNowData: IPayNow ) => {
 
     return POST(url, data, { appId: APP_ID });
 };
+
+const checkPaymentStatus = (requestId: string, transactionId: string) => {
+    const url = URL('/webpos/checkPaymentStatus');
+    const data = { requestId, ...defaultData, transactionId };
+
+    return POST(url, data, { appId: APP_ID });
+};
+
 export {
     listPaymentOptions,
-    createInvoice,
+    createInvoiceWithItems,
+    createInvoiceWithoutItems,
     getInvoiceSummary,
     getInvoice,
     cancelInvoice,
     processPayment,
     payNow,
+    checkPaymentStatus
 };

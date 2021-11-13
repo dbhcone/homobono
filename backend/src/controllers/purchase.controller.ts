@@ -14,7 +14,7 @@ const create = async (req: Request, res: Response) => {
 
     try {
         const validation = await createPurchase.validateAsync(data);
-        let { user, items } = data;
+        let { user, items, paymentDetails } = data;
         const newItems = <any[]>items;
 
         // console.log('data', data);
@@ -63,7 +63,6 @@ const create = async (req: Request, res: Response) => {
         let purch = { user: user.id, tickets: tickets, total: total };
         let purchase = await new Purchase(purch).save();
         console.log('purchase', purchase);
-
         try {
             let udata = { userId: user.id, purchaseId: purchase.id };
             const encryptedData = encryptedPlainText(JSON.stringify(udata));
@@ -77,8 +76,9 @@ const create = async (req: Request, res: Response) => {
                     });
                 }
 
-                await purchase.updateOne({ qrcode }, { new: true });
-                console.log('updated', purchase);
+                const update = await Purchase.findByIdAndUpdate(purchase._id, { qrcode }, { new: true });
+                // const update = await purchase.updateOne({ qrcode }, { new: true });
+                console.log('updated', update);
 
                 const us = await Users.findById(user.id).populate(
                     'accountOwner'
@@ -120,6 +120,67 @@ const create = async (req: Request, res: Response) => {
             .json({ message: error.message, code: 404, status: 'error' });
     }
 };
+
+/** TODO:
+ * Call this method only **AFTER** payment has been confirmed
+ * @param req Request
+ * @param res Response
+ */
+// const savePayment = async (user: any, purchase: any) => {
+//     let purch = { user: user.id, tickets: tickets, total: total };
+//         let purchase = await new Purchase(purch).save();
+//         console.log('purchase', purchase);
+//     try {
+//         let udata = { userId: user.id, purchaseId: purchase.id };
+//         const encryptedData = encryptedPlainText(JSON.stringify(udata));
+
+//         qr.toDataURL(encryptedData, async (err, qrcode) => {
+//             if (err) {
+//                 return res.status(404).json({
+//                     message: 'Could not generate qr code',
+//                     code: 404,
+//                     status: 'ok',
+//                 });
+//             }
+
+//             await purchase.updateOne({ qrcode }, { new: true });
+//             console.log('updated', purchase);
+
+//             const us = await Users.findById(user.id).populate(
+//                 'accountOwner'
+//             );
+
+//             // now send the email
+//             let response = await sendTicketEmail(
+//                 user.email,
+//                 us?.accountOwner?.firstName,
+//                 tickets,
+//                 qrcode
+//             );
+
+//             if (response.code == 200) {
+//                 return res.status(200).json({
+//                     message:
+//                         'Purchase completed successfully. Check your email to get full details',
+//                     status: 'ok',
+//                     code: 200,
+//                     data: purchase,
+//                 });
+//             } else {
+//                 return res.status(response.code).json({
+//                     message: response.message,
+//                     status: 'error',
+//                     code: response.code,
+//                     data: purchase,
+//                 });
+//             }
+//         });
+//     } catch (error: any) {
+//         return res
+//             .status(404)
+//             .json({ message: error.message, code: 404, status: 'error' });
+//     }
+// }
 
 const read = async (req: Request, res: Response) => {
     try {

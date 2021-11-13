@@ -8,17 +8,16 @@ export interface IInvoiceWithItems {
     merchantOrderId: string;
     reference: string;
     currency: 'GHS' | 'USD';
-    invoiceItems: [
-        {
-            code: string;
-            name: string;
-            description: string;
-            imgUrl: string;
-            unitPrice: number;
-            quantity: number;
-            subTotal: number;
-        }
-    ];
+    invoiceItems: IInvoiceItems[];
+}
+
+interface IInvoiceItems {
+    name: string;
+    description: string;
+    imgUrl: string;
+    unitPrice: number;
+    quantity: number;
+    subTotal: number;
 }
 
 export interface IInvoiceWithoutItems {

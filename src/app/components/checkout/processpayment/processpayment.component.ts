@@ -64,7 +64,9 @@ export class ProcesspaymentComponent implements OnInit {
             async (resp: any) => {
                 console.log('payment options', resp);
                 let options: [] = resp.data.result;
-                this.paymentOptions = options.filter((option: any) => option.type == "MOBILE_MONEY");
+                this.paymentOptions = options.filter(
+                    (option: any) => option.type == 'MOBILE_MONEY'
+                );
             },
             (err: any) => {
                 console.log('error', err);
@@ -106,33 +108,44 @@ export class ProcesspaymentComponent implements OnInit {
     onSubmit() {
         console.log('form being submitted', this.paymentForm.value);
         this.submitting = true;
-        this.userSubscription = this.userStore.subscribe((us) => {
-            const { id, email } = us.user;
-            this.cartSubscription = this.cartStore.subscribe((ca) => {
+        this.userSubscription = this.userStore.subscribe(async (us) => {
+            this.cartSubscription = this.cartStore.subscribe(async (ca) => {
                 const items = ca.items;
-
-                this.eventService.makePayment({ id, email }, items).subscribe(
-                    async (resp: any) => {
-                        console.log('resp', resp);
-                        Swal.fire({
-                            title: 'Payment Completed',
-                            text: resp.message,
-                            icon: 'success',
-                            timer: 5000,
-                        }).then((sar: SweetAlertResult) => {
-                            // clear cart and return to events page
-                            this.store.dispatch(clearCart());
-                            this.router.navigate(['/events']);
-                        });
-                    },
-                    (error: any) => {
-                        this.submitting = false;
-                        Swal.fire({
-                            icon: 'error',
-                            text: error.error.message,
-                        });
-                    }
-                );
+                const paymentDetails = {
+                    provider: this.paymentType?.value,
+                    customerMobile: this.mobileNumber?.value,
+                };
+                this.eventService
+                    .makePayment(
+                        {
+                            id: us.user.id,
+                            email: this.email?.value || us.user.email,
+                        },
+                        items,
+                        paymentDetails
+                    )
+                    .subscribe(
+                        async (resp: any) => {
+                            console.log('resp', resp);
+                            Swal.fire({
+                                title: 'Payment Completed',
+                                text: resp.message,
+                                icon: 'success',
+                                timer: 5000,
+                            }).then((sar: SweetAlertResult) => {
+                                // clear cart and return to events page
+                                this.store.dispatch(clearCart());
+                                this.router.navigate(['/events']);
+                            });
+                        },
+                        (error: any) => {
+                            this.submitting = false;
+                            Swal.fire({
+                                icon: 'error',
+                                text: error.error.message,
+                            });
+                        }
+                    );
                 // end
             });
         });
